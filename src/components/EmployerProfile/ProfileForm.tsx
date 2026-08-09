@@ -137,9 +137,9 @@ export const EmployerProfileForm: React.FC<Props> = ({
             onSubmit={handleSubmit}
             className="mx-auto max-w-2xl space-y-7 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 sm:p-8"
         >
-            <h2 className="text-xl font-bold text-gray-900">
+            <div className="border-b border-slate-100 pb-5"><p className="text-xs font-semibold uppercase tracking-wider text-blue-700">Employer workspace</p><h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
                 {initialData ? 'Update Employer Profile' : 'Setup Employer Profile'}
-            </h2>
+            </h2></div>
 
             {formError && (
                 <div className="p-3 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm">

@@ -48,8 +48,8 @@ export default function DisplayStudentProfile() {
         <main className="min-h-full bg-slate-100 px-4 py-6 sm:py-10">
         <div className="mx-auto max-w-4xl space-y-6">
             {/* 1. Header Card */}
-            <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 bg-gradient-to-r from-blue-50 via-white to-slate-50 p-6 sm:p-8"><div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                         {/* Avatar Placeholder */}
                         <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-2xl font-bold text-white shadow-inner">
@@ -95,7 +95,7 @@ export default function DisplayStudentProfile() {
                     >
                         Edit Profile
                     </Link>
-                </div>
+                </div></div>
 
                 {/* Bio */}
                 {profile.bio && (
@@ -118,7 +118,7 @@ export default function DisplayStudentProfile() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 p-6 sm:p-8 md:grid-cols-2">
                 {/* 2. Academic Background Card */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
                     <h2 className="text-base font-semibold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
@@ -158,7 +158,7 @@ export default function DisplayStudentProfile() {
                                 <span className="text-xs font-medium text-slate-500">Target Roles</span>
                                 <div className="flex flex-wrap gap-1.5 pt-1">
                                     {jobCategories.map((cat, i) => (
-                                        <span key={i} className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                                        <span key={i} className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
                                             {cat}
                                         </span>
                                     ))}
@@ -172,7 +172,7 @@ export default function DisplayStudentProfile() {
                                 <span className="text-xs font-medium text-slate-500">Target Locations</span>
                                 <div className="flex flex-wrap gap-1.5 pt-1">
                                     {locations.map((loc, i) => (
-                                        <span key={i} className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                                        <span key={i} className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
                                             {loc}
                                         </span>
                                     ))}
