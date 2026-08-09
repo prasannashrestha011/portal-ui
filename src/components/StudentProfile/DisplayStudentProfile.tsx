@@ -22,7 +22,7 @@ export default function DisplayStudentProfile() {
                     </svg>
                 </div>
                 <h3 className="mt-4 text-base font-semibold text-slate-900">No profile found</h3>
-                <p className="mt-1 text-sm text-slate-500">You haven't set up your student profile yet.</p>
+                <p className="mt-1 text-sm text-slate-500">You haven&apos;t set up your student profile yet.</p>
                 <div className="mt-6">
                     <Link
                         href="/student/profile/upsert"
@@ -45,7 +45,8 @@ export default function DisplayStudentProfile() {
         : [];
 
     return (
-        <div className="mx-auto max-w-4xl space-y-6 p-4 sm:p-6 lg:p-8">
+        <main className="min-h-full bg-slate-100 px-4 py-6 sm:py-10">
+        <div className="mx-auto max-w-4xl space-y-6">
             {/* 1. Header Card */}
             <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
@@ -182,6 +183,7 @@ export default function DisplayStudentProfile() {
                 </div>
             </div>
         </div>
+        </main>
     );
 }
 

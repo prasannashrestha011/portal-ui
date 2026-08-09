@@ -9,7 +9,7 @@ interface Props {
 
 export const EmployerProfileCard: React.FC<Props> = ({ profile, onEdit }) => {
     return (
-        <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
+        <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 sm:p-8">
             <div className="flex justify-between items-start mb-6">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">

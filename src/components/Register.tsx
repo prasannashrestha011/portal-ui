@@ -63,8 +63,8 @@ export default function Register() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-      <section className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8 sm:py-12">
+      <section className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 sm:p-9">
         <div className="mb-8">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">
             Student Job Portal

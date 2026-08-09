@@ -35,7 +35,7 @@ export default function EmployerProfilePage() {
     }
 
     return (
-        <div className="py-8 px-4">
+        <main className="min-h-full bg-slate-100 px-4 py-8 sm:py-12">
             {error && (
                 <div className="max-w-2xl mx-auto mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
                     {error}
@@ -55,6 +55,6 @@ export default function EmployerProfilePage() {
                     onEdit={() => setIsEditing(true)}
                 />
             )}
-        </div>
+        </main>
     );
 }

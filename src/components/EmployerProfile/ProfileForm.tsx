@@ -135,7 +135,7 @@ export const EmployerProfileForm: React.FC<Props> = ({
     return (
         <form
             onSubmit={handleSubmit}
-            className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 max-w-2xl mx-auto space-y-6"
+            className="mx-auto max-w-2xl space-y-7 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 sm:p-8"
         >
             <h2 className="text-xl font-bold text-gray-900">
                 {initialData ? 'Update Employer Profile' : 'Setup Employer Profile'}
@@ -325,7 +325,7 @@ export const EmployerProfileForm: React.FC<Props> = ({
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="px-5 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition disabled:opacity-50 flex items-center space-x-2"
+                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {isLoading && (
                         <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
