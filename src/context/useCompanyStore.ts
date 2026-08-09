@@ -36,6 +36,7 @@ export const useCompanyStore = create<CompanyState>((set, get) => ({
         set({ loading: true, error: null });
         try {
             const data = await companyService.getMyCompany();
+            console.log("Fetched company data:", data);
             set({ company: data, loading: false });
         } catch {
             // 404 means no company is linked to this account yet
