@@ -1,4 +1,4 @@
-import { CompanyInternshipsListPage } from '@/src/components/Job/CompanyInternshipsList'
+import { CompanyInternshipsListPage } from '@/src/components/Internships/CompanyInternshipsList'
 import React from 'react'
 
 const page = () => {

@@ -1,9 +1,9 @@
 "use client"
 import React from "react";
 import { Check, Lightbulb, ShieldCheck } from "lucide-react";
-import { JobForm } from "@/src/components/Job/CreateInternShipForm";
+import { IntershipForm } from "@/src/components/Internships/CreateInternShipForm";
 
-export default function CreateJobPage() {
+export default function CreateInternshipForm() {
 
 
 
@@ -13,8 +13,8 @@ export default function CreateJobPage() {
             <section className="bg-[#0a66c2] text-white">
                 <div className="mx-auto max-w-6xl px-4 py-9 sm:px-6 sm:py-11 lg:px-8">
                     <div className="max-w-2xl">
-                        <p className="mb-2 text-sm font-semibold text-blue-100">Post a job</p>
-                        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Find your next great hire</h1>
+                        <p className="mb-2 text-sm font-semibold text-blue-100">Post an internship</p>
+                        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Find your next great intern</h1>
                         <p className="mt-3 max-w-xl text-sm leading-6 text-blue-100 sm:text-base">
                             Tell candidates what makes this opportunity stand out. You can review every detail before publishing.
                         </p>
@@ -23,7 +23,7 @@ export default function CreateJobPage() {
             </section>
 
             <main className="mx-auto grid max-w-6xl items-start gap-6 px-4 pt-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:px-8">
-                <JobForm />
+                <IntershipForm />
 
                 <aside className="space-y-4 lg:sticky lg:top-6">
                     <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900">
