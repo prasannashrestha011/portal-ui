@@ -13,6 +13,9 @@ export interface LoginRequest {
 export interface User {
     id: string; // Change to number if user.ID is an auto-incrementing integer
     email: string;
+    full_name: string;
+    role: "student" | "employer" | "admin" | string;
+    created_at: string;
 }
 
 export interface LoginResponse {
