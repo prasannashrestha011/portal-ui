@@ -30,7 +30,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { CreateInternshipInput, Internship, InternshipType, StipendPeriod, WorkMode } from "@/src/types/job";
+import { CreateInternshipInput, Internship, InternshipType, StipendPeriod, WorkMode } from "@/src/types/internship";
 import { internshipService } from "@/src/services/internship";
 import { useRouter } from "next/navigation";
 

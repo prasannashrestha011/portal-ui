@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useMemo, useState } from "react";
-import { Internship } from "@/src/types/job";
+import { Internship } from "@/src/types/internship";
 import { internshipService } from "@/src/services/internship";
-import { useEmployerProfileStore } from "@/src/context/useEmployerProfile";
+import { useRecruiterProfileStore } from "@/src/context/useRecruiterProfile";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -52,7 +52,7 @@ function daysUntil(dateStr: string) {
 
 export function CompanyInternshipsListPage() {
     const router = useRouter();
-    const { myCompany } = useEmployerProfileStore();
+    const { myCompany } = useRecruiterProfileStore();
 
     const [internships, setInternships] = useState<Internship[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
