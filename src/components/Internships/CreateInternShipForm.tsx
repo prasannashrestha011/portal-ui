@@ -108,7 +108,7 @@ function FormSection({
     );
 }
 
-export function JobForm({ initialData }: InternshipFormProps) {
+export function IntershipForm({ initialData }: InternshipFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     // const isSubmittedRef = useRef(false);
     const route = useRouter()
