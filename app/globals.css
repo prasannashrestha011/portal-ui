@@ -55,7 +55,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme:dark) {
   :root {
     /* Core Neutrals (Dark Mode) */
     --background: #020617;
@@ -81,6 +81,18 @@
     --success: #34d399;
     /* emerald-400 */
     --success-foreground: #020617;
+
+    --sidebar: #ffffff;
+    --sidebar-foreground: oklch(0.205 0 0);
+    --sidebar-primary: oklch(0.546 0.215 262.881);
+    /* blue-600 */
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: oklch(0.93 0.03 262.881);
+    /* blue-100 */
+    --sidebar-accent-foreground: oklch(0.546 0.215 262.881);
+    --sidebar-border: oklch(0.92 0.03 262.881);
+    /* blue-200 */
+    --sidebar-ring: oklch(0.546 0.215 262.881);
   }
 }
 
@@ -168,22 +180,24 @@ body {
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: oklch(0.65 0.19 262.881);
+  --sidebar-primary-foreground: #020617;
+  --sidebar-accent: oklch(0.3 0.07 262.881);
+  --sidebar-accent-foreground: oklch(0.85 0.1 262.881);
+  --sidebar-border: oklch(0.3 0.05 262.881);
+  --sidebar-ring: oklch(0.65 0.19 262.881);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
