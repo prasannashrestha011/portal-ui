@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 import { EmployerProfileCard } from "@/src/components/RecruiterProfile/ProfileCard";
 import { EmployerProfileForm } from "@/src/components/RecruiterProfile/ProfileForm";
-import { useEmployerProfileStore } from "@/src/context/useRecruiterProfile";
-import { UpsertEmployerProfileRequest } from "@/src/types/recruiterProfile";
+import { useRecruiterProfileStore } from "@/src/context/useRecruiterProfile";
+import { UpsertRecruiterProfileRequest } from "@/src/types/recruiterProfile";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,13 +17,14 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 
-export default function EmployerProfilePage() {
-  const { profile, loading, error, saveProfile, updateLogo } = useEmployerProfileStore();
+
+export default function RecruiterProfilePage() {
+  const { profile, loading, error, saveProfile, updateLogo } = useRecruiterProfileStore();
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
 
 
-  const handleUpsert = async (payload: UpsertEmployerProfileRequest) => {
+  const handleUpsert = async (payload: UpsertRecruiterProfileRequest) => {
     setSaving(true);
     try {
       const { organization_logo, ...profileData } = payload
