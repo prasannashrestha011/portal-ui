@@ -1,4 +1,4 @@
-import { EmployerProfile } from "./recruiterProfile";
+import { RecruiterProfile } from "./recruiterProfile";
 
 export type OrganizationVerificationStatus =
     | "pending"
@@ -23,7 +23,7 @@ export interface SubmitVerificationRequest {
 export interface OrganizationVerification {
     id: string;
 
-    employer_profile_id: string;
+    recruiter_profile_id: string;
 
     status: OrganizationVerificationStatus;
     method?: OrganizationVerificationMethod;
@@ -46,7 +46,7 @@ export interface OrganizationVerification {
     reviewed_at?: string;
     verified_at?: string;
 
-    employer_profile?: EmployerProfile;
+    recruiter_profile?: RecruiterProfile;
 
     created_at: string;
     updated_at: string;
