@@ -1,7 +1,8 @@
 import { User } from "./auth";
+import { OrganizationVerification } from "./organizationVerification";
 
 
-export interface EmployerProfile {
+export interface RecruiterProfile {
     id: string;
     user_id: string;
     organization_name: string;
@@ -16,9 +17,10 @@ export interface EmployerProfile {
     created_at: string;
     updated_at: string;
     verification_status: "draft" | "pending" | "verified" | "rejected";
+    verification: OrganizationVerification
 }
 
-export interface UpsertEmployerProfileRequest {
+export interface UpsertRecruiterProfileRequest {
     organization_name: string;
     designation?: string;
     organization_website?: string;
