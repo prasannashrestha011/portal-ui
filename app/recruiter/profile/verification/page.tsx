@@ -1,21 +1,21 @@
 "use client";
 
 import VerificationForm from "@/src/components/RecruiterProfile/VerificationForm";
-import { useEmployerProfileStore } from "@/src/context/useRecruiterProfile";
+import { useRecruiterProfileStore } from "@/src/context/useRecruiterProfile";
 import { ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const Page = () => {
     const router = useRouter();
-    const profile = useEmployerProfileStore((state) => state.profile);
+    const profile = useRecruiterProfileStore((state) => state.profile);
 
     useEffect(() => {
         if (
             profile &&
             profile.verification_status !== "draft"
         ) {
-            router.replace("/employer/profile");
+            router.replace("/recruiter/profile/verification-status");
         }
     }, [profile, router]);
 
