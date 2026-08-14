@@ -7,10 +7,13 @@ export interface ApiResponse<T> {
 
 }
 
-
+export interface Page {
+    page: number;
+    page_size: number;
+}
 export interface PaginationMeta {
     page: number;
     page_size: number;
+    total_size: number;
     total_pages: number;
-    total_records: number;
 }
