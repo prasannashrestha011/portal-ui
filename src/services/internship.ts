@@ -1,5 +1,5 @@
 import { apiClient } from "../api/client";
-import { ApiResponse } from "../types/http";
+import { ApiResponse, Page } from "../types/http";
 import {
     CreateInternshipInput,
     Internship,
@@ -24,36 +24,46 @@ export const internshipService = {
     },
 
     /** Employer: list my own internships */
-    async listMyInternships(params?: InternshipSearchQueryParams) {
+    async listMyInternships(params?: Page) {
         const { data } = await apiClient.get<ApiResponse<Internship[]>>(
-            "/employers/me/internships",
+            "/recruiters/me/internships",
             { params }
         );
         return data;
     },
 
-    /** Employer: create a new internship */
+    /** Employer: list my recent top 3 job */
+    async listRecentInternship() {
+        const { data } = await apiClient.get<ApiResponse<Internship[]>>(
+            "/recruiters/me/internships",
+            { params: { page: 1, page_size: 3 } }
+        );
+        return data;
+    },
+
+    /** Recruiter: create a new internship */
     async createInternship(payload: CreateInternshipInput) {
         const { data } = await apiClient.post<ApiResponse<Internship>>(
-            "/employers/me/internships",
+            "/recruiters/me/internships",
             payload
         );
         return data;
     },
 
-    /** Employer: update an existing internship */
+    /** Recruiter: update an existing internship */
     async updateInternship(id: string, payload: UpdateInternshipInput) {
         const { data } = await apiClient.put<ApiResponse<Internship>>(
-            `/employers/me/internships/${id}`,
+            `/recruiters/me/internships/${id}`,
             payload
         );
+        console.log("Updated internship data:", data);
         return data;
     },
 
-    /** Employer: delete an internship */
+    /** Recruiter: delete an internship */
     async deleteInternship(id: string) {
         const { data } = await apiClient.delete<ApiResponse<null>>(
-            `/employers/me/internships/${id}`
+            `/recruiters/me/internships/${id}`
         );
         return data;
     },
