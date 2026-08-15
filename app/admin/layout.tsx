@@ -1,18 +1,16 @@
-
+import SideBar from "@/src/components/Admin/SideBar";
 import QueryProvider from "@/src/components/providers/QueryProvider";
-import { RecruiterInitializer } from "@/src/components/providers/RecruiterInitializer";
 
 export default function AdminLayout({ children }: LayoutProps<"/">) {
     return (
-        <RecruiterInitializer>
+        <QueryProvider>
             <div className="flex h-screen">
-                <main className="flex-1 overflow-y-auto">
-                    <QueryProvider>
+                <SideBar />
 
-                        {children}
-                    </QueryProvider>
+                <main className="flex-1 overflow-y-auto bg-white">
+                    {children}
                 </main>
             </div>
-        </RecruiterInitializer>
+        </QueryProvider>
     );
 }
