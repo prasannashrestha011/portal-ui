@@ -1,8 +1,9 @@
-import { OrganizationVerificationsListPage } from '@/src/components/Admin/comp'
 import React from 'react'
 
 const page = () => {
-    return <OrganizationVerificationsListPage />
+    return (
+        <div>page</div>
+    )
 }
 
 export default page
