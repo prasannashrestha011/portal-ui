@@ -1,11 +1,31 @@
 import { apiClient } from '../api/client';
+import { User } from '../types/auth';
 import { ApiResponse } from '../types/http';
 import {
     OrganizationVerification,
     ReviewOrganizationVerificationRequest,
 } from '../types/organizationVerification';
 
+
 export const adminService = {
+
+    /*
+     * Admin service for managing users
+     */
+    /*admin: get list of users*/
+    async listUsers(
+        page = 1,
+        pageSize = 10
+    ): Promise<ApiResponse<User[]>> {
+        const response = await apiClient.get<ApiResponse<User[]>>('/admin/users', {
+            params: {
+                page,
+                page_size: pageSize,
+            },
+        });
+
+        return response.data as ApiResponse<User[]>;
+    },
 
     /*
      * Admin service for managing organization verification requests
