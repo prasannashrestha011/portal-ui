@@ -1,7 +1,10 @@
+import { RecruiterProfile } from "./recruiterProfile";
 
 export interface Internship {
     id: string;
     issued_by: string;
+
+    issuer: RecruiterProfile
 
     // Basic Information
     title: string;
