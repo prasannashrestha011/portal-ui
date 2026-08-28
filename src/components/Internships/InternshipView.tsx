@@ -362,10 +362,22 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     its current status.
                                 </p>
 
+                                <button
+                                    onClick={() =>
+                                        router.push(
+                                            `/recruiter/candidates?internship_id=${internship.id}`
+                                        )
+                                    }
+                                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                                >
+                                    <Users className="h-4 w-4" />
+                                    View Applications
+                                </button>
+
                                 {/* Edit */}
                                 <button
                                     onClick={handleEdit}
-                                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
                                 >
                                     <Pencil className="h-4 w-4" />
                                     Edit Internship
