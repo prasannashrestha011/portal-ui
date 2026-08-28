@@ -1,8 +1,5 @@
 import StudentDashboardPage from '@/src/components/StudentProfile/Dashboard'
-import React from 'react'
 
-const page = () => {
+export default function StudentDashboard() {
     return <StudentDashboardPage />
 }
-
-export default page

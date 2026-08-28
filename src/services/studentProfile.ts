@@ -1,5 +1,6 @@
 import {
     ApiResponse,
+    StudentApplicationStats,
     StudentDocument,
     StudentProfile,
     UpsertStudentProfileRequest,
@@ -18,6 +19,13 @@ export const studentService = {
         const { data } = await apiClient.post<ApiResponse<StudentProfile>>(
             "/students/me/profile",
             payload
+        );
+        return data;
+    },
+
+    async getApplicationStats() {
+        const { data } = await apiClient.get<ApiResponse<StudentApplicationStats>>(
+            "/students/me/stats"
         );
         return data;
     },

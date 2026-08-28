@@ -45,6 +45,17 @@ export interface StudentDocument {
     created_at: string;
 }
 
+export interface StudentApplicationStats {
+    total_applications: number;
+    active_applications: number;
+    approved_applications: number;
+    rejected_applications: number;
+    pending_applications: number;
+    under_review_applications: number;
+    shortlisted_applications: number;
+    withdrawn_applications: number;
+}
+
 export interface ApiResponse<T> {
     success: boolean;
     message: string;

@@ -17,7 +17,7 @@ export default function StudentProfilePage() {
                 <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
                     {/* Breadcrumbs */}
                     <nav className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 font-medium">
-                        <Link href="/dashboard" className="transition-colors hover:text-slate-900">
+                        <Link href="/student/dashboard" className="transition-colors hover:text-slate-900">
                             Dashboard
                         </Link>
                         <svg className="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -33,7 +33,7 @@ export default function StudentProfilePage() {
                             Account Active
                         </span>
                         <Link
-                            href="/dashboard"
+                            href="/student/dashboard"
                             className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors"
                         >
                             Back to Dashboard
