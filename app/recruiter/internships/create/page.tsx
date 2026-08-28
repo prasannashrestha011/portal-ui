@@ -16,7 +16,7 @@ export default function CreateInternshipForm() {
                         <p className="mb-2 text-sm font-semibold text-blue-100">Post an internship</p>
                         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Find your next great intern</h1>
                         <p className="mt-3 max-w-xl text-sm leading-6 text-blue-100 sm:text-base">
-                            Tell candidates what makes this opportunity stand out. You can review every detail before publishing.
+                            Tell candidates what makes this opportunity stand out, then choose whether to publish it or keep it private.
                         </p>
                     </div>
                 </div>
@@ -50,7 +50,7 @@ export default function CreateInternshipForm() {
                         <ShieldCheck className="mt-0.5 size-5 shrink-0 text-[#0a66c2] dark:text-blue-400" />
                         <div>
                             <p className="font-semibold text-slate-900 dark:text-white">You&apos;re in control</p>
-                            <p className="mt-1 leading-5 text-slate-600 dark:text-slate-300">Your job stays private until you choose to publish it.</p>
+                            <p className="mt-1 leading-5 text-slate-600 dark:text-slate-300">Use the visibility toggle before submitting to publish now or save the internship privately.</p>
                         </div>
                     </div>
                 </aside>
