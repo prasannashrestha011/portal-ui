@@ -9,17 +9,28 @@ import {
 
 export const internshipService = {
     /** Public: search and list internships */
-    async searchInternship(params?: InternshipSearchQueryParams) {
+    async searchInternship(params?: InternshipSearchQueryParams, signal?: AbortSignal) {
         const { data } = await apiClient.get<ApiResponse<Internship[]>>(
             "/internships",
-            { params }
+            { params, signal }
         );
         return data;
     },
 
     /** Public: get internship details by ID */
-    async getInternshipById(id: string) {
-        const { data } = await apiClient.get<ApiResponse<Internship>>(`/internships/${id}`);
+    async getInternshipById(id: string, signal?: AbortSignal) {
+        const { data } = await apiClient.get<ApiResponse<Internship>>(
+            `/internships/${id}`,
+            { signal }
+        );
+        return data;
+    },
+
+    /** Student: submit an application for an internship */
+    async applyForInternship(id: string) {
+        const { data } = await apiClient.post<ApiResponse<unknown>>(
+            `/internships/${id}/apply`
+        );
         return data;
     },
 

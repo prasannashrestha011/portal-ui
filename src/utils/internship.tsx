@@ -13,7 +13,7 @@ export function formatStipend(internship: Pick<Internship, "internship_type" | "
     if (internship.internship_type === "unpaid" || !internship.stipend_amount) {
         return "Unpaid";
     }
-    const currency = internship.stipend_currency || "USD";
+    const currency = internship.stipend_currency || "NPR";
     const amount = new Intl.NumberFormat("en-US").format(internship.stipend_amount);
     const period =
         internship.stipend_period === "monthly"
