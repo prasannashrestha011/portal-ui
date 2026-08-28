@@ -56,7 +56,6 @@ export interface Internship {
 }
 
 export interface CreateInternshipInput {
-    issued_by: string;
     title: string;
     description: string;
     location: string;
@@ -80,7 +79,7 @@ export interface CreateInternshipInput {
     application_url?: string;
     responsibilities?: string;
     benefits?: string;
-    status?: InternshipStatus;
+    status: InternshipStatus;
 }
 
 export interface UpdateInternshipInput extends Partial<CreateInternshipInput> {
@@ -108,4 +107,11 @@ export type InternshipType = "paid" | "unpaid";
 export type WorkMode = "onsite" | "remote" | "hybrid";
 export type DurationUnit = "weeks" | "months";
 export type StipendPeriod = "monthly" | "weekly" | "fixed";
-export type InternshipStatus = "draft" | "published" | "closed" | "expired";
+export const INTERNSHIP_STATUS = {
+    PRIVATE: "private",
+    PUBLISHED: "published",
+    CLOSED: "closed",
+    EXPIRED: "expired",
+} as const;
+
+export type InternshipStatus = typeof INTERNSHIP_STATUS[keyof typeof INTERNSHIP_STATUS];
