@@ -5,7 +5,7 @@ import { Link, ExternalLink, ArrowRight } from 'lucide-react'
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { Internship } from '@/src/types/internship';
+import { INTERNSHIP_STATUS, Internship } from '@/src/types/internship';
 import { internshipService } from '@/src/services/internship';
 import moment from "moment";
 
@@ -33,7 +33,7 @@ const RecentIntershipsPostingPreview = () => {
             <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-slate-100">
                 <div>
                     <CardTitle className="text-base font-bold">Recent Internship Postings</CardTitle>
-                    <CardDescription>Overview of your active and draft listings</CardDescription>
+                    <CardDescription>Overview of your public and private listings</CardDescription>
                 </div>
                 <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50" >
                     <Link href="internships/list" className="flex items-center gap-1">
@@ -55,7 +55,7 @@ const RecentIntershipsPostingPreview = () => {
                                     <p className="font-semibold text-slate-900 text-sm">{internship.title}</p>
                                     <Badge
                                         variant="outline"
-                                        className={`border-none capitalize text-xs ${internship.status === 'published'
+                                        className={`border-none capitalize text-xs ${internship.status === INTERNSHIP_STATUS.PUBLISHED
                                             ? 'bg-blue-50 text-blue-700 font-semibold'
                                             : 'bg-slate-100 text-slate-600'
                                             }`}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
@@ -17,11 +17,14 @@ import {
     Mail,
     Link2,
     Gift,
+    Globe2,
+    LockKeyhole,
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import {
     Select,
     SelectContent,
@@ -30,7 +33,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { CreateInternshipInput, Internship, InternshipType, StipendPeriod, WorkMode } from "@/src/types/internship";
+import { CreateInternshipInput, INTERNSHIP_STATUS, Internship, InternshipType, StipendPeriod, WorkMode } from "@/src/types/internship";
 import { internshipService } from "@/src/services/internship";
 import { useRouter } from "next/navigation";
 
@@ -59,6 +62,7 @@ const internshipFormSchema = z
         application_url: z.string().url("Invalid URL format").optional().or(z.literal("")),
         responsibilities: z.string().optional(),
         benefits: z.string().optional(),
+        status: z.enum([INTERNSHIP_STATUS.PRIVATE, INTERNSHIP_STATUS.PUBLISHED]),
     }).refine((data) => {
         if (!data.start_date || !data.application_deadline) return true;
         return new Date(data.application_deadline) <= new Date(data.start_date);
@@ -146,15 +150,24 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
             application_url: initialData?.application_url || "",
             responsibilities: initialData?.responsibilities || "",
             benefits: initialData?.benefits || "",
+            status: initialData
+                ? initialData.status === INTERNSHIP_STATUS.PUBLISHED
+                    ? INTERNSHIP_STATUS.PUBLISHED
+                    : INTERNSHIP_STATUS.PRIVATE
+                : INTERNSHIP_STATUS.PUBLISHED,
         },
     });
 
+    const isPublic = useWatch({
+        control: form.control,
+        name: "status",
+    }) === INTERNSHIP_STATUS.PUBLISHED;
+
     const handleSubmit = async (values: InternshipFormValues) => {
         try {
-            console.log(values)
             setIsSubmitting(true);
             // Format the date picker string into an ISO timestamp for the backend
-            const formattedPayload = {
+            const formattedPayload: CreateInternshipInput = {
                 ...values,
                 start_date: values.start_date
                     ? new Date(values.start_date).toISOString()
@@ -163,8 +176,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                     ? new Date(values.application_deadline).toISOString()
                     : undefined,
             };
-            console.log(formattedPayload)
-            await internshipService.createInternship(formattedPayload as CreateInternshipInput);
+            await internshipService.createInternship(formattedPayload);
 
             // isSubmittedRef.current = true
 
@@ -576,6 +588,44 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
 
             </FormSection>
 
+            <Controller
+                name="status"
+                control={form.control}
+                render={({ field }) => (
+                    <Field className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900 sm:p-7">
+                        <div className="flex items-start justify-between gap-5">
+                            <div className="flex min-w-0 gap-3">
+                                <span className={`grid size-10 shrink-0 place-items-center rounded-full ${isPublic ? "bg-blue-50 text-[#0a66c2] dark:bg-blue-950/60 dark:text-blue-400" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"}`}>
+                                    {isPublic ? <Globe2 className="size-5" /> : <LockKeyhole className="size-5" />}
+                                </span>
+                                <div>
+                                    <FieldLabel htmlFor="internship-visibility" className={labelClass}>
+                                        Publish publicly
+                                    </FieldLabel>
+                                    <p className="mt-1 text-sm leading-5 text-slate-500 dark:text-slate-400">
+                                        {isPublic
+                                            ? "Students can find this internship and submit applications."
+                                            : "Only you can view this internship until you publish it."}
+                                    </p>
+                                </div>
+                            </div>
+                            <Switch
+                                id="internship-visibility"
+                                name={field.name}
+                                checked={isPublic}
+                                onCheckedChange={(checked) => field.onChange(
+                                    checked ? INTERNSHIP_STATUS.PUBLISHED : INTERNSHIP_STATUS.PRIVATE
+                                )}
+                                onBlur={field.onBlur}
+                                ref={field.ref}
+                                aria-label="Publish internship publicly"
+                                className="mt-1 data-checked:bg-[#0a66c2]"
+                            />
+                        </div>
+                    </Field>
+                )}
+            />
+
             <div className="flex flex-col-reverse gap-3 rounded-lg border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between sm:px-7">
                 <p className="text-xs leading-5 text-slate-500">Fields marked with <span className="text-red-600">*</span> are required.</p>
                 <div className="flex items-center justify-end gap-3">
@@ -595,12 +645,16 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         {isSubmitting ? (
                             <>
                                 <Loader2 className="mr-2 size-4 animate-spin" />
-                                Publishing...
+                                {isPublic ? "Publishing..." : "Saving..."}
                             </>
                         ) : (
                             <>
                                 <Send className="mr-2 size-4" />
-                                {initialData ? "Update internship" : "Publish internship"}
+                                {initialData
+                                    ? "Update internship"
+                                    : isPublic
+                                        ? "Publish internship"
+                                        : "Save privately"}
                             </>
                         )}
                     </Button>

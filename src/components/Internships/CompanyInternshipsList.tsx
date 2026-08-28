@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { internshipService } from "@/src/services/internship";
 
 import Link from "next/link";
@@ -31,8 +31,9 @@ import {
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import { PaginationBar } from "../shared/PaginationBar";
+import { INTERNSHIP_STATUS, type InternshipStatus } from "@/src/types/internship";
 
-type StatusFilter = "all" | "published" | "draft" | "closed";
+type StatusFilter = "all" | InternshipStatus;
 
 const DEADLINE_SOON_DAYS = 3;
 
@@ -69,21 +70,28 @@ export function CompanyInternshipsListPage() {
   };
 
   const counts = useMemo(() => {
-    if (!internships) return { published: 0, draft: 0, closed: 0 };
+    const initialCounts: Record<InternshipStatus, number> = {
+      [INTERNSHIP_STATUS.PRIVATE]: 0,
+      [INTERNSHIP_STATUS.PUBLISHED]: 0,
+      [INTERNSHIP_STATUS.CLOSED]: 0,
+      [INTERNSHIP_STATUS.EXPIRED]: 0,
+    };
+
+    if (!internships) return initialCounts;
     return internships.data.reduce(
       (acc, internship) => {
-        const s = (internship.status || "published") as StatusFilter;
-        acc[s] = (acc[s] || 0) + 1;
+        const s = internship.status;
+        acc[s] += 1;
         return acc;
       },
-      { published: 0, draft: 0, closed: 0 } as Record<string, number>
+      initialCounts
     );
   }, [internships]);
 
   const visibleInternships = useMemo(() => {
     if (!internships) return [];
     if (statusFilter === "all") return internships.data;
-    return internships.data.filter((i) => (i.status || "published") === statusFilter);
+    return internships.data.filter((i) => i.status === statusFilter);
   }, [internships, statusFilter]);
 
   return (
@@ -186,7 +194,7 @@ export function CompanyInternshipsListPage() {
                 </span>
                 <span className="h-4 w-px bg-slate-200" />
                 <span className="font-medium text-emerald-700">{counts.published} active</span>
-                <span className="font-medium text-slate-500">{counts.draft} draft</span>
+                <span className="font-medium text-slate-500">{counts.private} private</span>
                 <span className="font-medium text-slate-400">{counts.closed} closed</span>
               </div>
 
@@ -196,9 +204,10 @@ export function CompanyInternshipsListPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All statuses</SelectItem>
-                  <SelectItem value="published">Published</SelectItem>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="closed">Closed</SelectItem>
+                  <SelectItem value={INTERNSHIP_STATUS.PUBLISHED}>Published</SelectItem>
+                  <SelectItem value={INTERNSHIP_STATUS.PRIVATE}>Private</SelectItem>
+                  <SelectItem value={INTERNSHIP_STATUS.CLOSED}>Closed</SelectItem>
+                  <SelectItem value={INTERNSHIP_STATUS.EXPIRED}>Expired</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -223,15 +232,15 @@ export function CompanyInternshipsListPage() {
                     ? `${internship.duration} ${internship.duration_unit || ''}`
                     : "Duration flexible";
 
-                  const isDraft = internship.status === "draft";
-                  const isClosed = internship.status === "closed";
+                  const isPrivate = internship.status === INTERNSHIP_STATUS.PRIVATE;
+                  const isClosed = internship.status === INTERNSHIP_STATUS.CLOSED;
                   const daysLeft = internship.application_deadline ? daysUntil(internship.application_deadline) : null;
-                  const isUrgent = !isClosed && !isDraft && daysLeft !== null && daysLeft >= 0 && daysLeft <= DEADLINE_SOON_DAYS;
+                  const isUrgent = !isClosed && !isPrivate && daysLeft !== null && daysLeft >= 0 && daysLeft <= DEADLINE_SOON_DAYS;
 
                   return (
                     <Card
                       key={internship.id}
-                      className={`group shadow transition-all cursor-pointer overflow-hidden bg-white ${isDraft
+                      className={`group shadow transition-all cursor-pointer overflow-hidden bg-white ${isPrivate
                         ? "border-dashed border-slate-300 opacity-80 hover:opacity-100"
                         : isUrgent
                           ? "border-amber-300 hover:border-amber-400 hover:shadow-md"
@@ -244,14 +253,14 @@ export function CompanyInternshipsListPage() {
                           <div className="flex flex-wrap items-center gap-2 mb-3">
                             <Badge
                               variant="outline"
-                              className={`border-none capitalize font-semibold tracking-wide ${isDraft
+                              className={`border-none capitalize font-semibold tracking-wide ${isPrivate
                                 ? "bg-slate-100 text-slate-600"
                                 : isClosed
                                   ? "bg-red-50 text-red-700"
                                   : "bg-blue-100 text-blue-700"
                                 }`}
                             >
-                              {internship.status || "Published"}
+                              {internship.status}
                             </Badge>
 
                             <Badge variant="outline" className="capitalize bg-slate-50 text-slate-600 border-slate-200">
@@ -273,7 +282,7 @@ export function CompanyInternshipsListPage() {
                             )}
                           </div>
 
-                          <CardTitle className={`text-lg sm:text-xl mb-4 line-clamp-1 transition-colors ${isDraft ? "text-slate-600" : "text-slate-900 group-hover:text-blue-600"}`}>
+                          <CardTitle className={`text-lg sm:text-xl mb-4 line-clamp-1 transition-colors ${isPrivate ? "text-slate-600" : "text-slate-900 group-hover:text-blue-600"}`}>
                             {internship.title}
                           </CardTitle>
 

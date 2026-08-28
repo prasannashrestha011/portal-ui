@@ -1,7 +1,7 @@
 "use client"
 
 import { internshipService } from "@/src/services/internship"
-import { Internship } from "@/src/types/internship"
+import { INTERNSHIP_STATUS, Internship, InternshipStatus } from "@/src/types/internship"
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
@@ -78,7 +78,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
     }
 
     const handleStatusChange = async (
-        newStatus: "published" | "closed"
+        newStatus: InternshipStatus
     ) => {
         if (!internship) return
 
@@ -135,10 +135,8 @@ const InternshipView = ({ id }: InternshipViewProps) => {
             ? `${internship.stipend_currency || "NPR"} ${internship.stipend_amount.toLocaleString()}`
             : "Unpaid"
 
-    const isDraft = internship.status === "draft"
-    const isPublished = internship.status === "published"
-    const isClosed = internship.status === "closed"
-    const isExpired = internship.status === "expired"
+    const isPrivate = internship.status === INTERNSHIP_STATUS.PRIVATE
+    const isPublished = internship.status === INTERNSHIP_STATUS.PUBLISHED
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900">
@@ -384,12 +382,12 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                 </button>
 
                                 {/* Status actions */}
-                                {isDraft && (
+                                {isPrivate && (
                                     <button
                                         disabled={updatingStatus}
                                         onClick={() =>
                                             handleStatusChange(
-                                                "published"
+                                                INTERNSHIP_STATUS.PUBLISHED
                                             )
                                         }
                                         className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
@@ -405,7 +403,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     <button
                                         disabled={updatingStatus}
                                         onClick={() =>
-                                            handleStatusChange("closed")
+                                            handleStatusChange(INTERNSHIP_STATUS.CLOSED)
                                         }
                                         className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
                                     >
@@ -626,11 +624,11 @@ interface StatusBadgeProps {
 
 const StatusBadge = ({ status }: StatusBadgeProps) => {
 
-    const styles = {
-        draft: "bg-slate-100 text-slate-700",
-        published: "bg-blue-100 text-blue-700",
-        closed: "bg-red-50 text-red-700",
-        expired: "bg-amber-50 text-amber-700",
+    const styles: Record<InternshipStatus, string> = {
+        [INTERNSHIP_STATUS.PRIVATE]: "bg-slate-100 text-slate-700",
+        [INTERNSHIP_STATUS.PUBLISHED]: "bg-blue-100 text-blue-700",
+        [INTERNSHIP_STATUS.CLOSED]: "bg-red-50 text-red-700",
+        [INTERNSHIP_STATUS.EXPIRED]: "bg-amber-50 text-amber-700",
     }
 
     return (
