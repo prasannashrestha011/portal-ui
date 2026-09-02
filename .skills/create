@@ -1,0 +1,34 @@
+# UI Design Guidelines
+
+## Color Palette
+
+Primary:
+- blue-600: #2563EB
+- blue-700: #1D4ED8
+- blue-800: #1E40AF
+- blue-50: #EFF6FF
+- blue-100: #DBEAFE
+
+Slate:
+- slate-900: #0F172A
+- slate-800: #1E293B
+- slate-600: #475569
+- slate-500: #64748B
+- slate-400: #94A3B8
+- slate-200: #E2E8F0
+- slate-100: #F1F5F9
+- slate-50: #F8FAFC
+
+## General Style
+
+- Clean SaaS-style interface
+- White cards
+- Slate borders
+- Blue primary actions
+- Subtle shadows
+- Rounded corners
+- Avoid excessive gradients
+- Avoid excessive animations
+- Use Lucide React icons
+- Prefer Tailwind CSS
+- Maintain responsive layouts
