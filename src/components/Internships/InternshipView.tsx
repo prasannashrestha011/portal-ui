@@ -139,17 +139,17 @@ const InternshipView = ({ id }: InternshipViewProps) => {
     const isPublished = internship.status === INTERNSHIP_STATUS.PUBLISHED
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-900">
+        <div className="min-h-screen bg-background text-text-primary">
 
             {/* =========================================================
                 HERO
             ========================================================= */}
-            <section className="bg-linear-to-br from-blue-700 via-blue-700 to-blue-600">
+            <section className="bg-linear-to-br from-primary-active via-primary to-accent">
                 <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
 
                     <button
                         onClick={() => router.back()}
-                        className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition hover:text-white"
+                        className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-primary-foreground/80 transition hover:text-primary-foreground"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Back to internships
@@ -162,20 +162,20 @@ const InternshipView = ({ id }: InternshipViewProps) => {
 
                             <StatusBadge status={internship.status} />
 
-                            <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium capitalize text-blue-100">
+                            <span className="rounded-full bg-primary-foreground/10 px-3 py-1 text-xs font-medium capitalize text-primary-foreground/80">
                                 {internship.internship_type}
                             </span>
 
-                            <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium capitalize text-blue-100">
+                            <span className="rounded-full bg-primary-foreground/10 px-3 py-1 text-xs font-medium capitalize text-primary-foreground/80">
                                 {internship.work_mode}
                             </span>
                         </div>
 
-                        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+                        <h1 className="workspace-page-title text-primary-foreground">
                             {internship.title}
                         </h1>
 
-                        <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-blue-100">
+                        <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-primary-foreground/80">
 
                             <div className="flex items-center gap-2">
                                 <MapPin className="h-4 w-4" />
@@ -220,7 +220,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                     <div className="min-w-0 space-y-6">
 
                         {/* Description */}
-                        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                        <section className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
                             <SectionTitle
                                 icon={
                                     <BriefcaseBusiness className="h-5 w-5" />
@@ -228,14 +228,14 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                 title="About the Internship"
                             />
 
-                            <p className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-600">
+                            <p className="mt-5 whitespace-pre-line text-sm leading-7 text-text-secondary">
                                 {internship.description}
                             </p>
                         </section>
 
                         {/* Responsibilities */}
                         {internship.responsibilities && (
-                            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                            <section className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
                                 <SectionTitle
                                     icon={
                                         <CheckCircle2 className="h-5 w-5" />
@@ -243,14 +243,14 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     title="Responsibilities"
                                 />
 
-                                <div className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-600">
+                                <div className="mt-5 whitespace-pre-line text-sm leading-7 text-text-secondary">
                                     {internship.responsibilities}
                                 </div>
                             </section>
                         )}
 
                         {/* Requirements */}
-                        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                        <section className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
                             <SectionTitle
                                 icon={
                                     <GraduationCap className="h-5 w-5" />
@@ -290,7 +290,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                         </section>
 
                         {/* Eligibility */}
-                        <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                        <section className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
                             <SectionTitle
                                 icon={
                                     <GraduationCap className="h-5 w-5" />
@@ -300,23 +300,23 @@ const InternshipView = ({ id }: InternshipViewProps) => {
 
                             <div className="mt-6 grid gap-4 sm:grid-cols-2">
 
-                                <div className="rounded-lg bg-slate-50 p-4">
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                                <div className="rounded-lg bg-surface-hover p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
                                         Eligible Programs
                                     </p>
 
-                                    <p className="mt-2 text-sm font-medium text-slate-800">
+                                    <p className="mt-2 text-sm font-medium text-text-primary">
                                         {internship.eligible_programs ||
                                             "Not specified"}
                                     </p>
                                 </div>
 
-                                <div className="rounded-lg bg-slate-50 p-4">
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                                <div className="rounded-lg bg-surface-hover p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
                                         Eligible Semester
                                     </p>
 
-                                    <p className="mt-2 text-sm font-medium text-slate-800">
+                                    <p className="mt-2 text-sm font-medium text-text-primary">
                                         {internship.eligible_semester ||
                                             "Not specified"}
                                     </p>
@@ -326,7 +326,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
 
                         {/* Benefits */}
                         {internship.benefits && (
-                            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                            <section className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
                                 <SectionTitle
                                     icon={
                                         <CheckCircle2 className="h-5 w-5" />
@@ -334,7 +334,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     title="Benefits"
                                 />
 
-                                <div className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-600">
+                                <div className="mt-5 whitespace-pre-line text-sm leading-7 text-text-secondary">
                                     {internship.benefits}
                                 </div>
                             </section>
@@ -347,15 +347,15 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                     <aside className="lg:sticky lg:top-6 lg:h-fit">
 
                         {/* Management Card */}
-                        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                        <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
 
-                            <div className="border-b border-slate-200 p-6">
+                            <div className="border-b border-border p-6">
 
-                                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                                <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
                                     Internship Management
                                 </p>
 
-                                <p className="mt-1 text-sm text-slate-500">
+                                <p className="mt-1 text-sm text-text-muted">
                                     Manage this internship posting and
                                     its current status.
                                 </p>
@@ -366,7 +366,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                             `/recruiter/candidates?internship_id=${internship.id}`
                                         )
                                     }
-                                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover"
                                 >
                                     <Users className="h-4 w-4" />
                                     View Applications
@@ -375,7 +375,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                 {/* Edit */}
                                 <button
                                     onClick={handleEdit}
-                                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+                                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-primary/25 bg-primary-subtle px-4 py-3 text-sm font-semibold text-primary-hover transition hover:bg-primary-subtle"
                                 >
                                     <Pencil className="h-4 w-4" />
                                     Edit Internship
@@ -390,7 +390,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                                 INTERNSHIP_STATUS.PUBLISHED
                                             )
                                         }
-                                        className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-primary/25 bg-primary-subtle px-4 py-3 text-sm font-semibold text-primary-hover transition hover:bg-primary-subtle disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         <Send className="h-4 w-4" />
                                         {updatingStatus
@@ -405,7 +405,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                         onClick={() =>
                                             handleStatusChange(INTERNSHIP_STATUS.CLOSED)
                                         }
-                                        className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-warning/30 bg-warning-subtle px-4 py-3 text-sm font-semibold text-warning-active transition hover:bg-warning-subtle disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         <Lock className="h-4 w-4" />
                                         {updatingStatus
@@ -419,7 +419,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     onClick={() =>
                                         setShowDeleteConfirm(true)
                                     }
-                                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-error/25 bg-surface px-4 py-3 text-sm font-semibold text-error transition hover:bg-error-subtle"
                                 >
                                     <Trash2 className="h-4 w-4" />
                                     Delete Internship
@@ -427,7 +427,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                             </div>
 
                             {/* Internship Details */}
-                            <div className="divide-y divide-slate-100">
+                            <div className="divide-y divide-border">
 
                                 <DetailRow
                                     icon={
@@ -515,20 +515,20 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                         </div>
 
                         {/* Employer Card */}
-                        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm">
 
                             <div className="flex items-center gap-3">
 
-                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                                    <Building2 className="h-5 w-5 text-blue-600" />
+                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-subtle">
+                                    <Building2 className="h-5 w-5 text-primary" />
                                 </div>
 
                                 <div>
-                                    <p className="text-xs font-medium text-slate-400">
+                                    <p className="text-xs font-medium text-text-muted">
                                         Posted by
                                     </p>
 
-                                    <p className="text-sm font-semibold text-slate-800">
+                                    <p className="text-sm font-semibold text-text-primary">
                                         Your Organization
                                     </p>
                                 </div>
@@ -543,7 +543,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
             ========================================================= */}
             {showDeleteConfirm && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-overlay px-4 backdrop-blur-sm"
                     onClick={() => {
                         if (!deleting) {
                             setShowDeleteConfirm(false)
@@ -551,15 +551,15 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                     }}
                 >
                     <div
-                        className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-xl"
+                        className="w-full max-w-md rounded-xl border border-border bg-surface p-6 shadow-xl"
                         onClick={(e) => e.stopPropagation()}
                     >
 
                         {/* Icon */}
                         <div className="flex items-start justify-between">
 
-                            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-red-50">
-                                <Trash2 className="h-5 w-5 text-red-600" />
+                            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-error-subtle">
+                                <Trash2 className="h-5 w-5 text-error" />
                             </div>
 
                             <button
@@ -567,19 +567,19 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     setShowDeleteConfirm(false)
                                 }
                                 disabled={deleting}
-                                className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 disabled:opacity-50"
+                                className="rounded-md p-1.5 text-text-muted transition hover:bg-surface-muted hover:text-text-secondary disabled:opacity-50"
                             >
                                 <X className="h-5 w-5" />
                             </button>
                         </div>
 
-                        <h2 className="mt-4 text-lg font-bold text-slate-900">
+                        <h2 className="workspace-section-title mt-4 text-text-primary">
                             Delete internship?
                         </h2>
 
-                        <p className="mt-2 text-sm leading-6 text-slate-500">
+                        <p className="workspace-body mt-2 text-text-muted">
                             This will permanently delete{" "}
-                            <span className="font-semibold text-slate-700">
+                            <span className="font-semibold text-text-secondary">
                                 {internship.title}
                             </span>
                             . This action cannot be undone.
@@ -592,7 +592,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                                     setShowDeleteConfirm(false)
                                 }
                                 disabled={deleting}
-                                className="rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-text-secondary transition hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 Cancel
                             </button>
@@ -600,7 +600,7 @@ const InternshipView = ({ id }: InternshipViewProps) => {
                             <button
                                 onClick={handleDelete}
                                 disabled={deleting}
-                                className="rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                                className="rounded-lg bg-error px-4 py-2.5 text-sm font-semibold text-error-foreground transition hover:bg-error-hover disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 {deleting
                                     ? "Deleting..."
@@ -625,10 +625,10 @@ interface StatusBadgeProps {
 const StatusBadge = ({ status }: StatusBadgeProps) => {
 
     const styles: Record<InternshipStatus, string> = {
-        [INTERNSHIP_STATUS.PRIVATE]: "bg-slate-100 text-slate-700",
-        [INTERNSHIP_STATUS.PUBLISHED]: "bg-blue-100 text-blue-700",
-        [INTERNSHIP_STATUS.CLOSED]: "bg-red-50 text-red-700",
-        [INTERNSHIP_STATUS.EXPIRED]: "bg-amber-50 text-amber-700",
+        [INTERNSHIP_STATUS.PRIVATE]: "bg-surface-muted text-text-secondary",
+        [INTERNSHIP_STATUS.PUBLISHED]: "bg-primary-subtle text-primary-hover",
+        [INTERNSHIP_STATUS.CLOSED]: "bg-error-subtle text-error",
+        [INTERNSHIP_STATUS.EXPIRED]: "bg-warning-subtle text-warning-active",
     }
 
     return (
@@ -657,11 +657,11 @@ const SectionTitle = ({
     return (
         <div className="flex items-center gap-3">
 
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-subtle text-primary">
                 {icon}
             </div>
 
-            <h2 className="text-lg font-bold text-slate-900">
+            <h2 className="workspace-section-title text-text-primary">
                 {title}
             </h2>
         </div>
@@ -684,11 +684,11 @@ const InfoBlock = ({
     return (
         <div>
 
-            <h3 className="mb-2 text-sm font-semibold text-slate-800">
+            <h3 className="workspace-section-title mb-2 text-text-primary">
                 {title}
             </h3>
 
-            <p className="whitespace-pre-line text-sm leading-6 text-slate-500">
+            <p className="whitespace-pre-line text-sm leading-6 text-text-muted">
                 {value}
             </p>
         </div>
@@ -717,20 +717,20 @@ const DetailRow = ({
     return (
         <div className="flex gap-3 p-4">
 
-            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-500">
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface-hover text-text-muted">
                 {icon}
             </div>
 
             <div className="min-w-0">
 
-                <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+                <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
                     {label}
                 </p>
 
                 <p
                     className={`mt-1 text-sm font-semibold ${urgent
-                            ? "text-red-600"
-                            : "text-slate-700"
+                            ? "text-error"
+                            : "text-text-secondary"
                         } ${capitalize
                             ? "capitalize"
                             : ""
@@ -749,9 +749,9 @@ const DetailRow = ({
 
 const LoadingState = () => {
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-background">
 
-            <div className="h-56 animate-pulse bg-slate-200" />
+            <div className="h-56 animate-pulse bg-surface-muted" />
 
             <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
 
@@ -759,18 +759,18 @@ const LoadingState = () => {
 
                     <div className="space-y-6">
 
-                        <div className="h-8 w-3/4 animate-pulse rounded bg-slate-200" />
+                        <div className="h-8 w-3/4 animate-pulse rounded bg-surface-muted" />
 
-                        <div className="h-4 w-full animate-pulse rounded bg-slate-200" />
+                        <div className="h-4 w-full animate-pulse rounded bg-surface-muted" />
 
-                        <div className="h-4 w-5/6 animate-pulse rounded bg-slate-200" />
+                        <div className="h-4 w-5/6 animate-pulse rounded bg-surface-muted" />
 
-                        <div className="h-64 animate-pulse rounded-xl border border-slate-200 bg-white" />
+                        <div className="h-64 animate-pulse rounded-xl border border-border bg-surface" />
 
-                        <div className="h-48 animate-pulse rounded-xl border border-slate-200 bg-white" />
+                        <div className="h-48 animate-pulse rounded-xl border border-border bg-surface" />
                     </div>
 
-                    <div className="h-96 animate-pulse rounded-xl border border-slate-200 bg-white" />
+                    <div className="h-96 animate-pulse rounded-xl border border-border bg-surface" />
                 </div>
             </main>
         </div>
@@ -791,27 +791,27 @@ const ErrorState = ({
     onBack,
 }: ErrorStateProps) => {
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-background">
 
             <div className="flex min-h-[70vh] items-center justify-center px-4">
 
-                <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+                <div className="w-full max-w-md rounded-xl border border-border bg-surface p-8 text-center shadow-sm">
 
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
-                        <BriefcaseBusiness className="h-7 w-7 text-red-600" />
+                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-error-subtle">
+                        <BriefcaseBusiness className="h-7 w-7 text-error" />
                     </div>
 
-                    <h1 className="text-xl font-bold text-slate-900">
+                    <h1 className="workspace-section-title text-text-primary">
                         Internship not found
                     </h1>
 
-                    <p className="mt-2 text-sm text-slate-500">
+                    <p className="workspace-body mt-2 text-text-muted">
                         {error}
                     </p>
 
                     <button
                         onClick={onBack}
-                        className="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                        className="mt-6 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Go back

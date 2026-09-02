@@ -81,28 +81,28 @@ export const EmployerProfileForm: React.FC<Props> = ({
     };
 
     const inputClass =
-        'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-sm transition duration-150 ease-in-out focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10';
-    const labelClass = 'block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5';
+        'w-full rounded-xl border border-border bg-surface px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-muted shadow-sm transition duration-150 ease-in-out focus:border-primary focus:outline-none focus:ring-4 focus:ring-focus-ring/20';
+    const labelClass = 'block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5';
 
     return (
         <form
             onSubmit={handleSubmit}
-            className="mx-auto max-w-2xl space-y-6 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-200/40 sm:p-8"
+            className="mx-auto max-w-2xl space-y-6 rounded-3xl border border-border/80 bg-surface p-6 shadow-xl shadow-text-primary/5 sm:p-8"
         >
             {/* Header */}
-            <div className="border-b border-slate-100 pb-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <div className="border-b border-border pb-5">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary-hover">
                     Employer Workspace
                 </p>
-                <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-950">
+                <h2 className="workspace-page-title mt-1 text-text-primary">
                     {initialData ? 'Update Employer Profile' : 'Setup Employer Profile'}
                 </h2>
             </div>
 
             {/* Error Alert */}
             {formError && (
-                <div className="flex items-center gap-3 rounded-2xl border border-red-200/80 bg-red-50/70 p-4 text-sm font-medium text-red-800">
-                    <svg className="h-5 w-5 shrink-0 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                <div className="flex items-center gap-3 rounded-2xl border border-error/25 bg-error-subtle/70 p-4 text-sm font-medium text-error-active">
+                    <svg className="h-5 w-5 shrink-0 text-error" viewBox="0 0 20 20" fill="currentColor">
                         <path
                             fillRule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
@@ -126,8 +126,8 @@ export const EmployerProfileForm: React.FC<Props> = ({
             </div>
 
             {/* Organization Section */}
-            <div className="rounded-2xl border border-slate-200/80 bg-slate-50/50 p-5 space-y-4">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
+            <div className="rounded-2xl border border-border/80 bg-surface-hover/50 p-5 space-y-4">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-text-secondary">
                     Organization Information
                 </label>
 
@@ -145,21 +145,21 @@ export const EmployerProfileForm: React.FC<Props> = ({
                         <button
                             type="button"
                             onClick={() => logoInputRef.current?.click()}
-                            className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 bg-white p-4 text-center transition hover:border-blue-500 hover:bg-blue-50/30"
+                            className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border-strong bg-surface p-4 text-center transition hover:border-primary hover:bg-primary-subtle/70"
                         >
-                            <svg className="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                            <svg className="h-5 w-5 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                             </svg>
-                            <span className="text-xs font-semibold text-blue-600">Upload logo (PNG, JPG, SVG up to 5MB)</span>
+                            <span className="text-xs font-semibold text-primary">Upload logo (PNG, JPG, SVG up to 5MB)</span>
                         </button>
                     ) : (
-                        <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3">
-                            <img src={logoPreview} alt="Organization logo" className="h-12 w-12 shrink-0 rounded-lg border border-slate-200 object-contain" />
-                            <span className="flex-1 truncate text-xs text-slate-500">{logoFile?.name || 'Current logo'}</span>
+                        <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
+                            <img src={logoPreview} alt="Organization logo" className="h-12 w-12 shrink-0 rounded-lg border border-border object-contain" />
+                            <span className="flex-1 truncate text-xs text-text-muted">{logoFile?.name || 'Current logo'}</span>
                             <button
                                 type="button"
                                 onClick={handleRemoveLogo}
-                                className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+                                className="rounded-lg p-1.5 text-text-muted transition hover:bg-surface-muted hover:text-text-secondary"
                                 title="Remove logo"
                             >
                                 <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -173,7 +173,7 @@ export const EmployerProfileForm: React.FC<Props> = ({
                 {/* Name */}
                 <div>
                     <label className={labelClass}>
-                        Organization Name <span className="text-blue-600">*</span>
+                        Organization Name <span className="text-primary">*</span>
                     </label>
                     <input
                         type="text"
@@ -250,24 +250,24 @@ export const EmployerProfileForm: React.FC<Props> = ({
 
 
             {initialData?.verification_status === 'draft' && (
-                <div className="rounded-2xl border border-yellow-200/80 bg-yellow-50/70 p-4 text-sm font-medium text-yellow-800">
+                <div className="rounded-2xl border border-warning/30 bg-warning-subtle/70 p-4 text-sm font-medium text-warning-active">
                     Next step: Submit your profile for verification. Once submitted, it will be reviewed by our team.
                 </div>
             )}
             {initialData?.verification_status === 'pending' && (
-                <div className="rounded-2xl border border-yellow-200/80 bg-yellow-50/70 p-4 text-sm font-medium text-yellow-800">
+                <div className="rounded-2xl border border-warning/30 bg-warning-subtle/70 p-4 text-sm font-medium text-warning-active">
                     Your profile is currently under review. You will be notified once it has been verified.
                 </div>
             )}
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
                 {onCancel && (
                     <button
                         type="button"
                         onClick={onCancel}
                         disabled={isSubmitting}
-                        className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900 disabled:opacity-50"
+                        className="rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-text-secondary shadow-sm transition hover:bg-surface-hover hover:text-text-primary disabled:opacity-50"
                     >
                         Cancel
                     </button>
@@ -275,10 +275,10 @@ export const EmployerProfileForm: React.FC<Props> = ({
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {isSubmitting && (
-                        <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                        <svg className="animate-spin h-4 w-4 text-primary-foreground" viewBox="0 0 24 24" fill="none">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                         </svg>

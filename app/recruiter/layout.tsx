@@ -5,7 +5,7 @@ import { RecruiterInitializer } from "@/src/components/providers/RecruiterInitia
 export default function RecruiterLayout({ children }: LayoutProps<"/">) {
     return (
         <RecruiterInitializer>
-            <div className="flex h-screen">
+            <div className="flex h-screen bg-background text-text-primary">
                 <SideBar />
                 <main className="flex-1 overflow-y-auto">
                     <QueryProvider>

@@ -57,28 +57,28 @@ export default function RecruiterProfilePage() {
   const completionScore = calculateCompletion();
 
   return (
-    <div className="relative min-h-screen w-full  bg-white px-4 py-8 sm:px-6 sm:py-10">
+    <div className="relative min-h-screen w-full bg-background px-4 py-8 text-text-primary sm:px-6 sm:py-10">
       {/* Full Page Grid Background */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-size-[32px_32px]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-size-[32px_32px] opacity-40"
       />
 
       <div className="relative z-10 mx-auto max-w-6xl space-y-6">
         {/* Page Header */}
-        <div className="flex flex-col gap-2 border-b border-slate-200/80 pb-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-2 border-b border-border/80 pb-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+            <h1 className="workspace-page-title text-text-primary">
               {isEditing ? "Edit Employer Profile" : "Employer Dashboard"}
             </h1>
-            <p className="text-sm text-slate-500">
+            <p className="workspace-body text-text-muted">
               Manage your personal details, workspace access, and recruitment configuration
             </p>
           </div>
 
           {!loading && profile && !isEditing && (
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="gap-1.5 border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-2xs">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <Badge variant="outline" className="gap-1.5 border-border-strong bg-surface px-3 py-1 text-xs font-semibold text-text-secondary shadow-2xs">
+                <span className="h-2 w-2 rounded-full bg-success" />
                 Active Workspace
               </Badge>
             </div>
@@ -87,12 +87,12 @@ export default function RecruiterProfilePage() {
 
         {/* Error Banner */}
         {error && (
-          <div className="flex items-center justify-between rounded-xl border border-red-200 bg-red-50 p-4 text-red-800 shadow-2xs">
+          <div className="flex items-center justify-between rounded-xl border border-error/25 bg-error-subtle p-4 text-error-active shadow-2xs">
             <div className="flex items-center gap-3">
-              <AlertCircle className="h-5 w-5 shrink-0 text-red-600" />
+              <AlertCircle className="h-5 w-5 shrink-0 text-error" />
               <div>
                 <p className="text-sm font-semibold">Something went wrong</p>
-                <p className="text-xs text-red-700">{error}</p>
+                <p className="text-xs text-error">{error}</p>
               </div>
             </div>
           </div>
@@ -104,23 +104,23 @@ export default function RecruiterProfilePage() {
           {/* Main Content Column (2 Columns wide) */}
           <div className="space-y-6 lg:col-span-2">
             {loading ? (
-              <Card className="overflow-hidden border border-slate-200 bg-white shadow-2xs">
-                <Skeleton className="h-32 w-full rounded-none bg-slate-200 sm:h-40" />
+              <Card className="overflow-hidden border border-border bg-surface shadow-2xs">
+                <Skeleton className="h-32 w-full rounded-none bg-surface-muted sm:h-40" />
                 <CardContent className="relative px-6 pb-6 pt-0 sm:px-8">
                   <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between">
                     <div className="-mt-16 sm:-mt-20">
-                      <Skeleton className="h-28 w-28 rounded-full border-4 border-white bg-slate-200 sm:h-36 sm:w-36" />
+                      <Skeleton className="h-28 w-28 rounded-full border-4 border-surface bg-surface-muted sm:h-36 sm:w-36" />
                     </div>
-                    <Skeleton className="mt-4 h-9 w-28 rounded-full bg-slate-200 sm:mt-0" />
+                    <Skeleton className="mt-4 h-9 w-28 rounded-full bg-surface-muted sm:mt-0" />
                   </div>
                   <div className="mt-6 space-y-4">
-                    <Skeleton className="h-7 w-52 bg-slate-200" />
-                    <Skeleton className="h-4 w-40 bg-slate-200" />
+                    <Skeleton className="h-7 w-52 bg-surface-muted" />
+                    <Skeleton className="h-4 w-40 bg-surface-muted" />
                   </div>
                 </CardContent>
               </Card>
             ) : isEditing || !profile ? (
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs sm:p-8">
+              <div className="rounded-2xl border border-border bg-surface p-6 shadow-2xs sm:p-8">
                 <EmployerProfileForm
                   initialData={profile}
                   onSubmit={handleUpsert}
@@ -141,62 +141,62 @@ export default function RecruiterProfilePage() {
           <div className="space-y-6">
 
             {/* Profile Completion Card */}
-            <Card className="border border-slate-200 bg-white shadow-2xs">
+            <Card className="border border-border bg-surface shadow-2xs">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-bold text-slate-900">
+                <CardTitle className="workspace-section-title text-text-primary">
                   Profile Strength
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500">
+                <CardDescription className="workspace-meta text-text-muted">
                   Complete your profile to build trust with candidates
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+                  <div className="flex items-center justify-between text-xs font-semibold text-text-secondary">
                     <span>Progress</span>
-                    <span className="text-[#0a66c2]">{completionScore}%</span>
+                    <span className="text-primary">{completionScore}%</span>
                   </div>
-                  <Progress value={completionScore} className="h-2 bg-slate-100" />
+                  <Progress value={completionScore} className="h-2 bg-surface-muted" />
                 </div>
 
                 <ul className="space-y-2 text-xs">
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.user?.email ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.user?.email ? "text-success" : "text-text-disabled"}`} />
                     <span>Work email added</span>
                   </li>
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.designation ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.designation ? "text-success" : "text-text-disabled"}`} />
                     <span>Designation defined</span>
                   </li>
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_name ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_name ? "text-success" : "text-text-disabled"}`} />
                     <span>Connected to company</span>
                   </li>
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_website ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_website ? "text-success" : "text-text-disabled"}`} />
                     <span>Company website linked</span>
                   </li>
 
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_logo ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_logo ? "text-success" : "text-text-disabled"}`} />
                     <span>Company Logo </span>
                   </li>
 
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_address ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_address ? "text-success" : "text-text-disabled"}`} />
                     <span>Company Address </span>
                   </li>
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.industry ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.industry ? "text-success" : "text-text-disabled"}`} />
                     <span>Industry </span>
                   </li>
 
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_about ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.organization_about ? "text-success" : "text-text-disabled"}`} />
                     <span>Company Description </span>
                   </li>
-                  <li className="flex items-center gap-2 text-slate-700">
-                    <CheckCircle2 className={`h-4 w-4 ${profile?.verification_status === "approved" ? "text-emerald-500" : "text-slate-300"}`} />
+                  <li className="flex items-center gap-2 text-text-secondary">
+                    <CheckCircle2 className={`h-4 w-4 ${profile?.verification_status === "approved" ? "text-success" : "text-text-disabled"}`} />
                     <span>Company verified</span>
                   </li>
                 </ul>
@@ -206,7 +206,7 @@ export default function RecruiterProfilePage() {
                     onClick={() => setIsEditing(true)}
                     variant="outline"
                     size="sm"
-                    className="w-full text-xs border-slate-200 hover:opacity-0.8 text-slate-50"
+                    className="workspace-action w-full border-primary/30 bg-primary text-primary-foreground hover:bg-primary-hover"
                   >
                     Complete missing fields
                   </Button>
@@ -216,12 +216,12 @@ export default function RecruiterProfilePage() {
 
 
             {/* Support / Guidelines Box */}
-            <div className="rounded-xl border border-blue-100 bg-blue-50/60 p-4 text-xs text-blue-900">
-              <div className="flex items-center gap-2 font-bold text-[#0a66c2]">
+            <div className="workspace-meta rounded-xl border border-primary/20 bg-primary-subtle/60 p-4 text-primary-active">
+              <div className="flex items-center gap-2 font-bold text-primary">
                 <HelpCircle className="h-4 w-4" />
                 Employer Guidelines
               </div>
-              <p className="mt-1.5 text-slate-600 leading-relaxed">
+              <p className="mt-1.5 text-text-secondary leading-relaxed">
                 Ensure your designation and company details match official records. Unverified workspaces may have limited candidate outreach capabilities.
               </p>
             </div>

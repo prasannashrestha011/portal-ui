@@ -17,7 +17,8 @@ import {
   AlertTriangle,
   GraduationCap,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -95,25 +96,26 @@ export function CompanyInternshipsListPage() {
   }, [internships, statusFilter]);
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-100 to-slate-50 pb-16 text-slate-900 ">
+    <div className="min-h-screen bg-background pb-16 text-text-primary">
       {/* Sticky Top Header */}
-      <header className="bg-linear-to-br from-blue-700 via-blue-700 to-blue-600  sticky top-0 z-10 shadow-sm">
+      <header className="bg-linear-to-br from-primary-active via-primary to-accent  sticky top-0 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            <h1 className="workspace-page-title text-primary-foreground">
               Internship Openings
             </h1>
-            <p className="mt-1 text-sm text-blue-100">
+            <p className="workspace-body mt-1 text-primary-foreground/80">
               Manage, review, and monitor your active and past internship listings.
             </p>
           </div>
 
-          <Button className="h-12 bg-white text-blue-700 hover:bg-blue-50 shadow-sm transition-all">
-            <Link href="create" className="flex items-center justify-center">
-              <Plus className="h-4 w-4 mr-2" />
-              Post New Opening
-            </Link>
-          </Button>
+          <Link
+            href="/recruiter/internships/create"
+            className={cn(buttonVariants({ size: "lg" }), "h-12 bg-surface text-primary-hover shadow-sm transition-all hover:bg-primary-subtle")}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Post New Opening
+          </Link>
         </div>
       </header>
 
@@ -127,22 +129,22 @@ export function CompanyInternshipsListPage() {
         {isLoading && (
           <div className="space-y-4">
             {Array.from({ length: 4 }).map((_, i) => (
-              <Card key={i} className="p-0 overflow-hidden border-slate-200">
+              <Card key={i} className="p-0 overflow-hidden border-border">
                 <div className="p-6 sm:flex sm:items-center sm:justify-between gap-6">
                   <div className="flex-1 space-y-4">
                     <div className="flex gap-2">
-                      <Skeleton className="h-6 w-20 rounded-md bg-blue-50" />
-                      <Skeleton className="h-6 w-16 rounded-md bg-slate-100" />
+                      <Skeleton className="h-6 w-20 rounded-md bg-primary-subtle" />
+                      <Skeleton className="h-6 w-16 rounded-md bg-surface-muted" />
                     </div>
-                    <Skeleton className="h-7 w-3/4 sm:w-1/2 bg-slate-200" />
+                    <Skeleton className="h-7 w-3/4 sm:w-1/2 bg-surface-muted" />
                     <div className="flex flex-wrap gap-4 pt-2">
-                      <Skeleton className="h-4 w-24 bg-slate-100" />
-                      <Skeleton className="h-4 w-32 bg-slate-100" />
-                      <Skeleton className="h-4 w-28 bg-slate-100" />
+                      <Skeleton className="h-4 w-24 bg-surface-muted" />
+                      <Skeleton className="h-4 w-32 bg-surface-muted" />
+                      <Skeleton className="h-4 w-28 bg-surface-muted" />
                     </div>
                   </div>
                   <div className="mt-4 sm:mt-0">
-                    <Skeleton className="h-10 w-full sm:w-28 rounded-md bg-slate-100" />
+                    <Skeleton className="h-10 w-full sm:w-28 rounded-md bg-surface-muted" />
                   </div>
                 </div>
               </Card>
@@ -152,32 +154,33 @@ export function CompanyInternshipsListPage() {
 
         {/* Error State */}
         {error && !isLoading && (
-          <Alert variant="destructive" className="border-red-200 bg-red-50 text-red-900">
-            <AlertCircle className="h-4 w-4 text-red-600" />
-            <AlertTitle className="text-red-800 font-semibold">Unable to Load Internships</AlertTitle>
-            <AlertDescription className="text-red-700">{error.message}</AlertDescription>
+          <Alert variant="destructive" className="border-error/25 bg-error-subtle text-error-active">
+            <AlertCircle className="h-4 w-4 text-error" />
+            <AlertTitle className="text-error-active font-semibold">Unable to Load Internships</AlertTitle>
+            <AlertDescription className="text-error">{error.message}</AlertDescription>
           </Alert>
         )}
 
         {/* Empty State (no internships at all) */}
         {!isLoading && !error && internships && internships.data.length === 0 && (
-          <Card className="max-w-lg mx-auto text-center border-dashed border-2 border-blue-100 bg-blue-50/50 my-12 shadow-none">
+          <Card className="max-w-lg mx-auto text-center border-dashed border-2 border-primary/20 bg-primary-subtle/50 my-12 shadow-none">
             <CardContent className="pt-12 pb-12 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mx-auto text-blue-600 shadow-sm">
+              <div className="w-16 h-16 rounded-full bg-primary-subtle flex items-center justify-center mx-auto text-primary shadow-sm">
                 <GraduationCap className="w-8 h-8" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-bold text-slate-900">No Internship Openings Yet</h3>
-                <p className="text-sm text-slate-500 max-w-sm mx-auto">
+                <h3 className="workspace-section-title text-text-primary">No Internship Openings Yet</h3>
+                <p className="workspace-body mx-auto max-w-sm text-text-muted">
                   Get started by creating your first internship listing to attract top student talent.
                 </p>
               </div>
-              <Button className="mt-6 bg-blue-600 hover:bg-blue-700 text-white shadow-sm">
-                <Link href="/internships/create">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Create First Internship
-                </Link>
-              </Button>
+              <Link
+                href="/recruiter/internships/create"
+                className={cn(buttonVariants(), "mt-6 bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover")}
+              >
+                <Plus className="mr-2 h-4 w-4" />
+                Create First Internship
+              </Link>
             </CardContent>
           </Card>
         )}
@@ -187,15 +190,15 @@ export function CompanyInternshipsListPage() {
           <div className="space-y-6">
 
             {/* Stats + Filter Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface px-4 py-3 rounded-lg border border-border shadow-sm">
               <div className="flex items-center gap-4 text-sm">
-                <span className="font-medium text-slate-500">
-                  <strong className="text-blue-700">{totalInternships}</strong> total
+                <span className="font-medium text-text-muted">
+                  <strong className="text-primary-hover">{totalInternships}</strong> total
                 </span>
-                <span className="h-4 w-px bg-slate-200" />
-                <span className="font-medium text-emerald-700">{counts.published} active</span>
-                <span className="font-medium text-slate-500">{counts.private} private</span>
-                <span className="font-medium text-slate-400">{counts.closed} closed</span>
+                <span className="h-4 w-px bg-surface-muted" />
+                <span className="font-medium text-success-hover">{counts.published} active</span>
+                <span className="font-medium text-text-muted">{counts.private} private</span>
+                <span className="font-medium text-text-muted">{counts.closed} closed</span>
               </div>
 
               <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as StatusFilter)}>
@@ -214,9 +217,9 @@ export function CompanyInternshipsListPage() {
 
             {/* Filtered empty state */}
             {visibleInternships && visibleInternships.length === 0 ? (
-              <Card className="text-center border-dashed border-2 border-slate-200 bg-white shadow-none">
+              <Card className="text-center border-dashed border-2 border-border bg-surface shadow-none">
                 <CardContent className="py-10">
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-text-muted">
                     No postings match this filter. Try a different status.
                   </p>
                 </CardContent>
@@ -240,11 +243,11 @@ export function CompanyInternshipsListPage() {
                   return (
                     <Card
                       key={internship.id}
-                      className={`group shadow transition-all cursor-pointer overflow-hidden bg-white ${isPrivate
-                        ? "border-dashed border-slate-300 opacity-80 hover:opacity-100"
+                      className={`group shadow transition-all cursor-pointer overflow-hidden bg-surface ${isPrivate
+                        ? "border-dashed border-border-strong opacity-80 hover:opacity-100"
                         : isUrgent
-                          ? "border-amber-300 hover:border-amber-400 hover:shadow-md"
-                          : "border-slate-200 hover:border-blue-300 hover:shadow-md"
+                          ? "border-warning/40 hover:border-warning/60 hover:shadow-md"
+                          : "border-border hover:border-primary/50 hover:shadow-md"
                         }`}
                     >
                       <div className="p-0 sm:flex sm:items-stretch sm:justify-between">
@@ -254,74 +257,74 @@ export function CompanyInternshipsListPage() {
                             <Badge
                               variant="outline"
                               className={`border-none capitalize font-semibold tracking-wide ${isPrivate
-                                ? "bg-slate-100 text-slate-600"
+                                ? "bg-surface-muted text-text-secondary"
                                 : isClosed
-                                  ? "bg-red-50 text-red-700"
-                                  : "bg-blue-100 text-blue-700"
+                                  ? "bg-error-subtle text-error"
+                                  : "bg-primary-subtle text-primary-hover"
                                 }`}
                             >
                               {internship.status}
                             </Badge>
 
-                            <Badge variant="outline" className="capitalize bg-slate-50 text-slate-600 border-slate-200">
+                            <Badge variant="outline" className="capitalize bg-surface-hover text-text-secondary border-border">
                               {internship.internship_type}
                             </Badge>
 
                             {internship.work_mode === "remote" && (
-                              <Badge variant="outline" className="gap-1 bg-indigo-50 text-indigo-700 border-none">
+                              <Badge variant="outline" className="gap-1 bg-accent-subtle text-accent-hover border-none">
                                 <Sparkles className="h-3 w-3" />
                                 Remote
                               </Badge>
                             )}
 
                             {isUrgent && (
-                              <Badge variant="outline" className="gap-1 bg-amber-50 text-amber-700 border-none">
+                              <Badge variant="outline" className="gap-1 bg-warning-subtle text-warning-active border-none">
                                 <AlertTriangle className="h-3 w-3" />
                                 {daysLeft === 0 ? "Closes today" : `${daysLeft}d left`}
                               </Badge>
                             )}
                           </div>
 
-                          <CardTitle className={`text-lg sm:text-xl mb-4 line-clamp-1 transition-colors ${isPrivate ? "text-slate-600" : "text-slate-900 group-hover:text-blue-600"}`}>
+                          <CardTitle className={`workspace-section-title mb-4 line-clamp-1 transition-colors ${isPrivate ? "text-text-secondary" : "text-text-primary group-hover:text-primary"}`}>
                             {internship.title}
                           </CardTitle>
 
-                          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500">
+                          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-text-muted">
                             <div className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-blue-500 shrink-0" />
+                              <MapPin className="h-4 w-4 text-primary shrink-0" />
                               <span className="truncate max-w-37.5">{internship.location}</span>
                             </div>
 
                             <div className="flex items-center gap-2">
-                              <DollarSign className="h-4 w-4 text-emerald-500 shrink-0" />
+                              <DollarSign className="h-4 w-4 text-success shrink-0" />
                               <span className="truncate">{stipendText}</span>
                             </div>
 
                             <div className="flex items-center gap-2">
-                              <Clock className="h-4 w-4 text-blue-500 shrink-0" />
+                              <Clock className="h-4 w-4 text-primary shrink-0" />
                               <span className="truncate">{durationText}</span>
                             </div>
                           </div>
                         </div>
 
                         {/* Right side actionable area */}
-                        <div className={`transition-colors sm:w-48 p-4 sm:p-6 border-t sm:border-t-0 sm:border-l border-slate-100 flex sm:flex-col justify-between items-center sm:items-end gap-4 ${isUrgent ? "bg-amber-50/60 group-hover:bg-amber-50" : "bg-slate-50 group-hover:bg-blue-50/50"}`}>
+                        <div className={`transition-colors sm:w-48 p-4 sm:p-6 border-t sm:border-t-0 sm:border-l border-border flex sm:flex-col justify-between items-center sm:items-end gap-4 ${isUrgent ? "bg-warning-subtle/60 group-hover:bg-warning-subtle" : "bg-surface-hover group-hover:bg-primary-subtle/50"}`}>
 
                           {internship.application_deadline ? (
                             <div className="text-right flex items-center sm:items-end flex-row sm:flex-col gap-2 sm:gap-1">
-                              <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">Deadline</span>
-                              <div className={`flex items-center gap-1.5 text-sm font-semibold ${isUrgent ? "text-amber-700" : "text-slate-700"}`}>
+                              <span className="text-xs font-medium text-text-muted uppercase tracking-wider">Deadline</span>
+                              <div className={`flex items-center gap-1.5 text-sm font-semibold ${isUrgent ? "text-warning-active" : "text-text-secondary"}`}>
                                 <Calendar className="h-3.5 w-3.5" />
                                 {new Date(internship.application_deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                               </div>
                             </div>
                           ) : (
-                            <div className="hidden sm:block text-xs text-slate-400">Open Deadline</div>
+                            <div className="hidden sm:block text-xs text-text-muted">Open Deadline</div>
                           )}
 
                           <Button
                             variant="ghost"
-                            className="w-full sm:w-auto h-9 gap-2 bg-white sm:bg-transparent border border-slate-200 sm:border-none text-blue-600 hover:text-blue-700 hover:bg-blue-100"
+                            className="w-full sm:w-auto h-9 gap-2 bg-surface sm:bg-transparent border border-border sm:border-none text-primary hover:text-primary-hover hover:bg-primary-subtle"
                             onClick={(e) => {
                               e.stopPropagation();
                               router.push(`/recruiter/internships/list/${internship.id}`);

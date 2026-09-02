@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from 'zustand';
-import { Company } from '../types/company';
-import { AddTeamMemberPayload, companyService, CreateCompanyPayload, UpdateCompanyPayload } from '../services/company';
+import type {
+    AddTeamMemberPayload,
+    Company,
+    CreateCompanyPayload,
+    UpdateCompanyPayload,
+} from '../types/company';
+import { companyService } from '../services/company';
 
 interface CompanyState {
     company: Company | null;

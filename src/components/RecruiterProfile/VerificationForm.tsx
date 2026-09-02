@@ -112,15 +112,15 @@ const VerificationForm = () => {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-950/40">
-            <Clock3 className="h-7 w-7 text-amber-600" />
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warning-subtle dark:bg-warning-subtle/60">
+            <Clock3 className="h-7 w-7 text-warning-hover" />
           </div>
 
-          <h2 className="text-xl font-semibold">
+          <h2 className="workspace-section-title">
             Verification under review
           </h2>
 
-          <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          <p className="workspace-body mt-2 max-w-md text-muted-foreground">
             Your organization verification has been submitted and
             is currently being reviewed by our team.
           </p>
@@ -134,15 +134,15 @@ const VerificationForm = () => {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-100 dark:bg-green-950/40">
-            <ShieldCheck className="h-7 w-7 text-green-600" />
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success-subtle dark:bg-success-subtle/60">
+            <ShieldCheck className="h-7 w-7 text-success" />
           </div>
 
-          <h2 className="text-xl font-semibold">
+          <h2 className="workspace-section-title">
             Organization verified
           </h2>
 
-          <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          <p className="workspace-body mt-2 max-w-md text-muted-foreground">
             Your organization has been successfully verified.
             You can now access all employer features.
           </p>
@@ -156,15 +156,15 @@ const VerificationForm = () => {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 dark:bg-red-950/40">
-            <XCircle className="h-7 w-7 text-red-600" />
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-error-subtle dark:bg-error-subtle/60">
+            <XCircle className="h-7 w-7 text-error" />
           </div>
 
-          <h2 className="text-xl font-semibold">
+          <h2 className="workspace-section-title">
             Verification rejected
           </h2>
 
-          <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          <p className="workspace-body mt-2 max-w-md text-muted-foreground">
             Your organization verification was rejected. Please
             review your documents and submit a new verification
             request.
@@ -188,13 +188,13 @@ const VerificationForm = () => {
     <Card className="mx-auto w-full max-w-2xl">
       <CardHeader>
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-subtle">
             <FileText className="h-5 w-5 text-primary" />
           </div>
 
           <div>
-            <CardTitle>Organization Verification</CardTitle>
-            <CardDescription>
+            <CardTitle className="workspace-section-title">Organization Verification</CardTitle>
+            <CardDescription className="workspace-body">
               Upload an official document to verify your
               organization.
             </CardDescription>
@@ -245,7 +245,7 @@ const VerificationForm = () => {
 
             <Select
               value={documentType}
-              onValueChange={setDocumentType}
+              onValueChange={(value) => setDocumentType(value ?? "")}
             >
               <SelectTrigger id="document-type">
                 <SelectValue placeholder="Select document type" />

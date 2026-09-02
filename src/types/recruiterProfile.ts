@@ -32,3 +32,7 @@ export interface UpsertRecruiterProfileRequest {
   // profile/me/logo
   organization_logo?: File;
 }
+
+// Compatibility aliases for components that use employer-facing terminology.
+export type EmployerProfile = RecruiterProfile;
+export type UpsertEmployerProfileRequest = UpsertRecruiterProfileRequest;

@@ -342,19 +342,19 @@ const InternshipEditForm = ({
 
     if (loadError) {
         return (
-            <div className="min-h-screen bg-slate-50 px-4 py-10">
+            <div className="min-h-screen bg-background px-4 py-10 text-text-primary">
                 <div className="mx-auto max-w-2xl">
-                    <div className="rounded-xl border border-red-200 bg-white p-8 text-center shadow-sm">
+                    <div className="rounded-xl border border-error/25 bg-surface p-8 text-center shadow-sm">
 
-                        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-red-600">
+                        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-error-subtle text-error">
                             !
                         </div>
 
-                        <h2 className="mt-4 text-lg font-bold text-slate-900">
+                        <h2 className="workspace-section-title mt-4 text-text-primary">
                             Unable to load internship
                         </h2>
 
-                        <p className="mt-2 text-sm text-slate-500">
+                        <p className="workspace-body mt-2 text-text-muted">
                             {loadError}
                         </p>
 
@@ -363,7 +363,7 @@ const InternshipEditForm = ({
                             onClick={() =>
                                 router.back()
                             }
-                            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover"
                         >
                             <ArrowLeft className="h-4 w-4" />
                             Go Back
@@ -382,11 +382,11 @@ const InternshipEditForm = ({
      */
 
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-background text-text-primary">
 
             {/* HEADER */}
 
-            <header className="border-b border-slate-200 bg-white">
+            <header className="border-b border-border bg-surface">
                 <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
 
                     <div className="flex items-center justify-between gap-4">
@@ -398,21 +398,21 @@ const InternshipEditForm = ({
                                 onClick={() =>
                                     router.back()
                                 }
-                                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900"
+                                className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text-muted transition hover:bg-surface-hover hover:text-text-primary"
                             >
                                 <ArrowLeft className="h-5 w-5" />
                             </button>
 
                             <div>
-                                <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">
+                                <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                                     Recruiter
                                 </p>
 
-                                <h1 className="text-xl font-bold text-slate-900">
+                                <h1 className="workspace-page-title text-text-primary">
                                     Edit Internship
                                 </h1>
 
-                                <p className="mt-1 text-sm text-slate-500">
+                                <p className="workspace-body mt-1 text-text-muted">
                                     Update your internship
                                     posting
                                 </p>
@@ -424,7 +424,7 @@ const InternshipEditForm = ({
                             type="submit"
                             form="internship-edit-form"
                             disabled={saving}
-                            className="hidden items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-60 sm:flex"
+                            className="hidden items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:opacity-60 sm:flex"
                         >
                             <Save className="h-4 w-4" />
 
@@ -443,7 +443,7 @@ const InternshipEditForm = ({
             <main className="mx-auto max-w-5xl px-4 py-8 pb-28 sm:px-6 lg:px-8">
 
                 {success && (
-                    <div className="mb-6 flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+                    <div className="mb-6 flex items-center gap-3 rounded-lg border border-success/25 bg-success-subtle px-4 py-3 text-sm font-medium text-success-hover">
                         <CheckCircle2 className="h-5 w-5" />
                         Internship updated successfully.
                     </div>
@@ -1034,7 +1034,7 @@ const InternshipEditForm = ({
 
                     {/* ACTIONS */}
 
-                    <div className="flex justify-end gap-3 border-t border-slate-200 pt-6">
+                    <div className="flex justify-end gap-3 border-t border-border pt-6">
 
                         <button
                             type="button"
@@ -1042,7 +1042,7 @@ const InternshipEditForm = ({
                             onClick={() =>
                                 router.back()
                             }
-                            className="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+                            className="rounded-lg border border-border bg-surface px-5 py-2.5 text-sm font-semibold text-text-secondary hover:bg-surface-hover disabled:opacity-50"
                         >
                             Cancel
                         </button>
@@ -1050,7 +1050,7 @@ const InternshipEditForm = ({
                         <button
                             type="submit"
                             disabled={saving || !isDirty}
-                            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <Save className="h-4 w-4" />
 
@@ -1086,22 +1086,22 @@ const Section = ({
     description,
     children,
 }: SectionProps) => (
-    <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
 
-        <div className="border-b border-slate-100 px-6 py-5 sm:px-8">
+        <div className="border-b border-border px-6 py-5 sm:px-8">
 
             <div className="flex items-start gap-3">
 
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary">
                     {icon}
                 </div>
 
                 <div>
-                    <h2 className="text-base font-bold text-slate-900">
+                    <h2 className="workspace-section-title text-text-primary">
                         {title}
                     </h2>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="workspace-body mt-1 text-text-muted">
                         {description}
                     </p>
                 </div>
@@ -1131,11 +1131,11 @@ const Field = ({
     children,
 }: FieldProps) => (
     <div>
-        <label className="mb-2 block text-sm font-semibold text-slate-700">
+        <label className="mb-2 block text-sm font-semibold text-text-secondary">
             {label}
 
             {required && (
-                <span className="ml-1 text-red-500">
+                <span className="ml-1 text-error">
                     *
                 </span>
             )}
@@ -1144,7 +1144,7 @@ const Field = ({
         {children}
 
         {error && (
-            <p className="mt-1.5 text-xs font-medium text-red-600">
+            <p className="mt-1.5 text-xs font-medium text-error">
                 {error}
             </p>
         )}
@@ -1152,15 +1152,15 @@ const Field = ({
 )
 
 const inputClass = (hasError = false) =>
-    `h-10 w-full rounded-lg border bg-white px-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:ring-2 ${hasError
-        ? "border-red-300 focus:border-red-500 focus:ring-red-100"
-        : "border-slate-200 focus:border-blue-500 focus:ring-blue-100"
+    `h-10 w-full rounded-lg border bg-surface px-3 text-sm text-text-primary outline-none transition placeholder:text-text-muted hover:border-border-strong focus:ring-2 ${hasError
+        ? "border-error/35 focus:border-error focus:ring-error/20"
+        : "border-border focus:border-primary focus:ring-focus-ring/20"
     }`
 
 const textareaClass = (hasError = false) =>
-    `w-full resize-y rounded-lg border bg-white px-3 py-2.5 text-sm leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:ring-2 ${hasError
-        ? "border-red-300 focus:border-red-500 focus:ring-red-100"
-        : "border-slate-200 focus:border-blue-500 focus:ring-blue-100"
+    `w-full resize-y rounded-lg border bg-surface px-3 py-2.5 text-sm leading-6 text-text-primary outline-none transition placeholder:text-text-muted hover:border-border-strong focus:ring-2 ${hasError
+        ? "border-error/35 focus:border-error focus:ring-error/20"
+        : "border-border focus:border-primary focus:ring-focus-ring/20"
     }`
 
 /*
@@ -1206,11 +1206,11 @@ const toRFC3339 = (
 */
 
 const EditSkeleton = () => (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-background">
 
-        <div className="border-b border-slate-200 bg-white">
+        <div className="border-b border-border bg-surface">
             <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
-                <div className="h-10 w-64 animate-pulse rounded-lg bg-slate-200" />
+                <div className="h-10 w-64 animate-pulse rounded-lg bg-surface-muted" />
             </div>
         </div>
 
@@ -1220,7 +1220,7 @@ const EditSkeleton = () => (
                 (_, index) => (
                     <div
                         key={index}
-                        className="h-56 animate-pulse rounded-xl border border-slate-200 bg-white"
+                        className="h-56 animate-pulse rounded-xl border border-border bg-surface"
                     />
                 )
             )}

@@ -149,21 +149,21 @@ export function RecruiterApplicationsInbox() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-14 text-slate-950">
-            <header className="bg-linear-to-br from-blue-800 via-blue-700 to-cyan-600 text-white">
+        <div className="min-h-screen bg-background pb-14 text-text-primary">
+            <header className="bg-linear-to-br from-primary-active via-primary to-accent text-primary-foreground">
                 <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                     <div className="flex items-start gap-4">
-                        <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20">
+                        <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary-foreground/15 ring-1 ring-primary-foreground/20">
                             <UsersRound className="size-6" />
                         </div>
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-100">
+                            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground/80">
                                 Recruiter workspace
                             </p>
-                            <h1 className="mt-1 text-3xl font-bold tracking-tight">
+                            <h1 className="workspace-page-title mt-1">
                                 Candidates
                             </h1>
-                            <p className="mt-2 max-w-2xl text-sm leading-6 text-blue-100">
+                            <p className="workspace-body mt-2 max-w-2xl text-primary-foreground/80">
                                 Review student applications across all of your internship openings.
                             </p>
                         </div>
@@ -172,10 +172,10 @@ export function RecruiterApplicationsInbox() {
             </header>
 
             <main className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
-                <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
                     <div className="grid gap-3 lg:grid-cols-[minmax(240px,1fr)_260px_210px_auto]">
                         <div className="relative">
-                            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-muted" />
                             <Input
                                 value={searchInput}
                                 onChange={(event) => setSearchInput(event.target.value)}
@@ -252,26 +252,26 @@ export function RecruiterApplicationsInbox() {
 
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <p className="text-sm font-semibold text-slate-900">
+                        <p className="text-sm font-semibold text-text-primary">
                             {applicationsQuery.isPending
                                 ? "Loading applications…"
                                 : `${totalItems} ${totalItems === 1 ? "application" : "applications"}`}
                         </p>
                         {selectedInternship && (
-                            <p className="mt-0.5 text-xs text-slate-500">
+                            <p className="mt-0.5 text-xs text-text-muted">
                                 Filtered to {selectedInternship.title}
                             </p>
                         )}
                     </div>
                     {applicationsQuery.isFetching && !applicationsQuery.isPending && (
-                        <span className="text-xs font-medium text-blue-600">Refreshing…</span>
+                        <span className="text-xs font-medium text-primary">Refreshing…</span>
                     )}
                 </div>
 
                 {applicationsQuery.isPending && <ApplicationsTableSkeleton />}
 
                 {applicationsQuery.error && !applicationsQuery.isPending && (
-                    <Alert variant="destructive" className="mt-5 border-red-200 bg-red-50">
+                    <Alert variant="destructive" className="mt-5 border-error/25 bg-error-subtle">
                         <AlertCircle className="size-4" />
                         <AlertTitle>Unable to load applications</AlertTitle>
                         <AlertDescription className="flex flex-wrap items-center justify-between gap-3">
@@ -321,9 +321,9 @@ function ApplicationsTable({
     applications: RecruiterApplicationSummary[];
 }) {
     return (
-        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
             <Table>
-                <TableHeader className="bg-slate-50">
+                <TableHeader className="bg-surface-hover">
                     <TableRow>
                         <TableHead>Candidate</TableHead>
                         <TableHead>Education</TableHead>
@@ -343,10 +343,10 @@ function ApplicationsTable({
                                     <div className="flex items-center gap-3">
                                         <CandidateMark name={candidate?.full_name} />
                                         <div className="min-w-0">
-                                            <p className="max-w-52 truncate font-semibold text-slate-900">
+                                            <p className="max-w-52 truncate font-semibold text-text-primary">
                                                 {candidate?.full_name || "Unnamed candidate"}
                                             </p>
-                                            <p className="mt-0.5 flex items-center gap-1 text-xs text-slate-500">
+                                            <p className="mt-0.5 flex items-center gap-1 text-xs text-text-muted">
                                                 <MapPin className="size-3" />
                                                 {candidate?.location || "Location not provided"}
                                             </p>
@@ -354,22 +354,22 @@ function ApplicationsTable({
                                     </div>
                                 </TableCell>
                                 <TableCell>
-                                    <p className="max-w-52 truncate text-sm font-medium text-slate-700">
+                                    <p className="max-w-52 truncate text-sm font-medium text-text-secondary">
                                         {candidate?.degree || candidate?.faculty_or_major || "Not provided"}
                                     </p>
-                                    <p className="mt-0.5 max-w-52 truncate text-xs text-slate-500">
+                                    <p className="mt-0.5 max-w-52 truncate text-xs text-text-muted">
                                         {candidate?.college_name || "College not provided"}
                                     </p>
                                 </TableCell>
                                 <TableCell>
-                                    <p className="max-w-52 truncate text-sm font-medium text-slate-800">
+                                    <p className="max-w-52 truncate text-sm font-medium text-text-primary">
                                         {internship?.title || "Internship unavailable"}
                                     </p>
-                                    <p className="mt-0.5 text-xs capitalize text-slate-500">
+                                    <p className="mt-0.5 text-xs capitalize text-text-muted">
                                         {internship?.work_mode || ""}
                                     </p>
                                 </TableCell>
-                                <TableCell className="whitespace-nowrap text-sm text-slate-600">
+                                <TableCell className="whitespace-nowrap text-sm text-text-secondary">
                                     {formatDate(application.applied_at)}
                                 </TableCell>
                                 <TableCell>
@@ -381,7 +381,7 @@ function ApplicationsTable({
                                         className={buttonVariants({
                                             variant: "ghost",
                                             size: "sm",
-                                            className: "gap-1.5 text-blue-700",
+                                            className: "gap-1.5 text-primary-hover",
                                         })}
                                     >
                                         Review
@@ -399,12 +399,12 @@ function ApplicationsTable({
 
 export function ApplicationStatusBadge({ status }: { status: ApplicationStatus }) {
     const styles: Record<ApplicationStatus, string> = {
-        submitted: "border-blue-200 bg-blue-50 text-blue-700",
-        reviewing: "border-violet-200 bg-violet-50 text-violet-700",
-        shortlisted: "border-amber-200 bg-amber-50 text-amber-700",
-        accepted: "border-emerald-200 bg-emerald-50 text-emerald-700",
-        rejected: "border-red-200 bg-red-50 text-red-700",
-        withdrawn: "border-slate-200 bg-slate-100 text-slate-600",
+        submitted: "border-primary/25 bg-primary-subtle text-primary-hover",
+        reviewing: "border-info/25 bg-info-subtle text-info-hover",
+        shortlisted: "border-warning/30 bg-warning-subtle text-warning-active",
+        accepted: "border-success/25 bg-success-subtle text-success-hover",
+        rejected: "border-error/25 bg-error-subtle text-error",
+        withdrawn: "border-border bg-surface-muted text-text-secondary",
     };
     return (
         <Badge variant="outline" className={`capitalize ${styles[status]}`}>
@@ -421,19 +421,19 @@ function EmptyApplications({
     onClear: () => void;
 }) {
     return (
-        <Card className="mt-5 border-dashed border-slate-300 bg-white shadow-none">
+        <Card className="mt-5 border-dashed border-border-strong bg-surface shadow-none">
             <CardContent className="flex flex-col items-center px-6 py-16 text-center">
-                <div className="flex size-14 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                <div className="flex size-14 items-center justify-center rounded-full bg-primary-subtle text-primary">
                     {hasFilters ? (
                         <Search className="size-6" />
                     ) : (
                         <GraduationCap className="size-7" />
                     )}
                 </div>
-                <h2 className="mt-4 text-lg font-bold text-slate-900">
+                <h2 className="workspace-section-title mt-4 text-text-primary">
                     {hasFilters ? "No matching candidates" : "No applications yet"}
                 </h2>
-                <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+                <p className="workspace-body mt-2 max-w-md text-text-muted">
                     {hasFilters
                         ? "Try a different name, internship, or application status."
                         : "New student applications will appear here after they apply to one of your internships."}
@@ -450,7 +450,7 @@ function EmptyApplications({
 
 function ApplicationsTableSkeleton() {
     return (
-        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm">
             <div className="space-y-5">
                 {Array.from({ length: 5 }).map((_, index) => (
                     <div key={index} className="grid grid-cols-[2fr_2fr_2fr_1fr_1fr] gap-5">
@@ -468,8 +468,8 @@ function ApplicationsTableSkeleton() {
 
 export function RecruiterApplicationsInboxSkeleton() {
     return (
-        <div className="min-h-screen bg-slate-50">
-            <div className="h-48 animate-pulse bg-slate-200" />
+        <div className="min-h-screen bg-background">
+            <div className="h-48 animate-pulse bg-surface-muted" />
             <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
                 <Skeleton className="h-18 rounded-2xl" />
                 <ApplicationsTableSkeleton />
@@ -487,7 +487,7 @@ function CandidateMark({ name }: { name?: string }) {
             .map((part) => part[0]?.toUpperCase())
             .join("") || "?";
     return (
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700 ring-1 ring-blue-200">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-sm font-bold text-primary-hover ring-1 ring-primary/25">
             {initials}
         </div>
     );

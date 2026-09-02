@@ -78,9 +78,9 @@ interface InternshipFormProps {
 }
 
 
-const inputClass = "h-11 rounded-md text-black border-slate-300 bg-white px-3 shadow-none focus-visible:border-[#0a66c2] focus-visible:ring-[#0a66c2]/20 dark:border-slate-700 dark:bg-slate-950";
-const selectClass = "h-11 w-full text-black rounded-md border-slate-300 bg-white px-3 shadow-none focus-visible:border-[#0a66c2] focus-visible:ring-[#0a66c2]/20 dark:border-slate-700 dark:bg-slate-950";
-const labelClass = "text-sm font-semibold text-slate-800 dark:text-slate-100";
+const inputClass = "h-11 rounded-md text-text-primary border-border-strong bg-surface px-3 shadow-none focus-visible:border-primary focus-visible:ring-focus-ring/20 dark:border-border-strong dark:bg-background";
+const selectClass = "h-11 w-full text-text-primary rounded-md border-border-strong bg-surface px-3 shadow-none focus-visible:border-primary focus-visible:ring-focus-ring/20 dark:border-border-strong dark:bg-background";
+const labelClass = "text-sm font-semibold text-text-primary dark:text-text-primary";
 
 function FormSection({
     number,
@@ -96,15 +96,15 @@ function FormSection({
     children: React.ReactNode;
 }) {
     return (
-        <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900">
-            <div className="flex gap-3 border-b border-slate-200 px-5 py-5 dark:border-slate-800 sm:px-7">
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-blue-50 text-[#0a66c2] dark:bg-blue-950/60 dark:text-blue-400">
+        <section className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
+            <div className="flex gap-3 border-b border-border px-5 py-5 dark:border-border sm:px-7">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary-subtle text-primary dark:bg-primary-subtle/60 dark:text-primary">
                     <Icon className="size-5" />
                 </span>
                 <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#0a66c2] dark:text-blue-400">Step {number}</span>
-                    <h2 className="mt-0.5 text-lg font-semibold text-slate-900 dark:text-white">{title}</h2>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{description}</p>
+                    <span className="text-xs font-bold uppercase tracking-wider text-primary dark:text-primary">Step {number}</span>
+                    <h2 className="workspace-section-title mt-0.5 text-text-primary dark:text-text-primary">{title}</h2>
+                    <p className="workspace-body mt-1 text-text-muted dark:text-text-muted">{description}</p>
                 </div>
             </div>
             <div className="grid gap-5 p-5 sm:p-7">{children}</div>
@@ -190,13 +190,13 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)} className="min-w-0 space-y-5">
-            <div className="rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900 sm:px-7">
+            <div className="rounded-lg border border-border bg-surface px-5 py-4 shadow-sm sm:px-7">
                 <div className="mb-2 flex items-center justify-between text-sm">
-                    <span className="font-semibold text-slate-800 dark:text-slate-100">Create your internship post</span>
-                    <span className="font-medium text-slate-500">4 sections</span>
+                    <span className="font-semibold text-text-primary dark:text-text-primary">Create your internship post</span>
+                    <span className="font-medium text-text-muted">4 sections</span>
                 </div>
                 <div className="grid grid-cols-4 gap-1.5" aria-label="Four form sections">
-                    {[1, 2, 3, 4].map((step) => <span key={step} className="h-1.5 rounded-full bg-[#0a66c2]" />)}
+                    {[1, 2, 3, 4].map((step) => <span key={step} className="h-1.5 rounded-full bg-primary" />)}
                 </div>
             </div>
 
@@ -208,7 +208,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2 md:col-span-2">
-                                <FieldLabel htmlFor="title" className={labelClass}>Internship title <span className="text-red-600">*</span></FieldLabel>
+                                <FieldLabel htmlFor="title" className={labelClass}>Internship title <span className="text-error">*</span></FieldLabel>
                                 <Input
                                     {...field}
                                     id="title"
@@ -225,9 +225,9 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
-                                <FieldLabel htmlFor="location" className={labelClass}>Internship location <span className="text-red-600">*</span></FieldLabel>
+                                <FieldLabel htmlFor="location" className={labelClass}>Internship location <span className="text-error">*</span></FieldLabel>
                                 <div className="relative">
-                                    <MapPin className="absolute left-3 top-3.5 size-4 text-slate-400" />
+                                    <MapPin className="absolute left-3 top-3.5 size-4 text-text-muted" />
                                     <Input {...field} id="location" className={`${inputClass} pl-9`} placeholder="e.g. Kathmandu, Nepal" />
                                 </div>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -313,7 +313,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2 md:col-span-2">
-                                <FieldLabel htmlFor="working_hours" className={labelClass}>Working hours <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="working_hours" className={labelClass}>Working hours <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <Input {...field} id="working_hours" placeholder="e.g. 10:00 AM - 5:00 PM" className={inputClass} />
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
                             </Field>
@@ -331,7 +331,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
-                                <FieldLabel htmlFor="eligible_programs" className={labelClass}>Eligible programs <span className="text-red-600">*</span></FieldLabel>
+                                <FieldLabel htmlFor="eligible_programs" className={labelClass}>Eligible programs <span className="text-error">*</span></FieldLabel>
                                 <Input {...field} id="eligible_programs" placeholder="e.g. BSc CSIT, BIT, BCA" className={inputClass} />
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
                             </Field>
@@ -343,7 +343,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
-                                <FieldLabel htmlFor="eligible_semester" className={labelClass}>Eligible semester <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="eligible_semester" className={labelClass}>Eligible semester <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <Input {...field} id="eligible_semester" placeholder="e.g. 5th semester and above" className={inputClass} />
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
                             </Field>
@@ -355,14 +355,14 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="md:col-span-2 space-y-2">
-                                <FieldLabel htmlFor="required_skills" className={labelClass}>Required skills <span className="text-red-600">*</span></FieldLabel>
+                                <FieldLabel htmlFor="required_skills" className={labelClass}>Required skills <span className="text-error">*</span></FieldLabel>
                                 <Input
                                     {...field}
                                     id="required_skills"
                                     placeholder="e.g. Go, PostgreSQL, Docker, gRPC, React"
                                     className={inputClass}
                                 />
-                                <p className="text-xs text-slate-500">Separate skills with commas. Focus on the most important ones.</p>
+                                <p className="text-xs text-text-muted">Separate skills with commas. Focus on the most important ones.</p>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
                             </Field>
                         )}
@@ -373,7 +373,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="md:col-span-2 space-y-2">
-                                <FieldLabel htmlFor="preferred_skills" className={labelClass}>Preferred skills <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="preferred_skills" className={labelClass}>Preferred skills <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <Input
                                     {...field}
                                     id="preferred_skills"
@@ -390,7 +390,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="md:col-span-2 space-y-2">
-                                <FieldLabel htmlFor="required_education" className={labelClass}>Education <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="required_education" className={labelClass}>Education <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <Input
                                     {...field}
                                     id="required_education"
@@ -460,7 +460,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
                                 <FieldLabel htmlFor="vacancy_count" className={labelClass}>Number of openings</FieldLabel>
                                 <div className="relative">
-                                    <Users className="absolute left-3 top-3.5 size-4 text-slate-400" />
+                                    <Users className="absolute left-3 top-3.5 size-4 text-text-muted" />
                                     <Input {...field} id="vacancy_count" type="number" min="1" className={`${inputClass} pl-9`} />
                                 </div>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -473,9 +473,9 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
-                                <FieldLabel htmlFor="start_date" className={labelClass}>Start date <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="start_date" className={labelClass}>Start date <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <div className="relative">
-                                    <Calendar className="absolute left-3 top-3.5 size-4 text-slate-400" />
+                                    <Calendar className="absolute left-3 top-3.5 size-4 text-text-muted" />
                                     <Input {...field} id="start_date" type="date" className={`${inputClass} pl-9`} />
                                 </div>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -490,7 +490,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
                                 <FieldLabel htmlFor="application_deadline" className={labelClass}>Application deadline</FieldLabel>
                                 <div className="relative">
-                                    <Calendar className="absolute left-3 top-3.5 size-4 text-slate-400" />
+                                    <Calendar className="absolute left-3 top-3.5 size-4 text-text-muted" />
                                     <Input {...field} id="application_deadline" type="date" className={`${inputClass} pl-9`} />
                                 </div>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -508,13 +508,13 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                     control={form.control}
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid} className="space-y-2">
-                            <FieldLabel htmlFor="description" className={labelClass}>Internship description <span className="text-red-600">*</span></FieldLabel>
+                            <FieldLabel htmlFor="description" className={labelClass}>Internship description <span className="text-error">*</span></FieldLabel>
                             <Textarea
                                 {...field}
                                 id="description"
                                 rows={8}
                                 placeholder="Describe the role, team, and what the intern will learn..."
-                                className="min-h-48 h-48 w-full max-w-2xl resize-y overflow-x-clip overflow-y-auto rounded-md border-slate-300 bg-white text-black p-3 shadow-none focus-visible:border-[#0a66c2] focus-visible:ring-[#0a66c2]/20 dark:border-slate-700 dark:bg-slate-950"
+                                className="min-h-48 h-48 w-full max-w-2xl resize-y overflow-x-clip overflow-y-auto rounded-md border-border-strong bg-surface text-text-primary p-3 shadow-none focus-visible:border-primary focus-visible:ring-focus-ring/20 dark:border-border-strong dark:bg-background"
                             />
                             {fieldState.error && <FieldError errors={[fieldState.error]} />}
                         </Field>
@@ -526,13 +526,13 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                     control={form.control}
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid} className="space-y-2">
-                            <FieldLabel htmlFor="responsibilities" className={labelClass}>Responsibilities <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                            <FieldLabel htmlFor="responsibilities" className={labelClass}>Responsibilities <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                             <Textarea
                                 {...field}
                                 id="responsibilities"
                                 rows={4}
                                 placeholder="Key day-to-day tasks and responsibilities..."
-                                className="rounded-md border-slate-300 bg-white text-black p-3 shadow-none focus-visible:border-[#0a66c2] focus-visible:ring-[#0a66c2]/20 dark:border-slate-700 dark:bg-slate-950"
+                                className="rounded-md border-border-strong bg-surface text-text-primary p-3 shadow-none focus-visible:border-primary focus-visible:ring-focus-ring/20 dark:border-border-strong dark:bg-background"
                             />
                             {fieldState.error && <FieldError errors={[fieldState.error]} />}
                         </Field>
@@ -544,10 +544,10 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                     control={form.control}
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid} className="space-y-2">
-                            <FieldLabel htmlFor="benefits" className={labelClass}>Benefits <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                            <FieldLabel htmlFor="benefits" className={labelClass}>Benefits <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                             <div className="relative">
-                                <Gift className="absolute left-3 top-3 size-4 text-slate-400" />
-                                <Textarea {...field} id="benefits" rows={3} placeholder="Certificate, mentorship, letter of recommendation..." className="rounded-md border-slate-300 bg-white text-black py-2.5 pr-3 pl-9 shadow-none focus-visible:border-[#0a66c2] focus-visible:ring-[#0a66c2]/20 dark:border-slate-700 dark:bg-slate-950" />
+                                <Gift className="absolute left-3 top-3 size-4 text-text-muted" />
+                                <Textarea {...field} id="benefits" rows={3} placeholder="Certificate, mentorship, letter of recommendation..." className="rounded-md border-border-strong bg-surface text-text-primary py-2.5 pr-3 pl-9 shadow-none focus-visible:border-primary focus-visible:ring-focus-ring/20 dark:border-border-strong dark:bg-background" />
                             </div>
                             {fieldState.error && <FieldError errors={[fieldState.error]} />}
                         </Field>
@@ -560,9 +560,9 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
-                                <FieldLabel htmlFor="application_email" className={labelClass}>Application email <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="application_email" className={labelClass}>Application email <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <div className="relative">
-                                    <Mail className="absolute left-3 top-3.5 size-4 text-slate-400" />
+                                    <Mail className="absolute left-3 top-3.5 size-4 text-text-muted" />
                                     <Input {...field} id="application_email" type="email" placeholder="careers@company.com" className={`${inputClass} pl-9`} />
                                 </div>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -575,9 +575,9 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="space-y-2">
-                                <FieldLabel htmlFor="application_url" className={labelClass}>Application link <span className="font-normal text-slate-400">(optional)</span></FieldLabel>
+                                <FieldLabel htmlFor="application_url" className={labelClass}>Application link <span className="font-normal text-text-muted">(optional)</span></FieldLabel>
                                 <div className="relative">
-                                    <Link2 className="absolute left-3 top-3.5 size-4 text-slate-400" />
+                                    <Link2 className="absolute left-3 top-3.5 size-4 text-text-muted" />
                                     <Input {...field} id="application_url" type="url" placeholder="https://company.com/careers" className={`${inputClass} pl-9`} />
                                 </div>
                                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -592,17 +592,17 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                 name="status"
                 control={form.control}
                 render={({ field }) => (
-                    <Field className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900 sm:p-7">
+                    <Field className="rounded-lg border border-border bg-surface p-5 shadow-sm sm:p-7">
                         <div className="flex items-start justify-between gap-5">
                             <div className="flex min-w-0 gap-3">
-                                <span className={`grid size-10 shrink-0 place-items-center rounded-full ${isPublic ? "bg-blue-50 text-[#0a66c2] dark:bg-blue-950/60 dark:text-blue-400" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"}`}>
+                                <span className={`grid size-10 shrink-0 place-items-center rounded-full ${isPublic ? "bg-primary-subtle text-primary dark:bg-primary-subtle/60 dark:text-primary" : "bg-surface-muted text-text-secondary dark:bg-surface-muted dark:text-text-secondary"}`}>
                                     {isPublic ? <Globe2 className="size-5" /> : <LockKeyhole className="size-5" />}
                                 </span>
                                 <div>
                                     <FieldLabel htmlFor="internship-visibility" className={labelClass}>
                                         Publish publicly
                                     </FieldLabel>
-                                    <p className="mt-1 text-sm leading-5 text-slate-500 dark:text-slate-400">
+                                    <p className="mt-1 text-sm leading-5 text-text-muted dark:text-text-muted">
                                         {isPublic
                                             ? "Students can find this internship and submit applications."
                                             : "Only you can view this internship until you publish it."}
@@ -619,20 +619,20 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                                 onBlur={field.onBlur}
                                 ref={field.ref}
                                 aria-label="Publish internship publicly"
-                                className="mt-1 data-checked:bg-[#0a66c2]"
+                                className="mt-1 data-checked:bg-primary"
                             />
                         </div>
                     </Field>
                 )}
             />
 
-            <div className="flex flex-col-reverse gap-3 rounded-lg border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between sm:px-7">
-                <p className="text-xs leading-5 text-slate-500">Fields marked with <span className="text-red-600">*</span> are required.</p>
+            <div className="flex flex-col-reverse gap-3 rounded-lg border border-border bg-surface p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:px-7">
+                <p className="text-xs leading-5 text-text-muted">Fields marked with <span className="text-error">*</span> are required.</p>
                 <div className="flex items-center justify-end gap-3">
                     <Button
                         type="button"
                         variant="outline"
-                        className="h-10 rounded-full border-slate-400 px-5 font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200"
+                        className="h-10 rounded-full border-border-strong px-5 font-semibold text-text-secondary hover:bg-surface-muted dark:text-text-secondary"
                         onClick={() => window.history.back()}
                     >
                         Cancel
@@ -640,7 +640,7 @@ export function IntershipForm({ initialData }: InternshipFormProps) {
                     <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="h-10 rounded-full bg-[#0a66c2] px-6 font-semibold text-white shadow-none hover:bg-[#004182]"
+                        className="h-10 rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-none hover:bg-primary-hover"
                     >
                         {isSubmitting ? (
                             <>

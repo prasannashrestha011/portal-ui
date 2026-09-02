@@ -11,6 +11,7 @@ import {
     Settings,
     LucideIcon,
 } from "lucide-react";
+import SidebarLogoutButton from "@/src/components/Auth/SidebarLogoutButton";
 
 interface NavItem {
     label: string;
@@ -55,6 +56,10 @@ const SideBar = () => {
                     );
                 })}
             </nav>
+
+            <div className="border-t border-sidebar-border p-3">
+                <SidebarLogoutButton />
+            </div>
         </aside>
     );
 };

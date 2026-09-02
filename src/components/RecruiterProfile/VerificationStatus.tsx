@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   AlertCircle,
   CheckCircle2,
@@ -18,7 +19,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import { employerService } from "@/src/services/recruiterProfile";
 import { OrganizationVerification } from "@/src/types/organizationVerification";
@@ -62,7 +63,7 @@ const VerificationStatus = () => {
         <CardContent className="flex flex-col items-center justify-center py-16">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
 
-          <p className="mt-4 text-sm text-muted-foreground">
+          <p className="workspace-body mt-4 text-muted-foreground">
             Loading verification status...
           </p>
         </CardContent>
@@ -89,11 +90,11 @@ const VerificationStatus = () => {
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
           <FileText className="h-10 w-10 text-muted-foreground" />
 
-          <h2 className="mt-4 text-lg font-semibold">
+          <h2 className="workspace-section-title mt-4">
             No verification found
           </h2>
 
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="workspace-body mt-2 text-muted-foreground">
             You have not submitted an organization verification
             request yet.
           </p>
@@ -106,15 +107,15 @@ const VerificationStatus = () => {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardHeader className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-950/40">
-            <Clock3 className="h-7 w-7 text-amber-600" />
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-warning-subtle dark:bg-warning-subtle/60">
+            <Clock3 className="h-7 w-7 text-warning-hover" />
           </div>
 
-          <CardTitle className="mt-4">
+          <CardTitle className="workspace-section-title mt-4">
             Verification under review
           </CardTitle>
 
-          <CardDescription>
+          <CardDescription className="workspace-body">
             Your organization verification request has been submitted
             successfully.
           </CardDescription>
@@ -201,15 +202,15 @@ const VerificationStatus = () => {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardHeader className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 dark:bg-green-950/40">
-            <CheckCircle2 className="h-7 w-7 text-green-600" />
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success-subtle dark:bg-success-subtle/60">
+            <CheckCircle2 className="h-7 w-7 text-success" />
           </div>
 
-          <CardTitle className="mt-4">
+          <CardTitle className="workspace-section-title mt-4">
             Organization verified
           </CardTitle>
 
-          <CardDescription>
+          <CardDescription className="workspace-body">
             Your organization has been successfully verified.
           </CardDescription>
         </CardHeader>
@@ -252,7 +253,7 @@ const VerificationStatus = () => {
                 <p className="text-xs text-muted-foreground">
                   Status
                 </p>
-                <p className="mt-1 text-sm font-medium text-green-600">
+                <p className="mt-1 text-sm font-medium text-success">
                   Verified
                 </p>
               </div>
@@ -267,27 +268,27 @@ const VerificationStatus = () => {
     return (
       <Card className="mx-auto w-full max-w-2xl">
         <CardHeader className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-100 dark:bg-red-950/40">
-            <XCircle className="h-7 w-7 text-red-600" />
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-error-subtle dark:bg-error-subtle/60">
+            <XCircle className="h-7 w-7 text-error" />
           </div>
 
-          <CardTitle className="mt-4">
+          <CardTitle className="workspace-section-title mt-4">
             Verification rejected
           </CardTitle>
 
-          <CardDescription>
+          <CardDescription className="workspace-body">
             Your organization verification could not be approved.
           </CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-5">
           {verification.rejection_reason && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/30">
-              <p className="text-sm font-medium text-red-700 dark:text-red-400">
+            <div className="rounded-lg border border-error/25 bg-error-subtle p-4 dark:border-error/30 dark:bg-error-subtle/50">
+              <p className="text-sm font-medium text-error dark:text-error">
                 Rejection reason
               </p>
 
-              <p className="mt-1 text-sm text-red-600 dark:text-red-300">
+              <p className="mt-1 text-sm text-error dark:text-error">
                 {verification.rejection_reason}
               </p>
             </div>
@@ -328,11 +329,9 @@ const VerificationStatus = () => {
           )}
 
           <div className="flex justify-center">
-            <Button >
-              <a href="/employer/profile/verification">
-                Submit again
-              </a>
-            </Button>
+            <Link href="/recruiter/profile/verification" className={buttonVariants()}>
+              Submit again
+            </Link>
           </div>
         </CardContent>
       </Card>
@@ -345,21 +344,19 @@ const VerificationStatus = () => {
       <CardHeader className="text-center">
         <FileText className="mx-auto h-10 w-10 text-muted-foreground" />
 
-        <CardTitle className="mt-4">
+        <CardTitle className="workspace-section-title mt-4">
           Verification not submitted
         </CardTitle>
 
-        <CardDescription>
+        <CardDescription className="workspace-body">
           Complete your organization verification to continue.
         </CardDescription>
       </CardHeader>
 
       <CardContent className="flex justify-center">
-        <Button >
-          <a href="/employer/profile/verification">
-            Start verification
-          </a>
-        </Button>
+        <Link href="/recruiter/profile/verification" className={buttonVariants()}>
+          Start verification
+        </Link>
       </CardContent>
     </Card>
   );

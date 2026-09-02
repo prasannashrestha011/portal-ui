@@ -3,7 +3,7 @@ import { ShieldCheck } from "lucide-react";
 
 const Page = () => {
     return (
-        <main className="min-h-screen bg-muted/20">
+        <main className="min-h-screen bg-background text-text-primary">
             <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mb-8">
                     <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
@@ -18,11 +18,11 @@ const Page = () => {
                         </div>
 
                         <div>
-                            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+                            <h1 className="workspace-page-title">
                                 Organization verification
                             </h1>
 
-                            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                            <p className="workspace-body mt-2 max-w-2xl text-muted-foreground">
                                 View the current status of your organization
                                 verification request.
                             </p>

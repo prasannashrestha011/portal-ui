@@ -147,13 +147,13 @@ export default function RecruiterApplicationDetailView({ id }: { id: string }) {
     const canDecide = activeStatuses.includes(application.status);
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-14 text-slate-950">
-            <header className="bg-[#071b33] text-white">
+        <div className="min-h-screen bg-background pb-14 text-text-primary">
+            <header className="bg-primary-active text-primary-foreground">
                 <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                     <button
                         type="button"
                         onClick={() => router.back()}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-blue-400/40"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary-foreground/75 transition hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-focus-ring/40"
                     >
                         <ArrowLeft className="size-4" />
                         Back to candidates
@@ -167,25 +167,25 @@ export default function RecruiterApplicationDetailView({ id }: { id: string }) {
                                     <ApplicationStatusBadge status={application.status} />
                                     <Badge
                                         variant="outline"
-                                        className="border-white/20 bg-white/10 capitalize text-slate-100"
+                                        className="border-primary-foreground/20 bg-primary-foreground/10 capitalize text-primary-foreground"
                                     >
                                         {internship?.work_mode || "Internship"}
                                     </Badge>
                                 </div>
-                                <h1 className="mt-3 truncate text-3xl font-bold tracking-tight sm:text-4xl">
+                                <h1 className="workspace-page-title mt-3 truncate">
                                     {candidate?.full_name || "Unnamed candidate"}
                                 </h1>
-                                <p className="mt-2 flex items-center gap-2 text-sm text-slate-300">
-                                    <BriefcaseBusiness className="size-4 text-blue-300" />
+                                <p className="mt-2 flex items-center gap-2 text-sm text-text-disabled">
+                                    <BriefcaseBusiness className="size-4 text-primary-foreground/70" />
                                     Applied for {internship?.title || "an internship"}
                                 </p>
                             </div>
                         </div>
-                        <div className="text-sm text-slate-300 md:text-right">
-                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+                        <div className="text-sm text-text-disabled md:text-right">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-text-muted">
                                 Applied
                             </p>
-                            <p className="mt-1 font-semibold text-white">
+                            <p className="mt-1 font-semibold text-primary-foreground">
                                 {formatDateTime(application.applied_at)}
                             </p>
                         </div>
@@ -234,7 +234,7 @@ function ProfileSection({ application }: { application: RecruiterApplication }) 
     ].map((link) => ({ ...link, href: normalizeExternalURL(link.value) }));
 
     return (
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+        <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7">
             <SectionHeading
                 icon={<UserRound className="size-5" />}
                 eyebrow="Candidate profile"
@@ -242,14 +242,14 @@ function ProfileSection({ application }: { application: RecruiterApplication }) 
             />
 
             {candidate?.bio && (
-                <p className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-600">
+                <p className="mt-5 whitespace-pre-line text-sm leading-7 text-text-secondary">
                     {candidate.bio}
                 </p>
             )}
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <InfoPanel
-                    icon={<GraduationCap className="size-5 text-blue-600" />}
+                    icon={<GraduationCap className="size-5 text-primary" />}
                     label="Education"
                     value={
                         [candidate?.degree, candidate?.faculty_or_major]
@@ -258,12 +258,12 @@ function ProfileSection({ application }: { application: RecruiterApplication }) 
                     }
                 />
                 <InfoPanel
-                    icon={<GraduationCap className="size-5 text-violet-600" />}
+                    icon={<GraduationCap className="size-5 text-accent" />}
                     label="College"
                     value={candidate?.college_name || "Not provided"}
                 />
                 <InfoPanel
-                    icon={<CalendarDays className="size-5 text-amber-600" />}
+                    icon={<CalendarDays className="size-5 text-warning-hover" />}
                     label="Study progress"
                     value={
                         [
@@ -277,24 +277,24 @@ function ProfileSection({ application }: { application: RecruiterApplication }) 
                     }
                 />
                 <InfoPanel
-                    icon={<Clock3 className="size-5 text-emerald-600" />}
+                    icon={<Clock3 className="size-5 text-success" />}
                     label="Availability"
                     value={candidate?.availability || "Not provided"}
                 />
                 <InfoPanel
-                    icon={<MapPin className="size-5 text-red-500" />}
+                    icon={<MapPin className="size-5 text-error" />}
                     label="Location"
                     value={candidate?.location || "Not provided"}
                 />
                 <InfoPanel
-                    icon={<Phone className="size-5 text-cyan-600" />}
+                    icon={<Phone className="size-5 text-accent" />}
                     label="Phone"
                     value={candidate?.phone || "Not provided"}
                 />
             </div>
 
             {links.some((link) => link.href) && (
-                <div className="mt-6 flex flex-wrap gap-2 border-t border-slate-100 pt-5">
+                <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-5">
                     {links.map(({ label, href, icon: Icon }) =>
                         href ? (
                             <a
@@ -332,8 +332,8 @@ function DocumentSection({
     );
 
     return (
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex flex-col justify-between gap-4 border-b border-slate-200 p-5 sm:flex-row sm:items-center sm:p-7">
+        <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+            <div className="flex flex-col justify-between gap-4 border-b border-border p-5 sm:flex-row sm:items-center sm:p-7">
                 <SectionHeading
                     icon={<FileText className="size-5" />}
                     eyebrow="Application document"
@@ -354,11 +354,11 @@ function DocumentSection({
 
             {!document && (
                 <div className="flex flex-col items-center px-6 py-14 text-center">
-                    <div className="flex size-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                    <div className="flex size-12 items-center justify-center rounded-full bg-surface-muted text-text-muted">
                         <FileQuestion className="size-6" />
                     </div>
-                    <h3 className="mt-4 font-bold text-slate-900">No default document</h3>
-                    <p className="mt-1 max-w-sm text-sm leading-6 text-slate-500">
+                    <h3 className="workspace-section-title mt-4 text-text-primary">No default document</h3>
+                    <p className="workspace-body mt-1 max-w-sm text-text-muted">
                         This candidate has not selected a default resume or supporting document.
                     </p>
                 </div>
@@ -366,8 +366,8 @@ function DocumentSection({
 
             {document && (
                 <>
-                    <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-50 px-5 py-3 text-xs text-slate-600 sm:px-7">
-                        <span className="font-semibold text-slate-800">{document.file_name}</span>
+                    <div className="flex flex-wrap items-center justify-between gap-3 bg-surface-hover px-5 py-3 text-xs text-text-secondary sm:px-7">
+                        <span className="font-semibold text-text-primary">{document.file_name}</span>
                         <span>
                             {document.mime_type || "Unknown file type"} · {formatFileSize(document.size)}
                         </span>
@@ -377,15 +377,15 @@ function DocumentSection({
                         <iframe
                             src={documentURL}
                             title={`Preview of ${document.file_name}`}
-                            className="h-[68vh] min-h-125 w-full bg-slate-100"
+                            className="h-[68vh] min-h-125 w-full bg-surface-muted"
                         />
                     ) : documentURL ? (
                         <div className="flex flex-col items-center px-6 py-14 text-center">
-                            <FileText className="size-10 text-blue-500" />
-                            <h3 className="mt-4 font-bold text-slate-900">
+                            <FileText className="size-10 text-primary" />
+                            <h3 className="workspace-section-title mt-4 text-text-primary">
                                 Preview unavailable for this file type
                             </h3>
-                            <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+                            <p className="workspace-body mt-2 max-w-md text-text-muted">
                                 Open the signed document in a new tab to view or download it with an appropriate application.
                             </p>
                             <a
@@ -404,8 +404,8 @@ function DocumentSection({
                         </div>
                     ) : (
                         <div className="flex flex-col items-center px-6 py-12 text-center">
-                            <AlertCircle className="size-8 text-amber-500" />
-                            <p className="mt-3 text-sm font-semibold text-slate-800">
+                            <AlertCircle className="size-8 text-warning" />
+                            <p className="mt-3 text-sm font-semibold text-text-primary">
                                 The document link is unavailable.
                             </p>
                             <Button type="button" variant="outline" onClick={onRefresh} className="mt-4 gap-2">
@@ -432,20 +432,20 @@ function DecisionCard({
     onReject: () => void;
 }) {
     return (
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="h-1 bg-linear-to-r from-blue-600 via-cyan-500 to-emerald-400" />
+        <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+            <div className="h-1 bg-linear-to-r from-primary via-accent to-success" />
             <div className="p-5 sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.15em] text-blue-600">
+                <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary">
                     Application decision
                 </p>
                 <div className="mt-3 flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-bold text-slate-900">Current status</h2>
+                    <h2 className="workspace-section-title text-text-primary">Current status</h2>
                     <ApplicationStatusBadge status={application.status} />
                 </div>
 
                 {canDecide ? (
                     <>
-                        <p className="mt-3 text-sm leading-6 text-slate-500">
+                        <p className="mt-3 text-sm leading-6 text-text-muted">
                             Accept or reject this application. Your optional message will be visible to the student.
                         </p>
                         <div className="mt-5 grid grid-cols-2 gap-2">
@@ -453,7 +453,7 @@ function DecisionCard({
                                 type="button"
                                 variant="outline"
                                 onClick={onReject}
-                                className="border-red-200 text-red-700 hover:bg-red-50"
+                                className="border-error/25 text-error hover:bg-error-subtle"
                             >
                                 <XCircle className="size-4" />
                                 Reject
@@ -461,7 +461,7 @@ function DecisionCard({
                             <Button
                                 type="button"
                                 onClick={onAccept}
-                                className="bg-emerald-600 text-white hover:bg-emerald-700"
+                                className="bg-success text-success-foreground hover:bg-success-hover"
                             >
                                 <CheckCircle2 className="size-4" />
                                 Accept
@@ -469,17 +469,17 @@ function DecisionCard({
                         </div>
                     </>
                 ) : (
-                    <div className="mt-4 rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+                    <div className="mt-4 rounded-xl bg-surface-hover p-4 text-sm leading-6 text-text-secondary">
                         This application is final and no further recruiter decision is available.
                     </div>
                 )}
 
                 {application.employer_note && (
-                    <div className="mt-5 border-t border-slate-100 pt-4">
-                        <p className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                    <div className="mt-5 border-t border-border pt-4">
+                        <p className="text-xs font-bold uppercase tracking-wide text-text-muted">
                             Message to student
                         </p>
-                        <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600">
+                        <p className="mt-2 whitespace-pre-line text-sm leading-6 text-text-secondary">
                             {application.employer_note}
                         </p>
                     </div>
@@ -500,18 +500,18 @@ function ApplicationTimeline({ application }: { application: RecruiterApplicatio
     ].filter((event): event is { label: string; date: string } => Boolean(event.date));
 
     return (
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="font-bold text-slate-900">Application timeline</h2>
+        <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+            <h2 className="workspace-section-title text-text-primary">Application timeline</h2>
             <div className="mt-4 space-y-4">
                 {events.map((event, index) => (
                     <div key={event.label} className="flex gap-3">
                         <div className="flex flex-col items-center">
-                            <span className="mt-1 size-2.5 rounded-full bg-blue-600 ring-4 ring-blue-50" />
-                            {index < events.length - 1 && <span className="mt-1 h-full w-px bg-slate-200" />}
+                            <span className="mt-1 size-2.5 rounded-full bg-primary ring-4 ring-primary-subtle" />
+                            {index < events.length - 1 && <span className="mt-1 h-full w-px bg-surface-muted" />}
                         </div>
                         <div className="pb-1">
-                            <p className="text-sm font-semibold text-slate-800">{event.label}</p>
-                            <p className="mt-0.5 text-xs text-slate-500">{formatDateTime(event.date)}</p>
+                            <p className="text-sm font-semibold text-text-primary">{event.label}</p>
+                            <p className="mt-0.5 text-xs text-text-muted">{formatDateTime(event.date)}</p>
                         </div>
                     </div>
                 ))}
@@ -523,20 +523,20 @@ function ApplicationTimeline({ application }: { application: RecruiterApplicatio
 function InternshipCard({ application }: { application: RecruiterApplication }) {
     const internship = application.internship;
     return (
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+        <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-text-muted">
                 Applied internship
             </p>
-            <h2 className="mt-2 font-bold text-slate-900">
+            <h2 className="workspace-section-title mt-2 text-text-primary">
                 {internship?.title || "Internship unavailable"}
             </h2>
-            <div className="mt-4 space-y-2 text-sm text-slate-600">
+            <div className="mt-4 space-y-2 text-sm text-text-secondary">
                 <p className="flex items-center gap-2">
-                    <MapPin className="size-4 text-blue-500" />
+                    <MapPin className="size-4 text-primary" />
                     {internship?.location || "Location not specified"}
                 </p>
                 <p className="flex items-center gap-2 capitalize">
-                    <BriefcaseBusiness className="size-4 text-blue-500" />
+                    <BriefcaseBusiness className="size-4 text-primary" />
                     {[internship?.work_mode, internship?.internship_type]
                         .filter(Boolean)
                         .join(" · ") || "Details unavailable"}
@@ -545,7 +545,7 @@ function InternshipCard({ application }: { application: RecruiterApplication }) 
             {internship && (
                 <Link
                     href={`/recruiter/internships/list/${internship.id}`}
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-hover hover:text-primary-active"
                 >
                     View internship
                     <ArrowUpRight className="size-4" />
@@ -588,8 +588,8 @@ function DecisionDialog({
                 </DialogHeader>
 
                 <div className="space-y-2 py-2">
-                    <label htmlFor="decision-message" className="text-sm font-semibold text-slate-800">
-                        Message to student <span className="font-normal text-slate-400">(optional)</span>
+                    <label htmlFor="decision-message" className="text-sm font-semibold text-text-primary">
+                        Message to student <span className="font-normal text-text-muted">(optional)</span>
                     </label>
                     <Textarea
                         id="decision-message"
@@ -603,13 +603,13 @@ function DecisionDialog({
                         rows={5}
                         disabled={isPending}
                     />
-                    <p className="text-xs leading-5 text-slate-500">
+                    <p className="text-xs leading-5 text-text-muted">
                         Leaving this empty clears any existing recruiter message.
                     </p>
                 </div>
 
                 {error && (
-                    <Alert variant="destructive" className="border-red-200 bg-red-50">
+                    <Alert variant="destructive" className="border-error/25 bg-error-subtle">
                         <AlertCircle className="size-4" />
                         <AlertTitle>Decision not saved</AlertTitle>
                         <AlertDescription>{error}</AlertDescription>
@@ -626,8 +626,8 @@ function DecisionDialog({
                         disabled={isPending}
                         className={
                             accepting
-                                ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                                : "bg-red-600 text-white hover:bg-red-700"
+                                ? "bg-success text-success-foreground hover:bg-success-hover"
+                                : "bg-error text-error-foreground hover:bg-error-hover"
                         }
                     >
                         {isPending && <LoaderCircle className="size-4 animate-spin" />}
@@ -654,14 +654,14 @@ function SectionHeading({
 }) {
     return (
         <div className="flex items-center gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-subtle text-primary">
                 {icon}
             </div>
             <div>
-                <p className="text-xs font-bold uppercase tracking-[0.13em] text-blue-600">
+                <p className="text-xs font-bold uppercase tracking-[0.13em] text-primary">
                     {eyebrow}
                 </p>
-                <h2 className="mt-0.5 text-lg font-bold text-slate-900">{title}</h2>
+                <h2 className="workspace-section-title mt-0.5 text-text-primary">{title}</h2>
             </div>
         </div>
     );
@@ -677,11 +677,11 @@ function InfoPanel({
     value: string;
 }) {
     return (
-        <div className="flex gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-4">
+        <div className="flex gap-3 rounded-xl border border-border bg-surface-hover/80 p-4">
             <div className="mt-0.5 shrink-0">{icon}</div>
             <div className="min-w-0">
-                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">{label}</p>
-                <p className="mt-1 text-sm font-semibold leading-6 text-slate-700">{value}</p>
+                <p className="text-xs font-bold uppercase tracking-wide text-text-muted">{label}</p>
+                <p className="mt-1 text-sm font-semibold leading-6 text-text-secondary">{value}</p>
             </div>
         </div>
     );
@@ -696,7 +696,7 @@ function CandidateMark({ name }: { name?: string }) {
             .map((part) => part[0]?.toUpperCase())
             .join("") || "?";
     return (
-        <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-blue-500 text-xl font-bold text-white ring-4 ring-white/10">
+        <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-xl font-bold text-primary-foreground ring-4 ring-primary-foreground/10">
             {initials}
         </div>
     );
@@ -704,8 +704,8 @@ function CandidateMark({ name }: { name?: string }) {
 
 function ApplicationDetailSkeleton() {
     return (
-        <div className="min-h-screen bg-slate-50">
-            <div className="h-64 animate-pulse bg-slate-800" />
+        <div className="min-h-screen bg-background">
+            <div className="h-64 animate-pulse bg-primary-active/70" />
             <div className="mx-auto grid max-w-7xl gap-7 px-4 py-8 lg:grid-cols-[1fr_360px]">
                 <div className="space-y-6">
                     <Skeleton className="h-80 rounded-2xl" />
@@ -732,14 +732,14 @@ function ApplicationDetailError({
     onRetry: () => void;
 }) {
     return (
-        <div className="flex min-h-[70vh] items-center justify-center bg-slate-50 px-4">
-            <Card className="w-full max-w-lg border-slate-200 bg-white text-center shadow-sm">
+        <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
+            <Card className="w-full max-w-lg border-border bg-surface text-center shadow-sm">
                 <CardContent className="px-6 py-12">
-                    <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-red-50 text-red-600">
+                    <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-error-subtle text-error">
                         <AlertCircle className="size-6" />
                     </div>
-                    <h1 className="mt-4 text-xl font-bold text-slate-900">Application unavailable</h1>
-                    <p className="mt-2 text-sm leading-6 text-slate-500">{message}</p>
+                    <h1 className="workspace-section-title mt-4 text-text-primary">Application unavailable</h1>
+                    <p className="workspace-body mt-2 text-text-muted">{message}</p>
                     <div className="mt-6 flex justify-center gap-2">
                         <Button type="button" variant="outline" onClick={onBack}>
                             <ArrowLeft className="size-4" />
