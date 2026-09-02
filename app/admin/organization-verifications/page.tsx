@@ -11,6 +11,7 @@ export default async function Page({ searchParams }: Props) {
 
     return (
         <OrganizationVerificationsListPage
+            key={params.status ?? "all"}
             status={params.status}
         />
     );

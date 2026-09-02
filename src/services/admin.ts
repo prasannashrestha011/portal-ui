@@ -3,6 +3,7 @@ import { User } from '../types/auth';
 import { ApiResponse } from '../types/http';
 import {
     OrganizationVerification,
+    OrganizationVerificationResponse,
     ReviewOrganizationVerificationRequest,
 } from '../types/organizationVerification';
 
@@ -52,15 +53,12 @@ export const adminService = {
     // Get a single organization verification
     async getOrganizationVerification(
         id: string
-    ): Promise<OrganizationVerification> {
+    ): Promise<OrganizationVerificationResponse> {
         const response = await apiClient.get<
-            ApiResponse<{
-                verification: OrganizationVerification;
-                document_url?: string;
-            }>
+            ApiResponse<OrganizationVerificationResponse>
         >(`/admin/organization-verifications/${id}`);
 
-        return response.data.data.verification;
+        return response.data.data;
     },
 
     // Review an organization verification
