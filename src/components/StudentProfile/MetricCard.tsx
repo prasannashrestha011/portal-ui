@@ -29,7 +29,7 @@ export default function MetricCard({
                     <div className={`flex h-7 w-7 items-center justify-center rounded-lg ${toneStyles[tone]}`}>
                         {icon}
                     </div>
-                    <span className="text-xs font-semibold text-slate-600">{title}</span>
+                    <span className="text-sm font-semibold text-slate-600">{title}</span>
                 </div>
                 {badge && (
                     <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${toneStyles[tone]}`}>
@@ -39,7 +39,7 @@ export default function MetricCard({
             </div>
             <div>
                 <div className="text-2xl font-bold tracking-tight text-slate-900">{value}</div>
-                <p className="mt-0.5 text-xs text-slate-500 font-medium">{subtitle}</p>
+                <p className="workspace-meta mt-0.5 font-medium text-slate-500">{subtitle}</p>
             </div>
         </div>
     );

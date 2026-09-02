@@ -164,12 +164,12 @@ export default function StudentDashboardPage() {
                                 <Sparkles className="h-3.5 w-3.5" />
                                 Student career workspace
                             </div>
-                            <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
+                            <h1 className="workspace-page-title">
                                 {profile?.full_name
                                     ? `Welcome back, ${profile.full_name.split(" ")[0]}`
                                     : "Build your student profile"}
                             </h1>
-                            <p className="max-w-2xl text-sm leading-relaxed text-blue-100">
+                            <p className="workspace-body max-w-2xl text-blue-100">
                                 {profile
                                     ? "Track every application stage and keep your profile ready for the next opportunity."
                                     : "Create your profile before applying so employers can review your experience and skills."}
@@ -178,7 +178,7 @@ export default function StudentDashboardPage() {
 
                         <Link
                             href="/student/profile/upsert"
-                            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-4 text-xs font-bold text-blue-700 shadow-sm transition-colors hover:bg-blue-50"
+                            className="workspace-action inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-4 text-blue-700 shadow-sm transition-colors hover:bg-blue-50"
                         >
                             {profile ? "Update profile" : "Create profile"}
                             <ArrowRight className="h-3.5 w-3.5" />
@@ -234,8 +234,8 @@ export default function StudentDashboardPage() {
                     <section className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-2xs lg:col-span-2">
                         <div className="flex flex-col gap-2 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                             <div>
-                                <h2 className="text-sm font-bold text-slate-900">Application status breakdown</h2>
-                                <p className="mt-0.5 text-xs text-slate-500">A complete view of your current application pipeline.</p>
+                                <h2 className="workspace-section-title text-slate-900">Application status breakdown</h2>
+                                <p className="workspace-meta mt-0.5 text-slate-500">A complete view of your current application pipeline.</p>
                             </div>
                             <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
                                 <Clock3 className="h-3.5 w-3.5" />
@@ -248,13 +248,13 @@ export default function StudentDashboardPage() {
                                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-600">
                                     <Search className="h-5 w-5" />
                                 </div>
-                                <h3 className="text-sm font-bold text-slate-900">No applications yet</h3>
-                                <p className="mt-1 max-w-sm text-xs leading-relaxed text-slate-500">
+                                <h3 className="workspace-section-title text-slate-900">No applications yet</h3>
+                                <p className="workspace-body mt-1 max-w-sm text-slate-500">
                                     Explore available internships and submit your first application to start tracking progress here.
                                 </p>
                                 <Link
                                     href="/internships"
-                                    className="mt-4 inline-flex h-9 items-center gap-2 rounded-lg bg-blue-600 px-4 text-xs font-semibold text-white transition-colors hover:bg-blue-700"
+                                    className="workspace-action mt-4 inline-flex h-9 items-center gap-2 rounded-lg bg-blue-600 px-4 text-white transition-colors hover:bg-blue-700"
                                 >
                                     Browse internships
                                     <ArrowRight className="h-3.5 w-3.5" />
@@ -271,8 +271,8 @@ export default function StudentDashboardPage() {
                                                 <div className="flex items-start gap-2.5">
                                                     <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${status.dot}`} />
                                                     <div>
-                                                        <h3 className="text-xs font-bold text-slate-800">{status.label}</h3>
-                                                        <p className="mt-0.5 text-[11px] text-slate-500">{status.description}</p>
+                                                        <h3 className="text-sm font-semibold text-slate-800">{status.label}</h3>
+                                                        <p className="workspace-meta mt-0.5 text-slate-500">{status.description}</p>
                                                     </div>
                                                 </div>
                                                 <div className="text-right">
@@ -300,7 +300,7 @@ export default function StudentDashboardPage() {
                     <div className="space-y-6">
                         <section className="space-y-4 rounded-xl border border-slate-200/90 bg-white p-5 shadow-2xs">
                             <div className="flex items-center justify-between">
-                                <h2 className="text-sm font-bold text-slate-900">Profile strength</h2>
+                                <h2 className="workspace-section-title text-slate-900">Profile strength</h2>
                                 <span className="text-xs font-bold text-blue-600">{completionScore}%</span>
                             </div>
                             <div
@@ -313,7 +313,7 @@ export default function StudentDashboardPage() {
                             >
                                 <div className="h-full rounded-full bg-blue-600 transition-all duration-300" style={{ width: `${completionScore}%` }} />
                             </div>
-                            <p className="text-xs leading-relaxed text-slate-500">
+                            <p className="workspace-body text-slate-500">
                                 {completionScore < 100
                                     ? "Add missing profile details and links to help employers evaluate your application."
                                     : "Your profile is complete and ready for employer review."}
@@ -322,10 +322,10 @@ export default function StudentDashboardPage() {
                             {profile && (
                                 <div className="flex items-center justify-between border-t border-slate-100 pt-3">
                                     <div className="space-y-0.5">
-                                        <label htmlFor="searchable-toggle" className="cursor-pointer text-xs font-semibold text-slate-900">
+                                        <label htmlFor="searchable-toggle" className="cursor-pointer text-sm font-semibold text-slate-900">
                                             Recruiter talent pool
                                         </label>
-                                        <p className="text-[11px] text-slate-500">
+                                        <p className="workspace-meta text-slate-500">
                                             {profile.is_searchable ? "Visible to recruiters" : "Hidden from recruiter search"}
                                         </p>
                                     </div>
@@ -346,7 +346,7 @@ export default function StudentDashboardPage() {
                         </section>
 
                         <section className="rounded-xl border border-slate-200/90 bg-white p-5 shadow-2xs">
-                            <h2 className="text-sm font-bold text-slate-900">Quick actions</h2>
+                            <h2 className="workspace-section-title text-slate-900">Quick actions</h2>
                             <div className="mt-3 space-y-1">
                                 {[
                                     { label: "Find internships", href: "/internships", icon: Search },
@@ -356,7 +356,7 @@ export default function StudentDashboardPage() {
                                     <Link
                                         key={href}
                                         href={href}
-                                        className="group flex items-center justify-between rounded-lg px-2.5 py-2.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-700"
+                                        className="workspace-action group flex items-center justify-between rounded-lg px-2.5 py-2.5 text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-700"
                                     >
                                         <span className="flex items-center gap-2.5">
                                             <Icon className="h-4 w-4 text-slate-400 group-hover:text-blue-600" />
@@ -369,7 +369,7 @@ export default function StudentDashboardPage() {
                         </section>
 
                         <section className="space-y-3.5 rounded-xl border border-slate-200/90 bg-white p-5 shadow-2xs">
-                            <h2 className="text-sm font-bold text-slate-900">Links & online presence</h2>
+                            <h2 className="workspace-section-title text-slate-900">Links & online presence</h2>
                             <div className="space-y-3 pt-1">
                                 <PresenceLinkItem label="LinkedIn" url={profile?.linkedin_url} icon={<FaLinkedin className="h-4 w-4 text-blue-600" />} />
                                 <PresenceLinkItem label="GitHub" url={profile?.github_url} icon={<FaGithub className="h-4 w-4 text-slate-600" />} />

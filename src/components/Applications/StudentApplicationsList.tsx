@@ -129,10 +129,10 @@ export function StudentApplicationsList() {
                             <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-100">
                                 Student workspace
                             </p>
-                            <h1 className="mt-1 text-3xl font-bold tracking-tight">
+                            <h1 className="workspace-page-title mt-1">
                                 My applications
                             </h1>
-                            <p className="mt-2 max-w-2xl text-sm leading-6 text-blue-100">
+                            <p className="workspace-body mt-2 max-w-2xl text-blue-100">
                                 Follow every internship application and see recruiter decisions in one place.
                             </p>
                         </div>
@@ -256,7 +256,7 @@ function ApplicationCard({ application }: { application: StudentApplicationSumma
                                 <Building2 className="size-5" />
                             </div>
                             <div className="min-w-0">
-                                <h2 className="truncate text-base font-bold text-slate-900 sm:text-lg">
+                                <h2 className="workspace-section-title truncate text-slate-900">
                                     {internship?.title || "Internship unavailable"}
                                 </h2>
                                 <p className="mt-1 text-sm font-medium text-slate-600">
@@ -360,10 +360,10 @@ function EmptyApplications({
                 <div className="flex size-14 items-center justify-center rounded-full bg-blue-50 text-blue-600">
                     <Inbox className="size-7" />
                 </div>
-                <h2 className="mt-4 text-lg font-bold text-slate-900">
+                <h2 className="workspace-section-title mt-4 text-slate-900">
                     {filtered ? `No ${label.toLowerCase()} applications` : "No applications yet"}
                 </h2>
-                <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+                <p className="workspace-body mt-2 max-w-md text-slate-500">
                     {filtered
                         ? `None of your applications are currently ${label.toLowerCase()}. You can switch back to see every application.`
                         : "Once you apply for an internship, its progress and the recruiter’s decision will appear here."}

@@ -148,8 +148,8 @@ export const UploadResume: React.FC<UploadResumeProps> = ({
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                    <h3 className="text-base font-semibold text-slate-900">Resumes & Documents</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <h3 className="workspace-section-title text-slate-900">Resumes & Documents</h3>
+                    <p className="workspace-meta mt-0.5 text-slate-500">
                         Upload your resume and supporting documents for your internship applications.
                     </p>
                 </div>
@@ -219,7 +219,7 @@ export const UploadResume: React.FC<UploadResumeProps> = ({
             {/* Uploaded Documents Section */}
             <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-slate-800">Uploaded Documents</h4>
+                    <h4 className="workspace-section-title text-slate-800">Uploaded Documents</h4>
                     <span className="inline-flex items-center justify-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700">
                         {documents.length}
                     </span>

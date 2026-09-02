@@ -76,10 +76,10 @@ export function StudentProfileFormContent({ profile }: { profile: StudentProfile
                     <p className="text-xs font-bold uppercase tracking-wider text-blue-700">
                         Student Workspace
                     </p>
-                    <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                    <h1 className="workspace-page-title mt-1 text-slate-900">
                         Student Profile
                     </h1>
-                    <p className="mt-2 text-sm text-slate-600 sm:text-base leading-relaxed">
+                    <p className="workspace-body mt-2 text-slate-600">
                         Manage your personal details, academic background, and job preferences.
                     </p>
                 </div>
@@ -296,10 +296,10 @@ export function StudentProfileFormContent({ profile }: { profile: StudentProfile
                     <Section title="Privacy & Settings" description="Control how your profile appears to employers.">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-5 sm:p-6 transition-colors hover:bg-slate-50">
                             <div className="space-y-1">
-                                <label htmlFor="is_searchable" className="cursor-pointer text-base font-semibold text-slate-900">
+                                <label htmlFor="is_searchable" className="workspace-section-title cursor-pointer text-slate-900">
                                     Employer Visibility
                                 </label>
-                                <p className="text-sm text-slate-500 leading-relaxed">
+                                <p className="workspace-body text-slate-500">
                                     Allow employers and recruiters to discover your profile in search results.
                                 </p>
                             </div>
@@ -325,7 +325,7 @@ export function StudentProfileFormContent({ profile }: { profile: StudentProfile
                         <button
                             type="submit"
                             disabled={saving}
-                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
+                            className="workspace-action inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
                         >
                             {saving && (
                                 <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">

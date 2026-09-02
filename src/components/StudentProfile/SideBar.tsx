@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, User, Menu, X, ClipboardList } from "lucide-react";
+import { LayoutDashboard, FileText, User, Menu, X, ClipboardList, Search } from "lucide-react";
 import { useStudentProfileStore } from "@/src/context/useStudentProfile";
+import SidebarLogoutButton from "@/src/components/Auth/SidebarLogoutButton";
 
 interface NavItem {
     label: string;
@@ -13,6 +14,11 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+    {
+        label: "Browse Internship",
+        "href": "/internships",
+        "icon": Search,
+    },
     {
         label: "Dashboard",
         href: "/student/dashboard",
@@ -67,14 +73,14 @@ export default function SideBar() {
                         href={href}
                         onClick={() => setIsOpen(false)}
                         className={`group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-200 ${isActive
-                                ? "bg-blue-50 text-blue-700"
-                                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                            ? "bg-blue-50 text-blue-700"
+                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                             }`}
                     >
                         <Icon
                             className={`h-5 w-5 shrink-0 ${isActive
-                                    ? "text-blue-700"
-                                    : "text-slate-500 group-hover:text-slate-900"
+                                ? "text-blue-700"
+                                : "text-slate-500 group-hover:text-slate-900"
                                 }`}
                         />
                         {label}
@@ -143,12 +149,12 @@ export default function SideBar() {
                 {renderNavLinks()}
 
                 {/* Sidebar Footer (User Profile Section) */}
-                {profile && (
-                    <div className="border-t border-slate-200/80 p-4 bg-white">
+                <div className="border-t border-slate-200/80 bg-white p-4">
+                    {profile && (
                         <Link
                             href="/student/profile"
                             onClick={() => setIsOpen(false)}
-                            className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-50"
+                            className="mb-2 flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-50"
                         >
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700 text-sm border border-blue-200">
                                 {initials}
@@ -162,8 +168,9 @@ export default function SideBar() {
                                 </p>
                             </div>
                         </Link>
-                    </div>
-                )}
+                    )}
+                    <SidebarLogoutButton onNavigate={() => setIsOpen(false)} />
+                </div>
             </aside>
         </>
     );

@@ -4,7 +4,7 @@ import Link from "next/link";
 // Presence Link Item
 export default function PresenceLinkItem({ label, url, icon }: { label: string; url?: string; icon?: React.ReactNode }) {
     return (
-        <div className="flex items-center justify-between text-xs">
+        <div className="flex items-center justify-between text-sm">
             <section className="flex items-center gap-2">
                 {icon}
                 <span className="font-medium text-slate-600">{label}</span>

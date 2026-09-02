@@ -37,13 +37,13 @@ export function DashboardHeader({ user, onLogout }: { user: StudentProfile; onLo
         <div className="flex items-center gap-3">
           <Link
             href="/internships"
-            className="hidden sm:inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-3.5 text-xs font-semibold text-white shadow-2xs hover:bg-blue-700 transition-all"
+            className="workspace-action hidden h-9 items-center justify-center rounded-lg bg-blue-600 px-3.5 text-white shadow-2xs transition-all hover:bg-blue-700 sm:inline-flex"
           >
             Find Opportunities
           </Link>
           <Link
             href="/student/profile/documents"
-            className="hidden sm:inline-flex h-9 items-center justify-center rounded-lg bg-slate-100 px-3.5 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-200 transition-all"
+            className="workspace-action hidden h-9 items-center justify-center rounded-lg bg-slate-100 px-3.5 text-slate-700 shadow-2xs transition-all hover:bg-slate-200 sm:inline-flex"
           >
             <FaFile className="mr-1.5 h-3.5 w-3.5" />
             My Documents
@@ -76,14 +76,14 @@ export function DashboardHeader({ user, onLogout }: { user: StudentProfile; onLo
                     <Link
                       href="/student/profile"
                       onClick={() => setIsOpen(false)}
-                      className="flex w-full items-center px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors"
+                      className="flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-600"
                     >
                       View & Edit Profile
                     </Link>
                     <Link
                       href="/settings"
                       onClick={() => setIsOpen(false)}
-                      className="flex w-full items-center px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors"
+                      className="flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-600"
                     >
                       Account Settings
                     </Link>
@@ -96,7 +96,7 @@ export function DashboardHeader({ user, onLogout }: { user: StudentProfile; onLo
                         setIsOpen(false);
                         onLogout();
                       }}
-                      className="flex w-full items-center px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="flex w-full items-center rounded-lg px-3 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
                     >
                       <svg
                         className="mr-2 h-3.5 w-3.5 text-red-600"

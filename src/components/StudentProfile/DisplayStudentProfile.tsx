@@ -1,411 +1,548 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { Inter } from "next/font/google";
-import { useStudentProfileStore } from "@/src/context/useStudentProfile";
+import { useEffect, type ReactNode } from "react";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
-    GraduationCap,
-    Briefcase,
-    MapPin,
-    Globe,
-    UserCircle2,
-    Mail,
-    Phone,
+    ArrowUpRight,
+    BookOpen,
+    BriefcaseBusiness,
+    Building2,
     CalendarDays,
-    Target,
-    Award,
+    Check,
+    CircleDollarSign,
+    Clock3,
+    Eye,
+    EyeOff,
+    GraduationCap,
+    MapPin,
     Pencil,
-    ExternalLink,
-    CheckCircle2,
+    Phone,
+    Sparkles,
+    UserRound,
 } from "lucide-react";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-const inter = Inter({ subsets: ["latin"] });
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { useStudentProfileStore } from "@/src/context/useStudentProfile";
+import type { StudentProfile } from "@/src/types/studentProfile";
+
+const PROFILE_FIELDS: Array<keyof StudentProfile> = [
+    "full_name",
+    "phone",
+    "location",
+    "bio",
+    "college_name",
+    "degree",
+    "faculty_or_major",
+    "current_semester",
+    "graduation_year",
+    "preferred_job_categories",
+    "preferred_locations",
+    "preferred_work_mode",
+    "availability",
+    "expected_salary",
+    "linkedin_url",
+    "github_url",
+    "portfolio_url",
+];
 
 export default function DisplayStudentProfile() {
     const { profile, loading, fetchProfile } = useStudentProfileStore();
 
     useEffect(() => {
-        fetchProfile();
+        void fetchProfile();
     }, [fetchProfile]);
 
     if (loading) return <ProfileSkeleton />;
+    if (!profile) return <EmptyProfile />;
 
-    if (!profile) {
-        return (
-            <div
-                className={`${inter.className} flex min-h-[70vh] items-center justify-center bg-[#F3F2EF] px-4 font-sans text-slate-800`}
-            >
-                <Card className="w-full max-w-md border border-slate-200 bg-white p-8 text-center shadow-sm rounded-xl">
-                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#E8F2CE]/30 border-4 border-[#0A66C2]/10">
-                        <UserCircle2 className="h-10 w-10 text-[#0A66C2]" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="mt-6 text-2xl font-bold text-slate-900">
-                        Profile Not Found
-                    </h3>
-                    <p className="mt-2 text-sm text-slate-600 max-w-xs mx-auto leading-relaxed">
-                        It looks like you haven&apos;t created your student profile yet.
-                    </p>
-                    <div className="mt-8">
-                        <Link href="/student/profile/upsert">
-                            <Button className="w-full h-11 rounded-full bg-[#0A66C2] text-sm font-semibold text-white shadow-sm hover:bg-[#004182] transition-colors">
-                                Create My Profile
-                            </Button>
-                        </Link>
-                    </div>
-                </Card>
-            </div>
-        );
-    }
-
-    const jobCategories = profile.preferred_job_categories
-        ? profile.preferred_job_categories
-            .split(",")
-            .map((c) => c.trim())
-            .filter(Boolean)
-        : [];
-
-    const locations = profile.preferred_locations
-        ? profile.preferred_locations
-            .split(",")
-            .map((l) => l.trim())
-            .filter(Boolean)
-        : [];
+    const jobCategories = parseCommaSeparated(profile.preferred_job_categories);
+    const locations = parseCommaSeparated(profile.preferred_locations);
+    const completion = getCompletionPercentage(profile);
+    const imageSource = getProfileImageSource(profile.profile_image_key);
+    const initials = getInitials(profile.full_name);
+    const updatedAt = formatDate(profile.updated_at);
+    const headline = [profile.degree, profile.faculty_or_major]
+        .filter(Boolean)
+        .join(" · ");
 
     return (
-        <main
-            className={`${inter.className} min-h-screen bg-[#F3F2EF] px-3 py-6 sm:px-6 sm:py-10 text-slate-900 font-sans`}
-        >
-            <div className="mx-auto max-w-4xl space-y-4">
-                {/* Main Banner & Profile Header Card */}
-                <Card className="overflow-hidden border border-slate-200 bg-white shadow-sm rounded-xl">
-                    {/* Cover Header Banner */}
-                    <div className="h-32 sm:h-44 w-full bg-gradient-to-r from-[#004182] via-[#0A66C2] to-[#0077B5] relative">
-                        <div className="absolute top-4 right-4">
-                            <Link href="/student/profile/upsert">
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    className="rounded-full bg-white/90 text-[#0A66C2] hover:bg-white hover:text-[#004182] font-semibold text-xs backdrop-blur-sm shadow-sm"
-                                >
-                                    <Pencil className="h-3.5 w-3.5 mr-1.5" /> Edit Header
-                                </Button>
-                            </Link>
+        <main className="min-h-screen bg-background text-text-primary">
+            <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+                <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                            <Sparkles className="size-3.5" aria-hidden="true" />
+                            Student workspace
                         </div>
+                        <h1 className="workspace-page-title">
+                            Your professional profile
+                        </h1>
+                        <p className="workspace-body mt-1.5 max-w-2xl text-text-secondary">
+                            Review the information employers see when you apply for an opportunity.
+                        </p>
                     </div>
 
-                    <div className="px-6 pb-6 pt-0 relative sm:px-8">
-                        {/* Avatar Row */}
-                        <div className="flex flex-col sm:flex-row sm:items-end justify-between -mt-16 sm:-mt-20 mb-4 gap-4">
-                            <Avatar className="h-28 w-28 sm:h-36 sm:w-36 rounded-full border-4 border-white ring-1 ring-slate-200/60 shadow-md bg-white">
-                                <AvatarImage
-                                    src={profile.profile_picture_url}
-                                    alt={profile.full_name}
-                                    className="object-cover"
-                                />
-                                <AvatarFallback className="rounded-full bg-[#0A66C2] text-3xl font-bold text-white">
-                                    {profile.full_name
-                                        ? profile.full_name.charAt(0).toUpperCase()
-                                        : "S"}
+                    <Link
+                        href="/student/profile/upsert"
+                        className="inline-flex h-10 items-center justify-center gap-2 self-start rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-focus-ring/40 sm:self-auto"
+                    >
+                        <Pencil className="size-4" aria-hidden="true" />
+                        Edit profile
+                    </Link>
+                </header>
+
+                <Card className="gap-0 border border-border bg-surface py-0 shadow-sm ring-0">
+                    <div className="relative h-28 overflow-hidden bg-linear-to-br from-primary-active via-primary to-accent sm:h-36">
+                        <div className="absolute -right-12 -top-16 size-52 rounded-full bg-primary-foreground/10" />
+                        <div className="absolute bottom-[-5rem] right-24 size-44 rounded-full border-[28px] border-primary-foreground/10" />
+                    </div>
+
+                    <div className="px-5 pb-6 sm:px-7 sm:pb-7">
+                        <div className="-mt-11 flex flex-col gap-4 sm:-mt-12 sm:flex-row sm:items-end sm:justify-between">
+                            <Avatar className="size-24 border-4 border-surface bg-surface shadow-md sm:size-28">
+                                {imageSource && (
+                                    <AvatarImage src={imageSource} alt={`${profile.full_name}'s profile`} />
+                                )}
+                                <AvatarFallback className="bg-primary-subtle text-2xl font-bold text-primary sm:text-3xl">
+                                    {initials}
                                 </AvatarFallback>
                             </Avatar>
 
-                            <Link href="/student/profile/upsert" className="self-start sm:self-auto">
-                                <Button
-                                    variant="outline"
-                                    className="rounded-full border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2]/10 font-semibold text-sm px-5 h-9"
-                                >
-                                    Edit Full Profile
-                                </Button>
-                            </Link>
+                            <Badge
+                                variant="outline"
+                                className={
+                                    profile.is_searchable
+                                        ? "h-7 gap-1.5 border-success/25 bg-success-subtle px-3 text-success"
+                                        : "h-7 gap-1.5 border-border-strong bg-surface-muted px-3 text-text-secondary"
+                                }
+                            >
+                                {profile.is_searchable ? (
+                                    <Eye className="size-3.5!" aria-hidden="true" />
+                                ) : (
+                                    <EyeOff className="size-3.5!" aria-hidden="true" />
+                                )}
+                                {profile.is_searchable ? "Visible to employers" : "Profile hidden"}
+                            </Badge>
                         </div>
 
-                        {/* Main Details */}
-                        <div className="space-y-3">
-                            <div className="flex flex-wrap items-center gap-2.5">
-                                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-                                    {profile.full_name || "Unnamed Student"}
-                                </h1>
-                                <Badge
-                                    variant="outline"
-                                    className={
-                                        profile.is_searchable
-                                            ? "border-emerald-300 bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded-full font-medium text-xs flex items-center gap-1.5"
-                                            : "border-slate-300 bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full font-medium text-xs"
-                                    }
-                                >
-                                    {profile.is_searchable && (
-                                        <span className="flex h-2 w-2 relative">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-                                        </span>
-                                    )}
-                                    {profile.is_searchable ? "Open to Work" : "Hidden Profile"}
-                                </Badge>
-                            </div>
-
-                            <p className="text-base sm:text-lg text-slate-700 font-normal leading-snug">
-                                {profile.degree && profile.faculty_or_major
-                                    ? `${profile.degree} in ${profile.faculty_or_major}`
-                                    : profile.degree || profile.faculty_or_major || "Student"}
+                        <div className="mt-5">
+                            <h2 className="workspace-page-title">
+                                {profile.full_name || "Unnamed student"}
+                            </h2>
+                            <p className="mt-1.5 text-sm font-medium text-text-secondary sm:text-base">
+                                {headline || "Student seeking new opportunities"}
+                            </p>
+                            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-text-muted">
                                 {profile.college_name && (
-                                    <span className="text-slate-500 font-normal">
-                                        {" "}
-                                        • {profile.college_name}
+                                    <span className="inline-flex items-center gap-1.5">
+                                        <Building2 className="size-4 text-primary" aria-hidden="true" />
+                                        {profile.college_name}
                                     </span>
                                 )}
-                            </p>
-
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500 font-normal pt-0.5">
                                 {profile.location && (
-                                    <span className="flex items-center gap-1">
-                                        <MapPin className="h-4 w-4 text-slate-500" />
+                                    <span className="inline-flex items-center gap-1.5">
+                                        <MapPin className="size-4 text-primary" aria-hidden="true" />
                                         {profile.location}
                                     </span>
                                 )}
-                                {profile.email && (
+                                {profile.phone && (
                                     <a
-                                        href={`mailto:${profile.email}`}
-                                        className="flex items-center gap-1 text-[#0A66C2] hover:underline font-medium"
+                                        href={`tel:${profile.phone}`}
+                                        className="inline-flex items-center gap-1.5 transition-colors hover:text-primary"
                                     >
-                                        <Mail className="h-4 w-4 text-[#0A66C2]" />
-                                        Contact Info
+                                        <Phone className="size-4 text-primary" aria-hidden="true" />
+                                        {profile.phone}
                                     </a>
                                 )}
-                                {profile.phone_number && (
-                                    <span className="flex items-center gap-1 text-slate-600">
-                                        <Phone className="h-4 w-4 text-slate-500" />
-                                        {profile.phone_number}
-                                    </span>
-                                )}
                             </div>
-
-                            {/* Social Links Bar */}
-                            {(profile.linkedin_url ||
-                                profile.github_url ||
-                                profile.portfolio_url) && (
-                                    <div className="flex flex-wrap gap-2 pt-2">
-                                        {profile.linkedin_url && (
-                                            <SocialBadge
-                                                href={profile.linkedin_url}
-                                                label="LinkedIn"
-                                                icon={<FaLinkedin className="h-4 w-4 text-[#0A66C2]" />}
-                                            />
-                                        )}
-                                        {profile.github_url && (
-                                            <SocialBadge
-                                                href={profile.github_url}
-                                                label="GitHub"
-                                                icon={<FaGithub className="h-4 w-4 text-slate-800" />}
-                                            />
-                                        )}
-                                        {profile.portfolio_url && (
-                                            <SocialBadge
-                                                href={profile.portfolio_url}
-                                                label="Portfolio"
-                                                icon={<Globe className="h-4 w-4 text-teal-600" />}
-                                            />
-                                        )}
-                                    </div>
-                                )}
                         </div>
                     </div>
                 </Card>
 
-                {/* About Section */}
-                {profile.bio && (
-                    <Card className="border border-slate-200 bg-white p-6 sm:p-8 shadow-sm rounded-xl">
-                        <h2 className="text-lg font-bold text-slate-900 mb-3">About</h2>
-                        <p className="text-sm sm:text-base text-slate-700 leading-relaxed whitespace-pre-line">
-                            {profile.bio}
-                        </p>
-                    </Card>
-                )}
+                <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+                    <div className="space-y-5">
+                        <ProfileSection
+                            title="About"
+                            description="A short introduction for potential employers"
+                            icon={<UserRound className="size-5" />}
+                        >
+                            {profile.bio ? (
+                                <p className="workspace-body whitespace-pre-line text-text-secondary">
+                                    {profile.bio}
+                                </p>
+                            ) : (
+                                <MissingContent message="Add a short bio describing your strengths, interests, and career goals." />
+                            )}
+                        </ProfileSection>
 
-                {/* Main Content Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {/* Education Section */}
-                    <Card className="border border-slate-200 bg-white p-6 shadow-sm rounded-xl md:col-span-1 space-y-5">
-                        <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-                            <div className="p-2 rounded-lg bg-blue-50 text-[#0A66C2]">
-                                <GraduationCap className="h-5 w-5" />
-                            </div>
-                            <h2 className="text-base font-bold text-slate-900">Education</h2>
-                        </div>
+                        <ProfileSection
+                            title="Education"
+                            description="Your current academic background"
+                            icon={<GraduationCap className="size-5" />}
+                        >
+                            <dl className="grid gap-3 sm:grid-cols-2">
+                                <DetailTile
+                                    label="Institution"
+                                    value={profile.college_name}
+                                    icon={<Building2 className="size-4" />}
+                                />
+                                <DetailTile
+                                    label="Degree"
+                                    value={profile.degree}
+                                    icon={<BookOpen className="size-4" />}
+                                />
+                                <DetailTile
+                                    label="Faculty or major"
+                                    value={profile.faculty_or_major}
+                                    icon={<GraduationCap className="size-4" />}
+                                />
+                                <DetailTile
+                                    label="Current semester"
+                                    value={profile.current_semester}
+                                    icon={<CalendarDays className="size-4" />}
+                                />
+                                <DetailTile
+                                    label="Graduation year"
+                                    value={profile.graduation_year > 0 ? String(profile.graduation_year) : ""}
+                                    icon={<CalendarDays className="size-4" />}
+                                />
+                            </dl>
+                        </ProfileSection>
 
-                        <div className="space-y-4">
-                            <DetailItem
-                                label="Institution"
-                                value={profile.college_name}
-                                icon={<MapPin className="w-4 h-4 text-slate-400" />}
-                            />
-                            <DetailItem
-                                label="Degree"
-                                value={profile.degree}
-                                icon={<Award className="w-4 h-4 text-slate-400" />}
-                            />
-                            <DetailItem
-                                label="Major / Faculty"
-                                value={profile.faculty_or_major}
-                                icon={<Target className="w-4 h-4 text-slate-400" />}
-                            />
-                            <DetailItem
-                                label="Current Semester"
-                                value={profile.current_semester}
-                                icon={<CalendarDays className="w-4 h-4 text-slate-400" />}
-                            />
-                            <DetailItem
-                                label="Graduation Year"
-                                value={profile.graduation_year?.toString()}
-                                icon={<CalendarDays className="w-4 h-4 text-slate-400" />}
-                            />
-                        </div>
-                    </Card>
+                        <ProfileSection
+                            title="Career preferences"
+                            description="The opportunities and working arrangements you prefer"
+                            icon={<BriefcaseBusiness className="size-5" />}
+                        >
+                            <dl className="grid gap-3 sm:grid-cols-3">
+                                <DetailTile
+                                    label="Work mode"
+                                    value={formatDisplayValue(profile.preferred_work_mode)}
+                                    icon={<MapPin className="size-4" />}
+                                />
+                                <DetailTile
+                                    label="Availability"
+                                    value={profile.availability}
+                                    icon={<Clock3 className="size-4" />}
+                                />
+                                <DetailTile
+                                    label="Expected salary"
+                                    value={profile.expected_salary}
+                                    icon={<CircleDollarSign className="size-4" />}
+                                />
+                            </dl>
 
-                    {/* Career Preferences Section */}
-                    <Card className="border border-slate-200 bg-white p-6 shadow-sm rounded-xl md:col-span-2 space-y-6">
-                        <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-                            <div className="p-2 rounded-lg bg-blue-50 text-[#0A66C2]">
-                                <Briefcase className="h-5 w-5" />
-                            </div>
-                            <h2 className="text-base font-bold text-slate-900">
-                                Career Preferences
-                            </h2>
-                        </div>
+                            <TagGroup
+                                label="Target roles"
+                                values={jobCategories}
+                                emptyMessage="No target roles added yet"
+                            />
+                            <TagGroup
+                                label="Preferred locations"
+                                values={locations}
+                                emptyMessage="No preferred locations added yet"
+                                accent
+                            />
+                        </ProfileSection>
+                    </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-6">
-                            <DetailItem
-                                label="Preferred Work Mode"
-                                value={profile.preferred_work_mode}
-                                capitalize
-                                icon={<MapPin className="w-4 h-4 text-slate-400" />}
-                            />
-                            <DetailItem
-                                label="Availability"
-                                value={profile.availability}
-                                icon={<CalendarDays className="w-4 h-4 text-slate-400" />}
-                            />
-                            <DetailItem
-                                label="Expected Salary"
-                                value={profile.expected_salary}
-                                icon={<Award className="w-4 h-4 text-slate-400" />}
-                            />
-                        </div>
-
-                        {jobCategories.length > 0 && (
-                            <div className="space-y-2 pt-2 border-t border-slate-100">
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                    Target Roles
-                                </span>
-                                <div className="flex flex-wrap gap-2 pt-1">
-                                    {jobCategories.map((cat, i) => (
-                                        <Badge
-                                            key={i}
-                                            variant="secondary"
-                                            className="border border-slate-200 bg-slate-50 text-slate-800 px-3 py-1 rounded-full text-xs font-medium hover:bg-slate-100 transition-colors"
-                                        >
-                                            {cat}
-                                        </Badge>
-                                    ))}
+                    <aside className="space-y-5">
+                        <Card className="gap-0 border border-border bg-surface py-0 shadow-sm ring-0">
+                            <div className="p-5">
+                                <div className="flex items-start justify-between gap-4">
+                                    <div>
+                                        <p className="workspace-section-title">Profile strength</p>
+                                        <p className="workspace-meta mt-1 text-text-muted">
+                                            Complete profiles help employers evaluate you faster.
+                                        </p>
+                                    </div>
+                                    <span className="rounded-lg bg-primary-subtle px-2.5 py-1 text-sm font-bold text-primary">
+                                        {completion}%
+                                    </span>
                                 </div>
-                            </div>
-                        )}
 
-                        {locations.length > 0 && (
-                            <div className="space-y-2 pt-2 border-t border-slate-100">
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                    Target Locations
-                                </span>
-                                <div className="flex flex-wrap gap-2 pt-1">
-                                    {locations.map((loc, i) => (
-                                        <Badge
-                                            key={i}
-                                            variant="secondary"
-                                            className="border border-blue-100 bg-[#E8F4F9] text-[#0A66C2] px-3 py-1 rounded-full text-xs font-medium"
-                                        >
-                                            {loc}
-                                        </Badge>
-                                    ))}
+                                <div
+                                    className="mt-4 h-2 overflow-hidden rounded-full bg-surface-muted"
+                                    role="progressbar"
+                                    aria-label="Profile completion"
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                    aria-valuenow={completion}
+                                >
+                                    <div
+                                        className="h-full rounded-full bg-primary transition-[width]"
+                                        style={{ width: `${completion}%` }}
+                                    />
                                 </div>
+
+                                <p className="workspace-meta mt-3 flex items-start gap-2 text-text-secondary">
+                                    <Check className="mt-0.5 size-3.5 shrink-0 text-success" aria-hidden="true" />
+                                    {completion >= 80
+                                        ? "Your profile is ready to make a strong first impression."
+                                        : "Add missing details to improve your visibility and matches."}
+                                </p>
+
+                                <Link
+                                    href="/student/profile/upsert"
+                                    className="mt-4 inline-flex h-9 w-full items-center justify-center rounded-lg border border-border bg-surface-elevated px-3 text-sm font-semibold text-text-primary transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-focus-ring/30"
+                                >
+                                    Improve profile
+                                </Link>
                             </div>
+                        </Card>
+
+                        <Card className="gap-0 border border-border bg-surface py-0 shadow-sm ring-0">
+                            <div className="border-b border-border px-5 py-4">
+                                <h3 className="workspace-section-title">Online presence</h3>
+                                <p className="workspace-meta mt-1 text-text-muted">Portfolio and professional profiles</p>
+                            </div>
+                            <div className="space-y-2 p-3">
+                                <PresenceLink
+                                    href={profile.linkedin_url}
+                                    label="LinkedIn"
+                                    icon={<FaLinkedin className="size-4" />}
+                                />
+                                <PresenceLink
+                                    href={profile.github_url}
+                                    label="GitHub"
+                                    icon={<FaGithub className="size-4" />}
+                                />
+                                <PresenceLink
+                                    href={profile.portfolio_url}
+                                    label="Portfolio"
+                                    icon={<ArrowUpRight className="size-4" />}
+                                />
+                                {!profile.linkedin_url && !profile.github_url && !profile.portfolio_url && (
+                                    <p className="px-2 py-5 text-center text-xs leading-5 text-text-muted">
+                                        Add professional links to showcase your work.
+                                    </p>
+                                )}
+                            </div>
+                        </Card>
+
+                        {updatedAt && (
+                            <p className="px-1 text-center text-xs text-text-muted">
+                                Last updated {updatedAt}
+                            </p>
                         )}
-                    </Card>
+                    </aside>
                 </div>
             </div>
         </main>
     );
 }
 
-/* Helper Components */
-
-function DetailItem({
-    label,
-    value,
-    capitalize = false,
+function ProfileSection({
+    title,
+    description,
     icon,
+    children,
 }: {
-    label: string;
-    value?: string | null;
-    capitalize?: boolean;
-    icon?: React.ReactNode;
+    title: string;
+    description: string;
+    icon: ReactNode;
+    children: ReactNode;
 }) {
-    if (!value) return null;
     return (
-        <div className="flex items-start gap-3">
-            {icon && <div className="mt-0.5 shrink-0">{icon}</div>}
-            <div className="min-w-0">
-                <dt className="text-xs font-medium text-slate-500">{label}</dt>
-                <dd
-                    className={`text-sm font-semibold text-slate-800 mt-0.5 truncate ${capitalize ? "capitalize" : ""
-                        }`}
-                >
-                    {value}
-                </dd>
+        <Card className="gap-0 border border-border bg-surface py-0 shadow-sm ring-0">
+            <div className="flex items-start gap-3 border-b border-border px-5 py-4 sm:px-6">
+                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary-subtle text-primary">
+                    {icon}
+                </span>
+                <div>
+                    <h2 className="workspace-section-title text-text-primary">{title}</h2>
+                    <p className="workspace-meta mt-0.5 text-text-muted">{description}</p>
+                </div>
             </div>
+            <div className="space-y-5 p-5 sm:p-6">{children}</div>
+        </Card>
+    );
+}
+
+function DetailTile({ label, value, icon }: { label: string; value?: string; icon: ReactNode }) {
+    return (
+        <div className="rounded-xl border border-border bg-surface-elevated p-3.5">
+            <dt className="flex items-center gap-2 text-xs font-medium text-text-muted">
+                <span className="text-primary">{icon}</span>
+                {label}
+            </dt>
+            <dd className={`mt-2 text-sm font-semibold ${value ? "text-text-primary" : "text-text-disabled"}`}>
+                {value || "Not added"}
+            </dd>
         </div>
     );
 }
 
-function SocialBadge({
-    href,
+function TagGroup({
     label,
-    icon,
+    values,
+    emptyMessage,
+    accent = false,
 }: {
-    href: string;
     label: string;
-    icon: React.ReactNode;
+    values: string[];
+    emptyMessage: string;
+    accent?: boolean;
 }) {
+    return (
+        <div className="border-t border-border pt-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">{label}</p>
+            {values.length > 0 ? (
+                <div className="mt-3 flex flex-wrap gap-2">
+                    {values.map((value) => (
+                        <Badge
+                            key={value}
+                            variant="outline"
+                            className={
+                                accent
+                                    ? "h-7 border-accent/20 bg-accent-subtle px-3 text-accent-hover"
+                                    : "h-7 border-primary/20 bg-primary-subtle px-3 text-primary-hover"
+                            }
+                        >
+                            {accent && <MapPin className="size-3!" aria-hidden="true" />}
+                            {value}
+                        </Badge>
+                    ))}
+                </div>
+            ) : (
+                <p className="mt-2 text-sm text-text-disabled">{emptyMessage}</p>
+            )}
+        </div>
+    );
+}
+
+function PresenceLink({ href, label, icon }: { href: string; label: string; icon: ReactNode }) {
+    if (!href) return null;
+
     return (
         <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition-all hover:bg-slate-100 hover:border-slate-300"
+            className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-hover hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-focus-ring/30"
         >
-            {icon}
-            <span>{label}</span>
-            <ExternalLink className="h-3 w-3 text-slate-400" />
+            <span className="grid size-8 place-items-center rounded-lg bg-primary-subtle text-primary">{icon}</span>
+            <span className="flex-1">{label}</span>
+            <ArrowUpRight className="size-4 text-text-disabled" aria-hidden="true" />
         </a>
+    );
+}
+
+function MissingContent({ message }: { message: string }) {
+    return (
+        <div className="rounded-xl border border-dashed border-border-strong bg-surface-elevated px-4 py-5 text-sm leading-6 text-text-muted">
+            {message}
+        </div>
+    );
+}
+
+function EmptyProfile() {
+    return (
+        <main className="grid min-h-[75vh] place-items-center bg-background px-4 py-12 text-text-primary">
+            <Card className="w-full max-w-lg gap-0 border border-border bg-surface py-0 text-center shadow-sm ring-0">
+                <div className="p-7 sm:p-9">
+                    <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-primary-subtle text-primary">
+                        <UserRound className="size-8" aria-hidden="true" />
+                    </span>
+                    <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                        Student workspace
+                    </p>
+                    <h1 className="workspace-page-title mt-2">Create your professional profile</h1>
+                    <p className="workspace-body mx-auto mt-3 max-w-sm text-text-secondary">
+                        Add your education, career preferences, and portfolio links so employers can understand what you bring.
+                    </p>
+                    <Link
+                        href="/student/profile/upsert"
+                        className="mt-6 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-focus-ring/40"
+                    >
+                        Create profile
+                        <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </Link>
+                </div>
+            </Card>
+        </main>
     );
 }
 
 function ProfileSkeleton() {
     return (
-        <div className="min-h-screen bg-[#F3F2EF] px-4 py-8">
-            <div className="mx-auto max-w-4xl animate-pulse space-y-4">
-                <div className="h-72 rounded-xl border border-slate-200 bg-white" />
-                <div className="h-32 rounded-xl border border-slate-200 bg-white" />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="h-64 rounded-xl border border-slate-200 bg-white md:col-span-1" />
-                    <div className="h-64 rounded-xl border border-slate-200 bg-white md:col-span-2" />
+        <div className="min-h-screen bg-background px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+            <div className="mx-auto max-w-6xl animate-pulse">
+                <div className="mb-6 flex items-end justify-between gap-4">
+                    <div className="space-y-2">
+                        <div className="h-3 w-32 rounded-full bg-surface-muted" />
+                        <div className="h-8 w-64 rounded-lg bg-surface-muted" />
+                        <div className="h-4 w-80 max-w-full rounded bg-surface-muted" />
+                    </div>
+                    <div className="hidden h-10 w-32 rounded-lg bg-surface-muted sm:block" />
+                </div>
+                <div className="h-72 rounded-xl border border-border bg-surface" />
+                <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem]">
+                    <div className="space-y-5">
+                        <div className="h-44 rounded-xl border border-border bg-surface" />
+                        <div className="h-72 rounded-xl border border-border bg-surface" />
+                    </div>
+                    <div className="space-y-5">
+                        <div className="h-52 rounded-xl border border-border bg-surface" />
+                        <div className="h-48 rounded-xl border border-border bg-surface" />
+                    </div>
                 </div>
             </div>
         </div>
     );
+}
+
+function parseCommaSeparated(value: string) {
+    return value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+}
+
+function getInitials(name: string) {
+    const initials = name
+        .trim()
+        .split(/\s+/)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2);
+
+    return initials || "ST";
+}
+
+function getCompletionPercentage(profile: StudentProfile) {
+    const apiPercentage = Number(profile.profile_completion_percentage);
+    if (apiPercentage > 0) return Math.min(100, Math.max(0, Math.round(apiPercentage)));
+
+    const completedFields = PROFILE_FIELDS.filter((field) => Boolean(profile[field])).length;
+    return Math.round((completedFields / PROFILE_FIELDS.length) * 100);
+}
+
+function getProfileImageSource(value: string) {
+    const imageKey = value.trim();
+    return /^(https?:\/\/|\/|data:image\/|blob:)/i.test(imageKey) ? imageKey : undefined;
+}
+
+function formatDisplayValue(value: string) {
+    if (!value) return "";
+    return value
+        .replace(/[_-]+/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatDate(value: string) {
+    if (!value) return null;
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+
+    return new Intl.DateTimeFormat("en", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    }).format(date);
 }
