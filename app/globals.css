@@ -28,6 +28,7 @@
   --color-surface-hover: #f1f5f9;
   --color-surface-muted: #e1e8f0;
   --color-surface-elevated: #ffffff;
+  --color-overlay: rgb(15 23 42 / 0.55);
 
   /* Content and controls */
   --color-text-primary: #0f172a;
@@ -71,6 +72,7 @@
   --surface-hover: var(--color-surface-hover);
   --surface-muted: var(--color-surface-muted);
   --surface-elevated: var(--color-surface-elevated);
+  --overlay: var(--color-overlay);
   --text-primary: var(--color-text-primary);
   --text-secondary: var(--color-text-secondary);
   --text-muted: var(--color-text-muted);
@@ -163,6 +165,7 @@
   --color-surface-hover: #1e293b;
   --color-surface-muted: #1e293b;
   --color-surface-elevated: #1e293b;
+  --color-overlay: rgb(2 6 23 / 0.75);
 
   --color-text-primary: #f8fafc;
   --color-text-secondary: #cbd5e1;
@@ -206,6 +209,7 @@
   --color-surface-hover: var(--surface-hover);
   --color-surface-muted: var(--surface-muted);
   --color-surface-elevated: var(--surface-elevated);
+  --color-overlay: var(--overlay);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
@@ -299,5 +303,28 @@
 
   html {
     @apply font-sans;
+  }
+}
+
+@layer components {
+  /* Shared typography hierarchy for authenticated workspace pages. */
+  .workspace-page-title {
+    @apply text-2xl leading-tight font-bold tracking-tight sm:text-3xl;
+  }
+
+  .workspace-section-title {
+    @apply text-base leading-6 font-semibold;
+  }
+
+  .workspace-body {
+    @apply text-sm leading-6;
+  }
+
+  .workspace-meta {
+    @apply text-xs leading-5;
+  }
+
+  .workspace-action {
+    @apply text-sm font-semibold;
   }
 }

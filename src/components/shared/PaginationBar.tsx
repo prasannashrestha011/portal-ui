@@ -9,8 +9,11 @@ interface PaginationBarProps {
 export function PaginationBar({ currentPage, totalPages, onPageChange }: PaginationBarProps) {
     if (totalPages <= 1) return null;
 
+    const previousDisabled = currentPage === 1;
+    const nextDisabled = currentPage === totalPages;
+
     return (
-        <div className="pt-6 pb-2 border-t border-slate-200">
+        <div className="border-t border-border pt-6 pb-2">
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>
@@ -20,7 +23,9 @@ export function PaginationBar({ currentPage, totalPages, onPageChange }: Paginat
                                 e.preventDefault();
                                 if (currentPage > 1) onPageChange(currentPage - 1);
                             }}
-                            className={`text-slate-600 hover:text-blue-600 hover:bg-blue-50 ${currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                            aria-disabled={previousDisabled}
+                            tabIndex={previousDisabled ? -1 : undefined}
+                            className={`text-text-secondary hover:bg-primary-subtle hover:text-primary ${previousDisabled ? "pointer-events-none opacity-50" : ""
                                 }`}
                         />
                     </PaginationItem>
@@ -36,8 +41,8 @@ export function PaginationBar({ currentPage, totalPages, onPageChange }: Paginat
                                 }}
                                 className={
                                     currentPage === pageNum
-                                        ? "bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
-                                        : "text-slate-600 hover:text-blue-600 hover:bg-blue-50"
+                                        ? "border-primary bg-primary text-primary-foreground hover:bg-primary-hover hover:text-primary-foreground"
+                                        : "text-text-secondary hover:bg-primary-subtle hover:text-primary"
                                 }
                             >
                                 {pageNum}
@@ -52,7 +57,9 @@ export function PaginationBar({ currentPage, totalPages, onPageChange }: Paginat
                                 e.preventDefault();
                                 if (currentPage < totalPages) onPageChange(currentPage + 1);
                             }}
-                            className={`text-slate-600 hover:text-blue-600 hover:bg-blue-50 ${currentPage === totalPages ? "pointer-events-none opacity-50" : ""
+                            aria-disabled={nextDisabled}
+                            tabIndex={nextDisabled ? -1 : undefined}
+                            className={`text-text-secondary hover:bg-primary-subtle hover:text-primary ${nextDisabled ? "pointer-events-none opacity-50" : ""
                                 }`}
                         />
                     </PaginationItem>

@@ -7,8 +7,8 @@ export function Section({ title, description, children }: { title: string; descr
     return (
         <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-100 p-5 sm:p-6">
-                <h2 className="text-base font-semibold text-slate-900">{title}</h2>
-                <p className="mt-0.5 text-xs text-slate-500">{description}</p>
+                <h2 className="workspace-section-title text-slate-900">{title}</h2>
+                <p className="workspace-meta mt-0.5 text-slate-500">{description}</p>
             </div>
             <div className="p-5 sm:p-6">{children}</div>
         </div>
