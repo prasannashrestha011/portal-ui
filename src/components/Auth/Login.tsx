@@ -44,8 +44,11 @@ export default function Login() {
 
       if (meResp.data.role === "employer") {
         router.replace("/recruiter/dashboard");
+      } else if (meResp.data.role === "student") {
+        router.replace("/student/profile");
       } else {
-        router.replace("/");
+        router.replace("/")
+
       }
     } catch (error) {
       setError(getErrorMessage(error));

@@ -29,7 +29,7 @@ export function middleware(req: NextRequest) {
 
     // 3. Redirect authenticated users trying to access /login or /register
     if (isAuthRoute && isAuthenticated) {
-        return NextResponse.redirect(new URL('/dashboard', req.url));
+        return NextResponse.redirect(new URL('/', req.url));
     }
 
     return NextResponse.next();
