@@ -11,6 +11,16 @@ import type {
 import type { ApiResponse } from "../types/http";
 
 export const applicationService = {
+    async findStudentApplicationForInternship(
+        internshipId: string,
+        signal?: AbortSignal
+    ) {
+        const { data } = await apiClient.get<
+            ApiResponse<StudentApplicationSummary | null>
+        >(`/students/me/applications/internships/${internshipId}`, { signal });
+        return data;
+    },
+
     async listStudentApplications(
         params: StudentApplicationListParams,
         signal?: AbortSignal

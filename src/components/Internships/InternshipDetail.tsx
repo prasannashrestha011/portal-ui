@@ -27,7 +27,10 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { useAuthStore } from "@/src/context/useAuth";
+import { applicationService } from "@/src/services/application";
 import { internshipService } from "@/src/services/internship";
+import type { StudentApplicationSummary } from "@/src/types/application";
 import { INTERNSHIP_STATUS, type Internship } from "@/src/types/internship";
 import {
     formatDeadline,
@@ -312,6 +315,130 @@ function ApplicationCard({
     applicationsClosed: boolean;
     deadlineUrgent: boolean;
 }) {
+    const user = useAuthStore((state) => state.user);
+    const authStatus = useAuthStore((state) => state.status);
+    const isStudent = user?.role.toLowerCase() === "student";
+    const applicationQuery = useQuery({
+        queryKey: ["student-applications", "internship", internship.id],
+        queryFn: async ({ signal }) => {
+            const response = await applicationService.findStudentApplicationForInternship(
+                internship.id,
+                signal
+            );
+            if (!response.success) {
+                throw new Error(response.message || "Unable to verify your application status.");
+            }
+            return response.data;
+        },
+        enabled: authStatus === "authenticated" && isStudent,
+        retry: 1,
+        staleTime: 30_000,
+    });
+
+    if (authStatus === "idle" || authStatus === "loading") {
+        return (
+            <ApplicationStateCard
+                icon={<LoaderCircle className="size-6 animate-spin" />}
+                eyebrow="Application access"
+                title="Checking your application status"
+                description="Please wait while we confirm whether you have already applied."
+            />
+        );
+    }
+
+    if (authStatus === "unauthenticated" || !user) {
+        return (
+            <ApplicationStateCard
+                icon={<BriefcaseBusiness className="size-6" />}
+                eyebrow="Student applications"
+                title="Sign in before applying"
+                description="Use your student account to submit and track an application."
+            >
+                <Link
+                    href="/login"
+                    className={buttonVariants({
+                        size: "lg",
+                        className: "mt-5 h-11 w-full bg-blue-600 font-semibold text-white hover:bg-blue-700",
+                    })}
+                >
+                    Sign in to apply
+                </Link>
+            </ApplicationStateCard>
+        );
+    }
+
+    if (!isStudent) {
+        return (
+            <ApplicationStateCard
+                icon={<BriefcaseBusiness className="size-6" />}
+                eyebrow="Student applications"
+                title="Student accounts only"
+                description="Only signed-in student accounts can submit internship applications."
+            />
+        );
+    }
+
+    if (applicationQuery.isPending) {
+        return (
+            <ApplicationStateCard
+                icon={<LoaderCircle className="size-6 animate-spin" />}
+                eyebrow="Application access"
+                title="Checking your application status"
+                description="The apply action will appear only after this check is complete."
+            />
+        );
+    }
+
+    if (applicationQuery.isError) {
+        return (
+            <ApplicationStateCard
+                icon={<AlertCircle className="size-6" />}
+                eyebrow="Status unavailable"
+                title="We couldn't verify your application"
+                description="The apply action is hidden until we can safely confirm your application status."
+            >
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="mt-5 h-11 w-full font-semibold"
+                    onClick={() => void applicationQuery.refetch()}
+                    disabled={applicationQuery.isFetching}
+                >
+                    <RefreshCw className={`size-4 ${applicationQuery.isFetching ? "animate-spin" : ""}`} />
+                    {applicationQuery.isFetching ? "Checking again" : "Try again"}
+                </Button>
+            </ApplicationStateCard>
+        );
+    }
+
+    if (applicationQuery.data) {
+        return <ExistingApplicationCard application={applicationQuery.data} />;
+    }
+
+    return (
+        <OpenApplicationCard
+            internship={internship}
+            applicationUrl={applicationUrl}
+            applicationsClosed={applicationsClosed}
+            deadlineUrgent={deadlineUrgent}
+            onApplied={() => void applicationQuery.refetch()}
+        />
+    );
+}
+
+function OpenApplicationCard({
+    internship,
+    applicationUrl,
+    applicationsClosed,
+    deadlineUrgent,
+    onApplied,
+}: {
+    internship: Internship;
+    applicationUrl: string | null;
+    applicationsClosed: boolean;
+    deadlineUrgent: boolean;
+    onApplied: () => void;
+}) {
     const applyMutation = useMutation({
         mutationFn: async () => {
             const response = await internshipService.applyForInternship(internship.id);
@@ -322,6 +449,7 @@ function ApplicationCard({
 
             return response;
         },
+        onSuccess: onApplied,
     });
     const hasAdditionalInformation = Boolean(
         applicationUrl || internship.application_email
@@ -455,6 +583,64 @@ function ApplicationCard({
                     />
                     <SidebarFact label="Work mode" value={workModeLabel(internship.work_mode)} />
                 </div>
+            </div>
+        </section>
+    );
+}
+
+function ExistingApplicationCard({ application }: { application: StudentApplicationSummary }) {
+    return (
+        <ApplicationStateCard
+            icon={<CheckCircle2 className="size-6" />}
+            eyebrow="Application received"
+            title="You've already applied"
+            description={`Your application is ${formatApplicationStatus(application.status)}. Another submission is not available for this internship.`}
+        >
+            <Link
+                href="/student/applications"
+                className={buttonVariants({
+                    variant: "outline",
+                    size: "lg",
+                    className: "mt-5 h-11 w-full font-semibold",
+                })}
+            >
+                View my applications
+                <ArrowUpRight className="size-4" />
+            </Link>
+        </ApplicationStateCard>
+    );
+}
+
+function ApplicationStateCard({
+    icon,
+    eyebrow,
+    title,
+    description,
+    children,
+}: {
+    icon: ReactNode;
+    eyebrow: string;
+    title: string;
+    description: string;
+    children?: ReactNode;
+}) {
+    return (
+        <section className="overflow-hidden rounded-2xl bg-white shadow-[0_10px_35px_rgba(15,23,42,0.07)] ring-1 ring-slate-200/90 dark:bg-slate-900 dark:ring-slate-800">
+            <div className="h-1 bg-linear-to-r from-blue-600 via-cyan-500 to-emerald-400" />
+            <div className="p-5 sm:p-6">
+                <div className="grid size-11 place-items-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-300">
+                    {icon}
+                </div>
+                <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400">
+                    {eyebrow}
+                </p>
+                <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+                    {title}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
+                    {description}
+                </p>
+                {children}
             </div>
         </section>
     );
@@ -738,6 +924,11 @@ function getApplyErrorMessage(error: unknown) {
 
     if (error instanceof Error && error.message) return error.message;
     return "Unable to submit your application.";
+}
+
+function formatApplicationStatus(status: StudentApplicationSummary["status"]) {
+    if (status === "reviewing") return "currently under review";
+    return `currently ${status}`;
 }
 
 function getInitials(value: string) {
