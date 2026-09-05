@@ -1,9 +1,16 @@
 "use client";
 
 import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { CodeXml } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import loginImage from "@/public/login.jpg";
 import { authService } from "@/src/services/auth";
 import type { ApiErrorResponse } from "@/src/types/auth";
 import { useAuthStore } from "@/src/context/useAuth";
@@ -24,8 +31,6 @@ export default function Login() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const registered = searchParams.get("registered") === "true";
-
-  // zustand auth setter
   const setUser = useAuthStore((s) => s.setUser);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -34,12 +39,8 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      // perform login (tokens are stored by authService)
       await authService.login({ email: email.trim(), password });
-
-      // fetch current user and store in zustand auth store
       const meResp = await authService.me();
-      // set user in global auth store so other components can read auth state
       setUser(meResp.data);
 
       if (meResp.data.role === "employer") {
@@ -47,8 +48,7 @@ export default function Login() {
       } else if (meResp.data.role === "student") {
         router.replace("/student/profile");
       } else {
-        router.replace("/")
-
+        router.replace("/");
       }
     } catch (error) {
       setError(getErrorMessage(error));
@@ -58,85 +58,116 @@ export default function Login() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8 sm:py-12">
-      <section className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 sm:p-9">
-        <div className="mb-8">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">
-            Student Job Portal
-          </p>
-          <h1 className="text-3xl font-bold text-slate-900">Welcome back</h1>
-          <p className="mt-2 text-sm text-slate-600">
-            Sign in to continue to your account.
-          </p>
+    <main className="relative grid min-h-svh grid-rows-[minmax(13rem,32svh)_1fr] bg-surface-elevated lg:grid-cols-2 lg:grid-rows-1">
+      <section
+        className="relative min-h-52 overflow-hidden border-b-2 border-primary lg:min-h-svh lg:border-r-2 lg:border-b-0"
+        aria-label="Student workspace"
+      >
+        <Image
+          alt="A coding workspace with a monitor and laptop"
+          className="object-cover object-center"
+          fill
+          placeholder="blur"
+          preload
+          sizes="(max-width: 1023px) 100vw, 50vw"
+          src={loginImage}
+        />
+      </section>
+
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 hidden size-[4.5rem] -translate-1/2 items-center justify-center bg-primary [clip-path:polygon(25%_7%,75%_7%,100%_50%,75%_93%,25%_93%,0_50%)] lg:flex"
+        aria-hidden="true"
+      >
+        <div className="flex size-[4.05rem] items-center justify-center bg-surface-elevated [clip-path:polygon(25%_7%,75%_7%,100%_50%,75%_93%,25%_93%,0_50%)]">
+          <CodeXml className="size-8 text-primary" strokeWidth={1.8} />
         </div>
+      </div>
 
-        {registered && (
-          <p
-            className="mb-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
-            role="status"
-          >
-            Your account was created. You can sign in now.
-          </p>
-        )}
+      <section className="flex items-center justify-center px-6 py-12 sm:px-12 lg:px-16 xl:px-20">
+        <div className="flex w-full max-w-[35rem] flex-col gap-10">
+          <header className="flex flex-col gap-9">
+            <Link
+              className="flex w-fit items-center gap-3 text-lg font-bold tracking-tight text-foreground"
+              href="/"
+            >
+              <CodeXml className="size-9 text-primary" strokeWidth={2.3} aria-hidden="true" />
+              Student Job Portal
+            </Link>
+            <div className="flex flex-col gap-3">
+              <h1 className="text-4xl font-bold tracking-[-0.035em] text-foreground sm:text-5xl">
+                Welcome back
+              </h1>
+              <p className="text-base leading-7 text-muted-foreground sm:text-lg">
+                Sign in to continue to your account.
+              </p>
+            </div>
+          </header>
 
-        {error && (
-          <p
-            className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-            role="alert"
-          >
-            {error}
-          </p>
-        )}
+          <div className="flex flex-col gap-7">
+            {registered ? (
+              <Alert role="status">
+                <AlertDescription>
+                  Your account was created. You can sign in now.
+                </AlertDescription>
+              </Alert>
+            ) : null}
 
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700" htmlFor="email">
-              Email address
-            </label>
-            <input
-              autoComplete="email"
-              className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              id="email"
-              name="email"
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@example.com"
-              required
-              type="email"
-              value={email}
-            />
+            {error ? (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            ) : null}
+
+            <form className="flex flex-col gap-7" onSubmit={handleSubmit}>
+              <FieldGroup className="gap-5">
+                <Field>
+                  <FieldLabel className="text-sm font-semibold" htmlFor="email">
+                    Email address
+                  </FieldLabel>
+                  <Input
+                    autoComplete="email"
+                    className="h-12 px-4"
+                    id="email"
+                    name="email"
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    type="email"
+                    value={email}
+                  />
+                </Field>
+
+                <Field>
+                  <FieldLabel className="text-sm font-semibold" htmlFor="password">
+                    Password
+                  </FieldLabel>
+                  <Input
+                    autoComplete="current-password"
+                    className="h-12 px-4"
+                    id="password"
+                    name="password"
+                    onChange={(event) => setPassword(event.target.value)}
+                    placeholder="Enter your password"
+                    required
+                    type="password"
+                    value={password}
+                  />
+                </Field>
+              </FieldGroup>
+
+              <Button className="h-12 w-full" disabled={isSubmitting} size="lg" type="submit">
+                {isSubmitting ? "Signing in..." : "Sign in"}
+              </Button>
+            </form>
+
+            <p className="text-center text-sm text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <Link className="font-semibold text-primary hover:underline" href="/register">
+                Create one
+              </Link>
+            </p>
           </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700" htmlFor="password">
-              Password
-            </label>
-            <input
-              autoComplete="current-password"
-              className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              id="password"
-              name="password"
-              onChange={(event) => setPassword(event.target.value)}
-              required
-              type="password"
-              value={password}
-            />
-          </div>
-
-          <button
-            className="w-full rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-            disabled={isSubmitting}
-            type="submit"
-          >
-            {isSubmitting ? "Signing in..." : "Sign in"}
-          </button>
-        </form>
-
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Don&apos;t have an account?{" "}
-          <Link className="font-semibold text-blue-600 hover:text-blue-700" href="/Register">
-            Create one
-          </Link>
-        </p>
+        </div>
       </section>
     </main>
   );
