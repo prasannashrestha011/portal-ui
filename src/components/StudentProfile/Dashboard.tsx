@@ -350,7 +350,9 @@ export default function StudentDashboardPage() {
                             <div className="mt-3 space-y-1">
                                 {[
                                     { label: "Find internships", href: "/internships", icon: Search },
-                                    { label: "Manage documents", href: "/student/profile/documents", icon: FileText },
+                                    ...(profile
+                                        ? [{ label: "Manage documents", href: "/student/profile/documents", icon: FileText }]
+                                        : []),
                                     { label: "Update profile", href: "/student/profile/upsert", icon: UserRound },
                                 ].map(({ label, href, icon: Icon }) => (
                                     <Link

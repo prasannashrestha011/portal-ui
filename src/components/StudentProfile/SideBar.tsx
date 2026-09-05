@@ -11,6 +11,7 @@ interface NavItem {
     label: string;
     href: string;
     icon: React.ComponentType<{ className?: string }>;
+    requiresProfile?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -33,6 +34,7 @@ const navItems: NavItem[] = [
         label: "Documents",
         href: "/student/profile/documents",
         icon: FileText,
+        requiresProfile: true,
     },
     {
         label: "My Profile",
@@ -62,9 +64,13 @@ export default function SideBar() {
             .slice(0, 2)
         : "ST";
 
+    const visibleNavItems = navItems.filter(
+        ({ requiresProfile }) => !requiresProfile || profile !== null
+    );
+
     const renderNavLinks = () => (
         <nav className="flex-1 space-y-1.5 px-3 py-4">
-            {navItems.map(({ label, href, icon: Icon }) => {
+            {visibleNavItems.map(({ label, href, icon: Icon }) => {
                 const isActive = pathname === href;
 
                 return (
